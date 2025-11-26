@@ -1,0 +1,121 @@
+@font-face {
+    font-family: "Montserrat";
+    src: url("/assets/fonts/Montserrat-Regular.otf");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Montserrat";
+    src: url("/assets/fonts/Montserrat-Medium.otf");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Montserrat";
+    src: url("/assets/fonts/Montserrat-SemiBold.otf");
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Montserrat";
+    src: url("/assets/fonts/Montserrat-Bold.otf");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Montserrat";
+    src: url("/assets/fonts/Montserrat-ExtraBold.otf");
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Montserrat";
+    src: url("/assets/fonts/Montserrat-Black.otf");
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Montserrat Alternates";
+    src: url("/assets/fonts/MontserratAlternates-Regular.otf");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Montserrat Alternates";
+    src: url("/assets/fonts/MontserratAlternates-Medium.otf");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Montserrat Alternates";
+    src: url("/assets/fonts/MontserratAlternates-SemiBold.otf");
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Montserrat Alternates";
+    src: url("/assets/fonts/MontserratAlternates-Bold.otf");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Montserrat Alternates";
+    src: url("/assets/fonts/MontserratAlternates-ExtraBold.otf");
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Montserrat Alternates";
+    src: url("/assets/fonts/MontserratAlternates-Black.otf");
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "DFVN-DarumadropOne";
+    src: url("/assets/fonts/DFVN-DarumadropOne.ttf") format("truetype");
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "UTM-Dax";
+    src: url("/assets/fonts/UTM\ Dax.ttf") format("truetype");
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "UTM-Dax";
+    src: url("/assets/fonts/UTM\ DaxMedium.ttf") format("truetype");
+    font-display: swap;
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: "UTM-Dax";
+    src: url("/assets/fonts/UTM\ DaxBold.ttf") format("truetype");
+    font-display: swap;
+    font-weight: 700;
+}

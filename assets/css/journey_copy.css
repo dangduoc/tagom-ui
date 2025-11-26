@@ -1,0 +1,239 @@
+#app-wrapper {
+  --btm-shadow-color: #1c3d12;
+  --top-shadow-color: #1c3d12;
+  background-color: #1c3d12;
+  --slogan-color: #fff;
+  --language-contact-icon-color: #fff;
+  --language-contact-color: #fff;
+  --language-contact-icon-color-fb: #1c3d12;
+  color: #fff;
+}
+#app-wrapper::after {
+  content: none;
+}
+
+#app-nav {
+  color: #fff;
+}
+
+#app-bg {
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  position: relative;
+}
+#app-bg::before {
+  content: "";
+  display: block;
+  width: 150px;
+  left: 0;
+  position: absolute;
+  z-index: 5;
+  top: 0;
+  height: 100%;
+  background: linear-gradient(to right, var(--top-shadow-color, #1c3d12), transparent);
+}
+#app-bg::after {
+  content: "";
+  display: block;
+  position: absolute;
+  height: 195px;
+  width: 100%;
+  z-index: 0;
+  left: 0;
+  background: linear-gradient(to top, var(--btm-shadow-color, #fff), transparent);
+  bottom: 0;
+  opacity: 0.68;
+}
+
+#paragraph-box {
+  z-index: 6;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 12px;
+  text-align: right;
+}
+#paragraph-box h1 {
+  text-transform: uppercase;
+  font-family: "DFVN-DarumadropOne";
+  font-size: 35px;
+  color: #fff;
+}
+#paragraph-box h3 {
+  font-weight: 600;
+  font-size: 13px;
+  color: #fff;
+  margin-bottom: 16px;
+}
+#paragraph-box p {
+  width: 300px;
+  margin-left: auto;
+  font-size: 12px;
+  color: #d3d3d3;
+  font-weight: 400;
+}
+
+#main-object-wrapper {
+  height: 100%;
+  position: relative;
+  display: inline-block;
+  transform: translate(-10%, 20%);
+  z-index: 1;
+}
+#main-object-wrapper::after {
+  content: "";
+  display: block;
+  position: absolute;
+  height: 195px;
+  width: 100%;
+  z-index: 5;
+  left: 0;
+  background: linear-gradient(to top, var(--btm-shadow-color, #fff), transparent);
+  bottom: 20%;
+  opacity: 0.68;
+}
+#main-object-wrapper .main-object-background {
+  height: 100%;
+  position: relative;
+  z-index: 1;
+}
+#main-object-wrapper .mountain {
+  position: absolute;
+  left: 2%;
+  width: 40%;
+  top: -10%;
+  z-index: 0;
+}
+
+.wizard-wrapper {
+  position: relative;
+  width: min(40vw, 400px);
+  aspect-ratio: 1/1;
+  margin: auto;
+  bottom: 23%;
+  z-index: 6;
+}
+.wizard-wrapper .wizard {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 40%;
+  height: auto;
+  z-index: 2;
+}
+.wizard-wrapper .items {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: translateZ(0);
+}
+.wizard-wrapper .items .item {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 22%;
+  height: auto;
+  transform-origin: center center;
+  transition: transform 0.5s ease, opacity 0.3s ease;
+  cursor: pointer;
+  opacity: 0.9;
+}
+.wizard-wrapper .items .item:hover {
+  opacity: 1;
+}
+.wizard-wrapper .items .item:hover img {
+  transform: scale(1.1);
+}
+.wizard-wrapper .items .item img {
+  width: 100%;
+  height: auto;
+  transition: transform 0.3s ease;
+}
+.wizard-wrapper .items .item.selected img {
+  transform: scale(1.2);
+}
+
+@media screen and (min-width: 768px) and (orientation: portrait) {
+  #paragraph-box {
+    width: 50%;
+    max-width: 650px;
+    margin-left: 10%;
+    margin-top: 5%;
+  }
+  #paragraph-box h1 {
+    font-size: 50px;
+  }
+  #paragraph-box h3 {
+    font-size: 16px;
+  }
+  #paragraph-box p {
+    font-size: 14px;
+  }
+}
+@media screen and (min-width: 992px) and (orientation: portrait) {
+  #paragraph-box {
+    margin-top: 10%;
+  }
+  #paragraph-box h1 {
+    font-size: 70px;
+    margin-bottom: 24px;
+  }
+  #paragraph-box h3 {
+    font-size: 18px;
+  }
+  #paragraph-box p {
+    font-size: 16px;
+  }
+}
+@media screen and (min-width: 992px) and (orientation: landscape) {
+  #paragraph-box {
+    position: absolute;
+    top: 20%;
+    right: 12%;
+    margin-top: 0;
+    margin-left: 0;
+  }
+  #paragraph-box h1 {
+    font-size: 60px;
+  }
+  #paragraph-box h3 {
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+  #paragraph-box p {
+    font-size: 14px;
+    width: 360px;
+    margin-left: auto;
+  }
+}
+@media screen and (min-width: 1600px) {
+  #paragraph-box {
+    right: 12%;
+  }
+  #paragraph-box h1 {
+    font-size: 70px;
+  }
+  #paragraph-box h3 {
+    font-size: 20px;
+    margin-bottom: 24px;
+  }
+  #paragraph-box p {
+    font-size: 16px;
+    width: 380px;
+    margin-left: auto;
+  }
+}
+@media screen and (min-width: 2000px) {
+  #paragraph-box h1 {
+    font-size: 80px;
+  }
+  #paragraph-box h3 {
+    font-size: 24px;
+    margin-bottom: 24px;
+  }
+  #paragraph-box p {
+    width: 440px;
+    font-size: 18px;
+  }
+}/*# sourceMappingURL=journey_copy.css.map */

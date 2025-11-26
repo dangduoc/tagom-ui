@@ -1,0 +1,386 @@
+@import url(animation.css);
+#app-wrapper {
+  --btm-shadow-color: #1c3d12;
+  --language-contact-color: #fff;
+  --language-contact-icon-color: #fff;
+  --language-contact-icon-color-fb: #1c3d12;
+}
+
+#app-bg {
+  display: flex;
+  flex-direction: column;
+  padding-top: 75px;
+  background-image: url(/assets/images/school/mobile/bg.png);
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  position: relative;
+  background-size: 100% auto;
+  background-position-y: center;
+  background-repeat: no-repeat;
+}
+
+#school-wrap {
+  text-align: center;
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  z-index: 9;
+}
+#school-wrap > .inner {
+  position: relative;
+  width: 90%;
+  display: inline-block;
+}
+#school-wrap::after {
+  display: block;
+  content: "";
+  aspect-ratio: 600/180;
+  width: 100%;
+}
+#school-wrap .school {
+  position: absolute;
+  bottom: 0;
+  z-index: 2;
+  width: 48%;
+  left: 26%;
+  cursor: pointer;
+  transition: 0.2s;
+}
+#school-wrap .school.active {
+  filter: drop-shadow(0px 4px 30px #fff);
+}
+#school-wrap .school:hover {
+  filter: drop-shadow(0px 4px 30px #fff);
+}
+#school-wrap .school:hover img {
+  transition: 0.2s;
+  transform: translateY(-5px);
+}
+#school-wrap .school img {
+  width: 100%;
+}
+#school-wrap .behind {
+  width: 100%;
+  margin-bottom: -10%;
+}
+#school-wrap .base {
+  position: absolute;
+  z-index: 3;
+  left: 5%;
+  bottom: -20%;
+  width: 90%;
+}
+
+.school-popover {
+  --bs-popover-max-width: 500px;
+  --bs-popover-bg: rgba(255, 255, 255, 0.8);
+  --bs-popover-border-radius: 30px;
+  --bs-popover-body-padding-y: 24px;
+  --bs-popover-body-padding-x: 24px;
+  --bs-popover-border-width: 0;
+  --bs-popover-arrow-height: 20px;
+  --bs-popover-arrow-width: 36px;
+  filter: drop-shadow(0px 4px 30px rgba(0, 0, 0, 0.25));
+}
+.school-popover .popover-arrow {
+  bottom: calc(-1 * var(--bs-popover-arrow-height)) !important;
+}
+.school-popover p {
+  margin-bottom: 0;
+}
+
+#children {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  z-index: 10;
+  text-align: center;
+}
+#children > .inner {
+  position: relative;
+  width: 80%;
+  display: inline-block;
+}
+#children img {
+  position: absolute;
+  bottom: -50px;
+  width: 40%;
+}
+#children .children-left {
+  left: 0;
+}
+#children .children-right {
+  right: 0;
+  width: 45%;
+}
+#children::after {
+  display: block;
+  content: "";
+  aspect-ratio: 400/180;
+  width: 100%;
+}
+
+#title-wrap {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  width: 100%;
+  z-index: 11;
+  color: #fff;
+  text-align: center;
+}
+#title-wrap h1.title {
+  font-size: 18px;
+  font-family: "DFVN-DarumadropOne";
+  text-transform: uppercase;
+}
+#title-wrap p.address {
+  font-size: 10px;
+  font-family: "Montserrat";
+  font-weight: 600;
+}
+#title-wrap p.address > span {
+  opacity: 0.8;
+}
+#title-wrap span.drop-shadow {
+  display: inline-block;
+  margin: auto;
+  filter: drop-shadow(0px 4px 30px #000);
+}
+
+#ground {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+#slogan {
+  --slogan-color: #fff;
+}
+
+#app-wrapper.popover-shown #stats {
+  opacity: 0.3 !important;
+  pointer-events: none;
+}
+#app-wrapper.popover-shown #view-list-btn {
+  opacity: 0.3 !important;
+  pointer-events: none;
+}
+
+#stats {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 5% 0 10%;
+  margin-top: 30px;
+  z-index: 11;
+}
+
+.stat-box {
+  font-family: "UTM-Dax";
+  z-index: 99;
+}
+.stat-box .title {
+  font-weight: 500;
+  font-size: 20px;
+  text-transform: uppercase;
+}
+.stat-box .subtitle {
+  font-size: 10px;
+  text-transform: uppercase;
+}
+.stat-box .stat {
+  position: relative;
+}
+.stat-box .stat .value {
+  font-size: 50px;
+  font-family: "Montserrat";
+  font-weight: 700;
+  line-height: 1;
+}
+.stat-box .stat .label {
+  font-size: 10px;
+  font-family: "UTM-Dax";
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+#view-list-btn {
+  z-index: 11;
+  background-color: #f29328;
+  font-weight: 600;
+  border-radius: 50px;
+  text-transform: uppercase;
+  padding: 10px 24px;
+  transition: 0.2s;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 10px;
+  width: 200px;
+  margin-left: 10%;
+}
+#view-list-btn:hover {
+  transform: translateY(-2px) !important;
+  transition: 0.2s;
+  background-color: #f1a650;
+}
+
+#schoolPopover {
+  z-index: 11;
+  margin-top: 12px;
+  padding: 0 5% 0 10%;
+  margin-bottom: 12px;
+}
+#schoolPopover h2 {
+  text-transform: uppercase;
+  font-family: "DFVN-DarumadropOne";
+  font-size: 35px;
+  color: var(--color-gr);
+}
+#schoolPopover p {
+  font-size: 12px;
+}
+
+@media screen and (max-width: 600px) {
+  #stats {
+    display: flex;
+    width: 85%;
+    left: 10%;
+    justify-content: space-between;
+    top: unset;
+    bottom: 50%;
+    margin-top: 20px;
+  }
+  #schoolPopover {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+@media screen and (min-width: 768px) and (orientation: portrait) {
+  #app-bg {
+    background-image: url(/assets/images/school/tablet/bg.png);
+  }
+  #schoolPopover {
+    width: 50%;
+    max-width: 650px;
+    margin-left: 10%;
+    margin-top: 24px;
+    padding: 0;
+  }
+  #schoolPopover h2 {
+    font-size: 50px;
+  }
+  #schoolPopover p {
+    font-size: 14px;
+  }
+}
+@media screen and (min-width: 992px) {
+  .stat-box .title {
+    font-size: 30px;
+  }
+  .stat-box .subtitle {
+    font-size: 16px;
+  }
+  .stat-box .stat .value {
+    font-size: 70px;
+  }
+  .stat-box .stat .label {
+    font-size: 16px;
+  }
+  #view-list-btn {
+    font-size: inherit;
+    width: 300px;
+  }
+  #title-wrap {
+    bottom: 5%;
+  }
+  #title-wrap h1.title {
+    font-size: 32px;
+  }
+  #title-wrap p.address {
+    font-size: inherit;
+  }
+}
+@media screen and (min-width: 820px) and (orientation: portrait) {
+  #schoolPopover {
+    margin-top: 5%;
+  }
+  #stats {
+    padding: 0px 15% 0 10%;
+  }
+}
+@media screen and (min-width: 992px) and (orientation: portrait) {
+  #schoolPopover {
+    margin-top: 10%;
+  }
+}
+@media screen and (min-width: 768px) {
+  #title-wrap {
+    bottom: 30px;
+  }
+  #title-wrap h1.title {
+    font-size: 28px;
+  }
+  #title-wrap p.address {
+    font-size: 14px;
+  }
+  #school-wrap::after {
+    aspect-ratio: 800/180;
+  }
+}
+@media screen and (min-width: 992px) and (orientation: landscape) {
+  #app-bg {
+    display: block;
+    background-image: url(/assets/images/school/desktop/bg.png);
+  }
+  #school-wrap > .inner {
+    width: 50%;
+  }
+  #school-wrap::after {
+    aspect-ratio: 1900/210;
+  }
+  #children .children-right {
+    width: 25%;
+  }
+  #children img {
+    bottom: -80px;
+    width: 25%;
+  }
+  #children::after {
+    aspect-ratio: 1900/210;
+  }
+  #schoolPopover {
+    display: none;
+  }
+  #school-popover-content {
+    margin-bottom: 0;
+  }
+  #school-popover-content h2 {
+    display: none;
+  }
+  #school-popover-content p {
+    font-size: inherit;
+  }
+  #stats {
+    position: absolute;
+    top: 20%;
+    left: 10%;
+    transition: 0.2s;
+    z-index: 12;
+    display: block;
+    padding: 0;
+    margin-top: 0;
+  }
+  #view-list-btn {
+    position: fixed;
+    z-index: 10;
+    right: 5%;
+    top: 130px;
+    font-size: inherit;
+    width: auto;
+    margin-left: 0;
+  }
+}/*# sourceMappingURL=school.css.map */

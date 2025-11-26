@@ -1,0 +1,593 @@
+@import url(animation.css);
+@import url(_fonts.css);
+body {
+  font-family: "Montserrat Alternates";
+  --px: 0%;
+  --color-gr: #02542d;
+  --color-org: #f29328;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#app-wrapper {
+  --bs-link-color-rgb: #000;
+  --btm-shadow-color: #fff;
+  position: relative;
+  background-color: #f0fcff;
+  overflow: hidden;
+}
+#app-wrapper::before {
+  background: linear-gradient(to bottom, var(--top-shadow-color, #fff), transparent);
+  top: 0;
+  animation-name: fadeInDownSlow;
+}
+#app-wrapper::after {
+  background: linear-gradient(to top, var(--btm-shadow-color, #fff), transparent);
+  bottom: 0;
+  opacity: 0.68;
+  animation-name: fadeInUpSlow;
+}
+#app-wrapper::before, #app-wrapper::after {
+  content: "";
+  display: block;
+  position: absolute;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  height: 225px;
+  width: 100%;
+  z-index: 5;
+  left: 0;
+  animation-delay: 1s;
+}
+#app-wrapper.loading::before, #app-wrapper.loading::after {
+  animation-play-state: paused !important;
+  visibility: hidden; /* keep it invisible until play */
+}
+
+#app-nav {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 99;
+}
+#app-nav .logo img {
+  width: 160px;
+}
+#app-nav .app-nav-inner {
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+}
+#app-nav .app-nav-inner .nav-items {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 50px;
+}
+#app-nav .app-nav-inner .nav-items a {
+  font-weight: 500;
+}
+#app-nav .app-nav-inner .nav-items a.active {
+  font-weight: 900;
+}
+
+#app-nav-sm {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 99;
+}
+#app-nav-sm .app-nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px;
+}
+#app-nav-sm .logo img {
+  width: 65px;
+}
+
+#app-nav-sm-full {
+  height: 100vh;
+  height: 100dvh;
+  width: 100vw;
+  background: #54ab47;
+  position: fixed;
+  z-index: 99;
+  display: none;
+}
+#app-nav-sm-full.open {
+  display: block;
+}
+#app-nav-sm-full > div {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+#app-nav-sm-full .app-nav-sm-full-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px;
+}
+#app-nav-sm-full .app-nav-sm-full-header .logo img {
+  width: 65px;
+}
+#app-nav-sm-full .app-nav-sm-full-items {
+  flex: 1;
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 20px;
+  gap: 12px;
+  color: #fff;
+}
+#app-nav-sm-full .app-nav-sm-full-items a {
+  text-decoration: none;
+  font-weight: 500;
+}
+#app-nav-sm-full .app-nav-sm-full-items a.active {
+  font-weight: 700;
+}
+#app-nav-sm-full .app-nav-sm-full-extra {
+  text-align: center;
+  color: #fff;
+  line-height: 2;
+}
+#app-nav-sm-full .app-nav-sm-full-extra .hr-divider {
+  width: 130px;
+  border-top: 1px solid #fff;
+  margin: 30px auto;
+}
+#app-nav-sm-full .app-nav-sm-full-footer {
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  gap: 24px;
+  margin-top: 24px;
+}
+#app-nav-sm-full .app-nav-sm-full-footer > div:first-child {
+  font-size: 10px;
+  font-weight: 600;
+  font-style: italic;
+}
+#app-nav-sm-full .app-nav-sm-full-footer .tagom {
+  display: inline-block;
+  height: 24px;
+  line-height: 24px;
+  min-width: 90px;
+  color: #000;
+  border-radius: 24px;
+  text-align: center;
+  font-size: 10px;
+  font-weight: 600;
+  background-color: var(--color-org);
+}
+
+#app-nav-sm-full-toggler {
+  padding: 0;
+  border: 0;
+  background: none;
+  width: 22px;
+}
+
+#app-nav-sm-menu-toggler {
+  padding: 0;
+  border: 0;
+  background: none;
+  width: 22px;
+}
+
+#top-chart {
+  cursor: pointer;
+  display: none;
+  position: fixed;
+  z-index: 10;
+  filter: drop-shadow(0px 4px 30px #fff);
+}
+#top-chart:hover {
+  transform: translateY(-2px) !important;
+  transition: 0.2s;
+}
+
+#language-contact {
+  display: none;
+  position: fixed;
+  z-index: 10;
+}
+#language-contact > div {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  gap: 12px;
+}
+#language-contact > div a {
+  display: block;
+  cursor: pointer;
+  color: var(--language-contact-color, var(--color-gr));
+}
+#language-contact > div a:hover {
+  transform: translateX(-2px) !important;
+  transition: 0.2s;
+}
+#language-contact > div a svg path {
+  fill: var(--language-contact-icon-color, #1c3d12);
+}
+#language-contact > div a svg path.fb {
+  fill: var(--language-contact-icon-color-fb, #fff);
+}
+#language-contact > div .languages {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1px;
+  color: var(--language-contact-icon-color, #1c3d12);
+}
+#language-contact > div .languages a.active {
+  font-weight: 700;
+}
+#language-contact > div .line {
+  display: block;
+  width: 40px;
+  background: var(--language-contact-icon-color, #1c3d12);
+  width: 1px;
+  height: 60px;
+}
+
+#slogan {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  right: 5%;
+  bottom: 5%;
+  position: fixed;
+  z-index: 10;
+  color: var(--slogan-color, #000);
+  font-weight: 600;
+}
+#slogan .text {
+  font-size: 10px;
+  font-style: italic;
+}
+#slogan .tagom {
+  display: inline-block;
+  height: 24px;
+  line-height: 24px;
+  min-width: 90px;
+  border-radius: 24px;
+  text-align: center;
+  font-size: 10px;
+  background-color: var(--color-org);
+}
+
+#app-loading {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  z-index: 9999;
+  background-image: url(/assets/images/loading/bg-sm.png);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+#app-loading .app-loading-inner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+  gap: 24px;
+}
+#app-loading .app-loading-inner .loading-img {
+  width: 120px;
+}
+#app-loading .app-loading-inner .loading-text {
+  font-family: "DFVN-DarumadropOne";
+  font-size: 50px;
+  line-height: 1;
+  color: var(--color-gr);
+}
+
+.loading .animate__paused {
+  animation-play-state: paused !important;
+  visibility: hidden; /* keep it invisible until play */
+}
+
+#top-chart-modal {
+  --bs-modal-width: 900px;
+}
+#top-chart-modal .modal-info-bottom {
+  font-style: italic;
+  color: #fff;
+  padding: 16px;
+  text-align: center;
+  font-size: 14px;
+  max-width: 750px;
+  margin: auto;
+}
+#top-chart-modal .modal-header {
+  display: block;
+  border: 0;
+}
+#top-chart-modal .modal-header .modal-header-top {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+}
+#top-chart-modal .modal-header .modal-header-top .modal-title {
+  flex: 1;
+  font-size: 60px;
+  font-family: "DFVN-DarumadropOne";
+  color: var(--color-gr);
+  text-transform: uppercase;
+  line-height: 1;
+}
+#top-chart-modal .modal-header .modal-header-top .search-box {
+  position: relative;
+  height: 59px;
+  border-radius: 30px;
+  background-color: #fbefbd;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 24px;
+}
+#top-chart-modal .modal-header .modal-header-top .search-box input {
+  background-color: transparent;
+  flex: 1;
+  border: 0;
+}
+#top-chart-modal .modal-header .modal-header-top .search-box input:focus {
+  outline: 0;
+  box-shadow: 0;
+  border: 0;
+}
+#top-chart-modal .modal-header .modal-header-top .search-box input::-moz-placeholder {
+  font-style: italic;
+  font-size: 16px;
+  color: #000;
+}
+#top-chart-modal .modal-header .modal-header-top .search-box input::placeholder {
+  font-style: italic;
+  font-size: 16px;
+  color: #000;
+}
+#top-chart-modal .modal-header .modal-header-top .search-box .search-icon {
+  width: 37px;
+}
+#top-chart-modal .modal-header .modal-header-bottom {
+  display: flex;
+}
+#top-chart-modal .modal-header .modal-header-bottom .btn-check:checked + .btn {
+  background-color: #d3fbd2;
+  font-weight: 900;
+}
+#top-chart-modal .modal-header .modal-header-bottom .btn {
+  text-transform: uppercase;
+  font-family: "Montserrat";
+  flex: 1;
+  background-color: #f2fff1;
+  color: var(--color-gr);
+  border-radius: 30px;
+  height: 59px;
+  padding: 0;
+  text-align: center;
+  line-height: 59px;
+  border: 0;
+  font-weight: 500;
+}
+#top-chart-modal .modal-footer {
+  border: 0;
+}
+#top-chart-modal .modal-footer {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  color: #000;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+#top-chart-modal .modal-footer .total {
+  flex: 1;
+  font-style: italic;
+}
+#top-chart-modal .modal-footer ul {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 5px;
+}
+#top-chart-modal .modal-footer ul li a {
+  color: #000;
+  text-decoration: none;
+  width: 32px;
+  height: 32px;
+  display: inline-block;
+  line-height: 32px;
+  text-align: center;
+  padding: 0;
+  cursor: pointer;
+}
+#top-chart-modal .modal-footer ul li a.navigator img {
+  height: 11px;
+}
+#top-chart-modal .modal-footer ul li a.active {
+  font-weight: 700;
+  text-decoration: underline;
+}
+#top-chart-modal table {
+  margin-top: 24px;
+  font-family: "Montserrat";
+}
+#top-chart-modal table th {
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 800;
+  font-size: 20px;
+}
+#top-chart-modal table td {
+  vertical-align: middle;
+  border-bottom: 3px dashed #54ab47;
+  font-weight: 500;
+}
+#top-chart-modal table tr:last-child td {
+  border-bottom: 0;
+}
+#top-chart-modal table .col-index {
+  display: inline-block;
+  width: 62px;
+  height: 60px;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  color: #000;
+  font-weight: 500;
+  font-size: 20px;
+  text-align: center;
+  line-height: 60px;
+}
+
+.c-modal .modal-content {
+  padding: 12px 50px;
+  --bs-modal-border-radius: 30px;
+}
+.c-modal .modal-content .btn-close {
+  position: absolute;
+  top: 0;
+  right: -60px;
+  color: #fff;
+  --bs-btn-close-color: #fff;
+  opacity: 1;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+@media screen and (min-width: 768px) and (orientation: portrait) {
+  #app-loading {
+    background-image: url(/assets/images/loading/bg-md.png);
+  }
+}
+@media screen and (min-width: 992px) and (orientation: portrait) {
+  #app-nav .app-nav-inner {
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #app-nav .app-nav-inner .nav-items {
+    margin-left: 50px;
+    justify-content: space-between;
+    gap: 0;
+  }
+  #app-nav .app-nav-inner .nav-items a {
+    font-size: 14px;
+  }
+}
+@media screen and (min-width: 992px) and (orientation: landscape) {
+  .app-container {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #top-chart {
+    display: block;
+  }
+  #slogan {
+    display: flex;
+  }
+  #language-contact {
+    display: block;
+  }
+  #app-loading .app-loading-inner .loading-img {
+    width: 170px;
+  }
+  #app-loading .app-loading-inner .loading-text {
+    font-size: 70px;
+  }
+}
+@media screen and (min-width: 768px) and (orientation: portrait) {
+  #app-nav-sm-full .app-nav-sm-full-items {
+    font-size: 32px;
+  }
+  #app-nav-sm-full .app-nav-sm-full-extra {
+    font-size: 20px;
+  }
+  #app-nav-sm-full .app-nav-sm-full-footer {
+    font-size: 14px;
+  }
+  #app-nav-sm-full .app-nav-sm-full-footer > div:first-child {
+    font-size: inherit;
+  }
+  #app-nav-sm-full .app-nav-sm-full-footer > div:first-child br {
+    display: none;
+  }
+}
+@media screen and (min-width: 820px) and (orientation: portrait) {
+  #app-nav-sm-full .app-nav-sm-full-items {
+    font-size: 36px;
+  }
+  #app-nav-sm-full .app-nav-sm-full-extra {
+    font-size: 24px;
+  }
+}
+@media screen and (min-width: 1024px) and (orientation: portrait) {
+  #app-nav-sm-full .app-nav-sm-full-items {
+    font-size: 40px;
+  }
+}
+@media screen and (min-width: 992px) {
+  #app-nav-sm {
+    display: none;
+  }
+  #app-nav {
+    display: block;
+  }
+  #top-chart {
+    display: block;
+    right: 2%;
+    top: 15%;
+  }
+  #top-chart img {
+    width: 45px;
+  }
+  #language-contact {
+    display: block;
+    left: 2%;
+    bottom: 5%;
+  }
+}
+@media screen and (min-width: 1200px) {
+  #top-chart {
+    right: 5%;
+    top: 30%;
+  }
+  #top-chart img {
+    width: 52px;
+  }
+  #language-contact {
+    left: 5%;
+    bottom: 5%;
+  }
+  #app-loading {
+    background-image: url(/assets/images/loading/bg.png);
+  }
+}/*# sourceMappingURL=main.css.map */
