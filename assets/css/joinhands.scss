@@ -1,0 +1,30 @@
+#app-bg {
+    padding-top: 75px;
+
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    position: relative;
+    background-size: 100% auto;
+    background-position-y: center;
+    background-repeat: no-repeat;
+
+    background-color: #f0fcff;
+    background-image: url(/assets/images/joinhands/light.png);
+    .app-bg-left {
+        position: absolute;
+        height: 100%;
+        left: 0;
+        bottom: 0;
+    }
+    .app-bg-right {
+        position: absolute;
+        right: 0;
+        height: 100%;
+        bottom: 0;
+    }
+    .app-bg-bottom {
+        position: absolute;
+        bottom: 0;
+    }
+}
