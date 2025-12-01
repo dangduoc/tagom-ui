@@ -27,13 +27,13 @@
                     <a href="/" title="">
                         Chuyện kể
                     </a>
-                    <a href="/school.html" class="active" title="">
+                    <a href="/school.html" title="">
                         Mái trường
                     </a>
                     <a href="/journey.html" title="">
                         Hành trình
                     </a>
-                    <a href="#" title="">
+                    <a href="/joinhands.html" class="active" title="">
                         Chung tay
                     </a>
                     <a href="#" title="">
@@ -85,13 +85,13 @@
                     <a href="/" title="">
                         Chuyện kể
                     </a>
-                    <a href="/school.html" class="active" title="">
+                    <a href="/school.html" title="">
                         Mái trường
                     </a>
                     <a href="/journey.html" title="">
                         Hành trình
                     </a>
-                    <a href="#" title="">
+                    <a href="/joinhands.html" class="active" title="">
                         Chung tay
                     </a>
                     <a href="#" title="">
@@ -141,12 +141,91 @@
         </div>
 
         <div id="app-bg">
-            <img class="app-bg-left" src="/assets/images/joinhands/left.png">
-            <img class="app-bg-right" src="/assets/images/joinhands/right.png">
-            <img class="app-bg-bottom" src="/assets/images/joinhands/bottom.png">
+            <img class="app-bg-left animate__animated animate__fadeInLeftSlow animate__paused"
+                src="/assets/images/joinhands/left.png">
+            <img class="app-bg-right animate__animated animate__fadeInRightSlow animate__paused"
+                src="/assets/images/joinhands/right.png">
+            <img class="app-bg-bottom animate__animated animate__fadeInUpSlow animate__paused"
+                src="/assets/images/joinhands/bottom.png">
+            <div class="app-bg-inner container">
+                <div class="title-wrapper">
+                    <h1 class="animate__animated animate__fadeInLeftSlow animate__paused">Chung tay</h1>
+                    <h3 class="animate__animated animate__fadeInRightSlow animate__paused">Góp sức</h3>
+                </div>
+                <div class="features">
+                    <div class="feature-box animate__animated animation-delay animate__fadeInUpSlow animate__paused"
+                        style="--delay-ms:300ms">
+                        <div class="feature-box-inner">
+
+                            <div class="content">
+                                <div class="title">Vỏ hộp sữa</div>
+                                <div class="text">
+                                    <p>Thu gom tất cả các vỏ hộp sữa. Quy đổi vỏ hộp sữa theo đơn vị Kilogram (kg).</p>
+                                    <p>Lưu ý: Chỉ thu gom vỏ hộp sữa đã được vệ sinh</p>
+                                </div>
+                                <div class="img">
+                                    <img src="/assets/images/joinhands/feature1.png">
+                                </div>
+                            </div>
+                            <div class="actions">
+                                <a class="btn" data-bs-toggle="modal" data-bs-target="#feature-box-modal1">Xem thêm về
+                                    vệ sinh vỏ hộp sữa</a>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="feature-box animate__animated animation-delay animate__fadeInUpSlow animate__paused"
+                        style="--delay-ms:500ms">
+                        <div class="feature-box-inner">
+
+                            <div class="content">
+                                <div class="title">Giấy cũ</div>
+                                <div class="text">
+                                    <p>Thu gom tất cả các loại giấy. Quy đổi giấy theo đơn vị Kilogram (kg).</p>
+                                    <p>Lưu ý: Giấy cần vệ sinh và phân loại trước khi mang đến Trạm Xanh</p>
+                                </div>
+                                <div class="img">
+                                    <img src="/assets/images/joinhands/feature2.png">
+                                </div>
+                            </div>
+                            <div class="actions">
+                                <a class="btn" data-bs-toggle="modal" data-bs-target="#feature-box-modal2">Xem thêm về
+                                    vệ
+                                    sinh vỏ hộp sữa</a>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="feature-box animate__animated animation-delay animate__fadeInUpSlow animate__paused"
+                        style="--delay-ms:800ms">
+                        <div class="feature-box-inner">
+
+                            <div class="content">
+                                <div class="title">Quỹ yêu thương</div>
+                                <div class="text">
+                                    <p>
+                                        Quỹ hỗ trợ tài chính chiến dịch. Số tiền nhận được sẽ góp quỹ mua sữa cho các em
+                                        và
+                                        các
+                                        hoạt
+                                        động tình nguyện khác.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="actions">
+                                <a class="btn" data-bs-toggle="modal" data-bs-target="#feature-box-modal3">Xem thêm
+                                    QR</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
 
         </div>
-        <a id="top-chart" style="--delay-ms:2000ms" data-bs-toggle="modal" data-bs-target="#top-chart-modal"><img
+        <a id="top-chart" style="--delay-ms:1000ms" data-bs-toggle="modal" data-bs-target="#top-chart-modal"><img
                 class="animate__animated animation-delay animate__fadeInUpSlow animate__paused"
                 src="/assets/images/home/top-balloon.png"></a>
 
@@ -187,6 +266,125 @@
             </div>
         </div>
 
+    </div>
+
+    <div class="modal fade feature-box-modal c-modal" id="feature-box-modal1" tabindex="-1"
+        aria-labelledby="feature-box-modal1-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-fullscreen-md-down">
+            <div class="modal-content">
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+                <div class="modal-header">
+                    <div class="modal-header-sm">
+                        <div class="logo">
+                            <a id="app-logo" href="/" title="">
+                                <img src="/assets/images/logo.png">
+                            </a>
+                        </div>
+                        <button type="button" class="modal-header-sm-toggler" data-bs-dismiss="modal">
+                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M15.6663 2.33313L2.33301 15.6665" stroke="#000" stroke-width="3"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M2.33301 2.33313L15.6663 15.6665" stroke="#000" stroke-width="3"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </button>
+                    </div>
+                    <h1 class="modal-title" id="feature-box-modal1-label">HƯỚNG DẪN VỆ SINH VỎ HỘP SỮA</h1>
+                </div>
+                <div class="modal-body img-only">
+                    <picture>
+                        <source media="(min-width:768px)" srcset="/assets/images/joinhands/feature1-img.png">
+
+                        <img class="w-100" src="/assets/images/joinhands/feature1-img-sm.png">
+                    </picture>
+
+                </div>
+                <div class="modal-footer">
+                    <a class="btn">video hướng dẫn</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal fade feature-box-modal c-modal" id="feature-box-modal2" tabindex="-1"
+        aria-labelledby="feature-box-modal2-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-fullscreen-md-down">
+            <div class="modal-content">
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+                <div class="modal-header">
+                    <div class="modal-header-sm">
+                        <div class="logo">
+                            <a id="app-logo" href="/" title="">
+                                <img src="/assets/images/logo.png">
+                            </a>
+                        </div>
+                        <button type="button" class="modal-header-sm-toggler" data-bs-dismiss="modal">
+                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M15.6663 2.33313L2.33301 15.6665" stroke="#000" stroke-width="3"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M2.33301 2.33313L15.6663 15.6665" stroke="#000" stroke-width="3"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </button>
+                    </div>
+                    <h1 class="modal-title" id="feature-box-modal1-label">HƯỚNG DẪN phân loại giấy</h1>
+                </div>
+
+                <div class="modal-body img-only">
+                    <picture>
+                        <source media="(min-width:768px)" srcset="/assets/images/joinhands/feature2-img.png">
+
+                        <img class="w-100" src="/assets/images/joinhands/feature2-img-sm.png">
+                    </picture>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal fade feature-box-modal c-modal" id="feature-box-modal3" tabindex="-1"
+        aria-labelledby="feature-box-modal3-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-fullscreen-md-down">
+            <div class="modal-content">
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+                <div class="modal-header">
+                    <div class="modal-header-sm">
+                        <div class="logo">
+                            <a id="app-logo" href="/" title="">
+                                <img src="/assets/images/logo.png">
+                            </a>
+                        </div>
+                        <button type="button" class="modal-header-sm-toggler" data-bs-dismiss="modal">
+                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M15.6663 2.33313L2.33301 15.6665" stroke="#000" stroke-width="3"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M2.33301 2.33313L15.6663 15.6665" stroke="#000" stroke-width="3"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="modal-title-wrapper">
+                        <div class="sub label">Tên tài khoản</div>
+                        <h1 class="modal-title" id="feature-box-modal3-label">gom vỏ giấy - sữa trao em</h1>
+                        <div class="sub bank-name">Ngân hàng Nông nghiệp và Phát triển Nông thôn Việt Nam</div>
+                    </div>
+                </div>
+                
+                <div class="modal-body img-only text-left py-0">
+                    <img src="/assets/images/joinhands/feature3-img.png">
+                </div>
+
+            </div>
+
+        </div>
     </div>
 
     <div class="modal fade c-modal" id="top-chart-modal" tabindex="-1" aria-labelledby="top-chart-modal-label"
@@ -306,7 +504,6 @@
                 tên, số lượng, số điện thoại</div>
         </div>
     </div>
-
 
     <script src="/assets/plugins/jquery/dist/jquery.min.js"></script>
     <script src="/assets/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

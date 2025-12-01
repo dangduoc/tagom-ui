@@ -44,7 +44,8 @@ a {
 }
 #app-wrapper.loading::before, #app-wrapper.loading::after {
   animation-play-state: paused !important;
-  visibility: hidden; /* keep it invisible until play */
+  visibility: hidden;
+  /* keep it invisible until play */
 }
 
 #app-nav {
@@ -309,7 +310,8 @@ a {
 
 .loading .animate__paused {
   animation-play-state: paused !important;
-  visibility: hidden; /* keep it invisible until play */
+  visibility: hidden;
+  /* keep it invisible until play */
 }
 
 #top-chart-modal {
@@ -468,18 +470,10 @@ a {
 }
 
 .c-modal .modal-content {
-  padding: 12px 50px;
-  --bs-modal-border-radius: 30px;
+  padding: 0;
 }
 .c-modal .modal-content .btn-close {
-  position: absolute;
-  top: 0;
-  right: -60px;
-  color: #fff;
-  --bs-btn-close-color: #fff;
-  opacity: 1;
-  font-size: 30px;
-  cursor: pointer;
+  display: none;
 }
 
 @media screen and (min-width: 768px) and (orientation: portrait) {
@@ -552,6 +546,22 @@ a {
 @media screen and (min-width: 1024px) and (orientation: portrait) {
   #app-nav-sm-full .app-nav-sm-full-items {
     font-size: 40px;
+  }
+}
+@media screen and (min-width: 768px) {
+  .c-modal .modal-content {
+    padding: 12px 50px;
+    --bs-modal-border-radius: 30px;
+  }
+  .c-modal .modal-content .btn-close {
+    position: absolute;
+    top: 0;
+    right: -60px;
+    color: #fff;
+    --bs-btn-close-color: #fff;
+    opacity: 1;
+    font-size: 30px;
+    cursor: pointer;
   }
 }
 @media screen and (min-width: 992px) {

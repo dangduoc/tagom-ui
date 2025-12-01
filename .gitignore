@@ -1,0 +1,2 @@
+# Ignore node modules for JavaScript projects
+node_modules/

@@ -1,6 +1,5 @@
 #app-bg {
     padding-top: 75px;
-
     width: 100%;
     height: 100vh;
     height: 100dvh;
@@ -8,23 +7,370 @@
     background-size: 100% auto;
     background-position-y: center;
     background-repeat: no-repeat;
-
     background-color: #f0fcff;
     background-image: url(/assets/images/joinhands/light.png);
+
     .app-bg-left {
         position: absolute;
         height: 100%;
         left: 0;
         bottom: 0;
     }
+
     .app-bg-right {
         position: absolute;
         right: 0;
         height: 100%;
         bottom: 0;
     }
+
     .app-bg-bottom {
         position: absolute;
         bottom: 0;
+    }
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .app-bg-inner {
+        position: relative;
+        z-index: 6;
+        overflow-y: auto;
+    }
+}
+
+.title-wrapper {
+    max-width: 300px;
+    margin: auto;
+    font-family: "DFVN-DarumadropOne";
+    margin-bottom: 20px;
+
+    h1 {
+        text-transform: uppercase;
+        font-size: 35px;
+        color: var(--color-gr);
+        margin-bottom: 0;
+        line-height: 1;
+    }
+
+    h3 {
+        color: #000;
+        font-size: 24px;
+        margin-bottom: 0;
+    }
+}
+
+.features {
+    .feature-box {
+        color: #000;
+
+        margin-bottom: 40px;
+
+        .feature-box-inner {
+            max-width: 300px;
+            margin: auto;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+
+            .content {
+                flex: 1;
+            }
+        }
+
+        .content {
+
+            .title {
+                font-family: "Montserrat";
+                font-weight: 800;
+                font-size: 16px;
+                vertical-align: middle;
+                text-transform: uppercase;
+                margin-bottom: 12px;
+            }
+
+            .img {
+                margin-top: 12px;
+
+                img {
+                    width: 100%;
+                    max-width: 240px;
+                }
+            }
+
+            .text {
+                font-size: 14px;
+
+                p {
+                    margin-bottom: 0;
+                }
+            }
+        }
+
+        .actions {
+            margin-top: 12px;
+            text-align: left;
+
+            .btn {
+                width: auto;
+                display: inline-block;
+                margin: auto;
+                text-align: center;
+                border-radius: 30px;
+                color: inherit;
+                background-color: var(--color-org);
+                font-weight: 600;
+                cursor: pointer;
+                font-size: 12px;
+            }
+        }
+
+    }
+}
+
+.feature-box-modal {
+    --bs-modal-width: 860px;
+
+    .modal-header {
+        border: 0;
+        text-align: left;
+        flex-direction: column;
+
+        .modal-header-sm {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 24px;
+            padding: 0;
+
+            .logo {
+                img {
+                    width: 65px;
+                }
+            }
+
+            .modal-header-sm-toggler {
+                border: 0;
+                background-color: transparent;
+            }
+        }
+    }
+
+    .modal-footer {
+        border: 0;
+
+        .btn {
+            width: auto;
+            display: inline-block;
+            margin-left: auto;
+            text-align: center;
+            border-radius: 30px;
+            color: inherit;
+            background-color: var(--color-org);
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 10px;
+        }
+    }
+
+    .modal-title-wrapper {
+
+        color: var(--color-gr);
+        text-align: left;
+
+        .sub {
+            &.label {
+                // font-size: 20px;
+                text-transform: uppercase;
+                font-family: "DFVN-DarumadropOne";
+            }
+
+            &.bank-name {
+                margin-top: 12px;
+                text-transform: none;
+                font-weight: 700;
+            }
+        }
+
+    }
+
+    .modal-title {
+        width: 100%;
+        font-size: 20px;
+        font-family: "DFVN-DarumadropOne";
+        color: var(--color-gr);
+        text-transform: uppercase;
+        line-height: 1;
+    }
+
+    .img-only img {
+        max-width: 100%;
+        // width: 100%;
+    }
+}
+
+#feature-box-modal3 {
+    --bs-modal-width: 800px;
+}
+
+
+
+@media screen and (min-width: 768px) and (orientation: portrait) {
+
+    .title-wrapper {
+        h1 {
+            font-size: 50px;
+        }
+
+        h3 {
+            font-size: 32px;
+        }
+    }
+}
+
+@media screen and (min-width: 992px) and (orientation: portrait) {
+
+    .title-wrapper {
+        h1 {
+            font-size: 70px;
+        }
+
+        h3 {
+            font-size: 48px;
+        }
+    }
+}
+
+@media screen and (min-width: 992px) and (orientation: landscape) {
+    .title-wrapper {
+        h1 {
+            font-size: 60px;
+        }
+
+        h3 {
+            font-size: 42px;
+        }
+    }
+}
+
+@media screen and (min-width:768px) {
+    #app-bg {
+        .app-bg-inner {
+            margin-top: -50px;
+        }
+    }
+
+    .title-wrapper {
+        text-align: center;
+        max-width: unset;
+        margin-bottom: 50px;
+    }
+
+    .feature-box-modal {
+        --bs-modal-width: 860px;
+
+        .modal-header {
+            border: 0;
+            text-align: center;
+
+            .modal-header-sm {
+                display: none;
+            }
+        }
+
+        .modal-footer {
+
+            .btn {
+
+                font-size: 16px;
+            }
+        }
+
+        .modal-title-wrapper {
+            .sub {
+                &.label {
+                    font-size: 20px;
+                }
+            }
+        }
+
+        .modal-title {
+
+            font-size: 36px;
+
+        }
+    }
+
+    .features {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 65px;
+
+        .feature-box {
+            text-align: center;
+
+            margin-bottom: 0;
+
+            .content {
+                text-align: center;
+
+                .title {
+
+                    font-size: 26px;
+
+                }
+
+                .text {
+                    font-size: inherit;
+                }
+
+                .img {
+                    margin-top: 24px;
+
+                    img {
+                        max-width: unset;
+                    }
+                }
+            }
+
+            .actions {
+                margin-top: 24px;
+                text-align: center;
+
+                .btn {
+                    font-size: inherit;
+                }
+            }
+
+        }
+    }
+}
+
+@media screen and (min-width: 1600px) {
+
+    .title-wrapper {
+        h1 {
+            font-size: 70px;
+        }
+
+        h3 {
+            font-size: 48px;
+        }
+    }
+}
+
+@media screen and (min-width: 2000px) {
+
+    .title-wrapper {
+        h1 {
+            font-size: 80px;
+        }
+
+        h3 {
+            font-size: 55px;
+        }
     }
 }
