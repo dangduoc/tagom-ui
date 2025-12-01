@@ -141,85 +141,104 @@
         </div>
 
         <div id="app-bg">
-            <img class="app-bg-left animate__animated animate__fadeInLeftSlow animate__paused"
-                src="/assets/images/joinhands/left.png">
-            <img class="app-bg-right animate__animated animate__fadeInRightSlow animate__paused"
-                src="/assets/images/joinhands/right.png">
-            <img class="app-bg-bottom animate__animated animate__fadeInUpSlow animate__paused"
-                src="/assets/images/joinhands/bottom.png">
-            <div class="app-bg-inner container">
-                <div class="title-wrapper">
-                    <h1 class="animate__animated animate__fadeInLeftSlow animate__paused">Chung tay</h1>
-                    <h3 class="animate__animated animate__fadeInRightSlow animate__paused">Góp sức</h3>
-                </div>
-                <div class="features">
-                    <div class="feature-box animate__animated animation-delay animate__fadeInUpSlow animate__paused"
-                        style="--delay-ms:300ms">
-                        <div class="feature-box-inner">
+            <picture>
+                <source media="(min-width:768px)" srcset="/assets/images/joinhands/left-md.png">
+                <source media="(min-width:992px)" srcset="/assets/images/joinhands/left.png">
+                <img class="app-bg-left animate__animated animate__fadeInLeftSlow animate__paused"
+                    src="/assets/images/joinhands/left-sm.png">
+            </picture>
+            <picture>
+                <source media="(min-width:768px)" srcset="/assets/images/joinhands/right-md.png">
+                <source media="(min-width:992px)" srcset="/assets/images/joinhands/right.png">
+                <img class="app-bg-right animate__animated animate__fadeInLeftSlow animate__paused"
+                    src="/assets/images/joinhands/right-sm.png">
+            </picture>
+            <picture>
+                <source media="(min-width:768px)" srcset="/assets/images/joinhands/bottom-md.png">
+                <source media="(min-width:992px)" srcset="/assets/images/joinhands/bottom.png">
+                <img class="app-bg-bottom animate__animated animate__fadeInLeftSlow animate__paused"
+                    src="/assets/images/joinhands/bottom-sm.png">
+            </picture>
 
-                            <div class="content">
-                                <div class="title">Vỏ hộp sữa</div>
-                                <div class="text">
-                                    <p>Thu gom tất cả các vỏ hộp sữa. Quy đổi vỏ hộp sữa theo đơn vị Kilogram (kg).</p>
-                                    <p>Lưu ý: Chỉ thu gom vỏ hộp sữa đã được vệ sinh</p>
-                                </div>
-                                <div class="img">
-                                    <img src="/assets/images/joinhands/feature1.png">
-                                </div>
-                            </div>
-                            <div class="actions">
-                                <a class="btn" data-bs-toggle="modal" data-bs-target="#feature-box-modal1">Xem thêm về
-                                    vệ sinh vỏ hộp sữa</a>
-                            </div>
-
-                        </div>
+            <div class="scoller">
+                <div class="app-bg-inner container">
+                    <div class="title-wrapper">
+                        <h1 class="animate__animated animate__fadeInLeftSlow animate__paused">Chung tay</h1>
+                        <h3 class="animate__animated animate__fadeInRightSlow animate__paused">Góp sức</h3>
                     </div>
-                    <div class="feature-box animate__animated animation-delay animate__fadeInUpSlow animate__paused"
-                        style="--delay-ms:500ms">
-                        <div class="feature-box-inner">
+                    <div class="features">
+                        <div class="feature-box animate__animated animation-delay animate__fadeInUpSlow animate__paused"
+                            style="--delay-ms:300ms">
+                            <div class="feature-box-inner">
 
-                            <div class="content">
-                                <div class="title">Giấy cũ</div>
-                                <div class="text">
-                                    <p>Thu gom tất cả các loại giấy. Quy đổi giấy theo đơn vị Kilogram (kg).</p>
-                                    <p>Lưu ý: Giấy cần vệ sinh và phân loại trước khi mang đến Trạm Xanh</p>
+                                <div class="content">
+                                    <div class="title">Vỏ hộp sữa</div>
+                                    <div class="text">
+                                        <p>Thu gom tất cả các vỏ hộp sữa. Quy đổi vỏ hộp sữa theo đơn vị Kilogram (kg).
+                                        </p>
+                                        <p>Lưu ý: Chỉ thu gom vỏ hộp sữa đã được vệ sinh</p>
+                                    </div>
+                                    <div class="img">
+                                        <img src="/assets/images/joinhands/feature1.png">
+                                    </div>
                                 </div>
-                                <div class="img">
-                                    <img src="/assets/images/joinhands/feature2.png">
+                                <div class="actions">
+                                    <a class="btn" data-bs-toggle="modal" data-bs-target="#feature-box-modal1">Xem thêm
+                                        về
+                                        vệ sinh vỏ hộp sữa</a>
                                 </div>
+
                             </div>
-                            <div class="actions">
-                                <a class="btn" data-bs-toggle="modal" data-bs-target="#feature-box-modal2">Xem thêm về
-                                    vệ
-                                    sinh vỏ hộp sữa</a>
+                        </div>
+                        <div class="feature-box animate__animated animation-delay animate__fadeInUpSlow animate__paused"
+                            style="--delay-ms:500ms">
+                            <div class="feature-box-inner">
+
+                                <div class="content">
+                                    <div class="title">Giấy cũ</div>
+                                    <div class="text">
+                                        <p>Thu gom tất cả các loại giấy. Quy đổi giấy theo đơn vị Kilogram (kg).</p>
+                                        <p>Lưu ý: Giấy cần vệ sinh và phân loại trước khi mang đến Trạm Xanh</p>
+                                    </div>
+                                    <div class="img">
+                                        <img src="/assets/images/joinhands/feature2.png">
+                                    </div>
+                                </div>
+                                <div class="actions">
+                                    <a class="btn" data-bs-toggle="modal" data-bs-target="#feature-box-modal2">Xem thêm
+                                        về
+                                        vệ
+                                        sinh vỏ hộp sữa</a>
+                                </div>
+
                             </div>
 
                         </div>
+                        <div class="feature-box animate__animated animation-delay animate__fadeInUpSlow animate__paused"
+                            style="--delay-ms:800ms">
+                            <div class="feature-box-inner">
 
-                    </div>
-                    <div class="feature-box animate__animated animation-delay animate__fadeInUpSlow animate__paused"
-                        style="--delay-ms:800ms">
-                        <div class="feature-box-inner">
+                                <div class="content">
+                                    <div class="title">Quỹ yêu thương</div>
+                                    <div class="text">
+                                        <p>
+                                            Quỹ hỗ trợ tài chính chiến dịch. Số tiền nhận được sẽ góp quỹ mua sữa cho
+                                            các em
+                                            và
+                                            các
+                                            hoạt
+                                            động tình nguyện khác.
+                                        </p>
+                                    </div>
+                                </div>
 
-                            <div class="content">
-                                <div class="title">Quỹ yêu thương</div>
-                                <div class="text">
-                                    <p>
-                                        Quỹ hỗ trợ tài chính chiến dịch. Số tiền nhận được sẽ góp quỹ mua sữa cho các em
-                                        và
-                                        các
-                                        hoạt
-                                        động tình nguyện khác.
-                                    </p>
+                                <div class="actions">
+                                    <a class="btn" data-bs-toggle="modal" data-bs-target="#feature-box-modal3">Xem thêm
+                                        QR</a>
                                 </div>
                             </div>
 
-                            <div class="actions">
-                                <a class="btn" data-bs-toggle="modal" data-bs-target="#feature-box-modal3">Xem thêm
-                                    QR</a>
-                            </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -377,7 +396,7 @@
                         <div class="sub bank-name">Ngân hàng Nông nghiệp và Phát triển Nông thôn Việt Nam</div>
                     </div>
                 </div>
-                
+
                 <div class="modal-body img-only text-left py-0">
                     <img src="/assets/images/joinhands/feature3-img.png">
                 </div>
