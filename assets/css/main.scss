@@ -13,6 +13,20 @@ a {
     text-decoration: none;
 }
 
+.btn {
+    &.orange {
+        background-color: var(--color-org);
+        font-weight: 600;
+        cursor: pointer;
+        color: #000;
+
+        &.rounded {
+            --bs-border-radius: 50px;
+            font-family: Montserrat;
+        }
+    }
+}
+
 #app-wrapper {
     --bs-link-color-rgb: #000;
     --btm-shadow-color: #fff;
@@ -560,8 +574,6 @@ a {
             display: none;
         }
     }
-
-
 }
 
 @media screen and (min-width: 768px) and (orientation: portrait) {
@@ -682,6 +694,7 @@ a {
                 opacity: 1;
                 font-size: 30px;
                 cursor: pointer;
+                display: inline-block;
             }
         }
 

@@ -12,6 +12,17 @@ a {
   text-decoration: none;
 }
 
+.btn.orange {
+  background-color: var(--color-org);
+  font-weight: 600;
+  cursor: pointer;
+  color: #000;
+}
+.btn.orange.rounded {
+  --bs-border-radius: 50px;
+  font-family: Montserrat;
+}
+
 #app-wrapper {
   --bs-link-color-rgb: #000;
   --btm-shadow-color: #fff;
@@ -562,6 +573,7 @@ a {
     opacity: 1;
     font-size: 30px;
     cursor: pointer;
+    display: inline-block;
   }
 }
 @media screen and (min-width: 992px) {

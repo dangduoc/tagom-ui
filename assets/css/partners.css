@@ -1,0 +1,60 @@
+#app-bg {
+  padding-top: 75px;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  position: relative;
+  background-size: 100% auto;
+  background-position-y: center;
+  background-repeat: no-repeat;
+  background-color: #f0fcff;
+  background-image: url(/assets/images/joinhands/light-sm.png);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#app-bg .app-bg-left {
+  position: absolute;
+  height: 80%;
+  left: 0;
+  bottom: 0;
+  z-index: 1;
+}
+#app-bg .app-bg-right {
+  position: absolute;
+  right: 0;
+  height: 65%;
+  bottom: 0;
+  z-index: 1;
+}
+#app-bg .app-bg-bottom {
+  position: absolute;
+  bottom: -18px;
+  width: 80%;
+  right: 10%;
+}
+#app-bg .app-bg-inner {
+  position: relative;
+}
+
+@media screen and (min-width: 768px) and (orientation: portrait) {
+  #app-bg {
+    background-image: url(/assets/images/joinhands/light-md.png);
+  }
+}
+@media screen and (min-width: 992px) and (orientation: landscape) {
+  #app-bg {
+    background-image: url(/assets/images/joinhands/light.png);
+    background-position-x: left;
+    background-size: 70% auto;
+  }
+  #app-bg .app-bg-right {
+    height: 100%;
+  }
+  #app-bg .app-bg-bottom {
+    bottom: 0;
+    width: 50%;
+    left: 10%;
+  }
+}/*# sourceMappingURL=partners.css.map */

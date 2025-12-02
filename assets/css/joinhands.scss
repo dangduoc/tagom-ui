@@ -13,6 +13,7 @@
         opacity: 0.5 !important;
     }
 }
+
 #app-bg {
     padding-top: 75px;
     width: 100%;
@@ -56,6 +57,7 @@
     .app-bg-inner {
         position: relative;
     }
+
     .scoller {
         padding-top: 16px;
         padding-bottom: 16px;
@@ -184,6 +186,10 @@
         }
     }
 
+    .modal-body {
+        padding-top: 0;
+    }
+
     .modal-footer {
         border: 0;
 
@@ -192,12 +198,9 @@
             display: inline-block;
             margin-left: auto;
             text-align: center;
-            border-radius: 30px;
-            color: inherit;
-            background-color: var(--color-org);
             font-weight: 600;
-            cursor: pointer;
-            font-size: 10px;
+            font-size: 12px;
+            text-transform: uppercase;
         }
     }
 
@@ -237,15 +240,37 @@
 
 #feature-box-modal3 {
     --bs-modal-width: 800px;
+
+    .modal-header {
+        align-items: flex-start;
+    }
+
+    .img-only {
+        text-align: center;
+
+        img {
+            max-width: 100%;
+        }
+
+    }
+
+    .btn {
+        margin-top: 20px;
+        font-size: 14px;
+        text-transform: uppercase;
+        font-family: Montserrat;
+    }
 }
 
 @media screen and (min-width: 768px) and (orientation: portrait) {
     #app-bg {
-        background-image: url(/assets/images/joinhands/light.png);
+        background-image: url(/assets/images/joinhands/light-md.png);
     }
 
     .title-wrapper {
-        max-width: 600px;
+        max-width: 80%;
+        margin-bottom: 50px;
+
         h1 {
             font-size: 50px;
         }
@@ -254,10 +279,38 @@
             font-size: 32px;
         }
     }
+
     .features {
         .feature-box {
+            margin-bottom: 50px;
+
             .feature-box-inner {
-                max-width: 600px;
+                max-width: 80%;
+
+                .content {
+                    display: flex;
+                    gap: 24px;
+
+                    .title {
+                        font-size: 20px;
+                    }
+
+                    .content-inner {
+                        flex: 1;
+                    }
+
+                    .img {
+                        width: 40%;
+
+                        img {
+                            max-width: 100%;
+                        }
+                    }
+                }
+            }
+
+            .actions {
+                margin-top: 32px;
             }
         }
     }
@@ -265,6 +318,7 @@
 
 @media screen and (min-width: 992px) and (orientation: portrait) {
     .title-wrapper {
+        margin-top: 10%;
         h1 {
             font-size: 70px;
         }
@@ -277,6 +331,10 @@
 
 @media screen and (min-width: 992px) and (orientation: landscape) {
     .title-wrapper {
+        text-align: center;
+        max-width: unset;
+        margin-bottom: 50px;
+        margin-top: 5%;
         h1 {
             font-size: 60px;
         }
@@ -285,7 +343,9 @@
             font-size: 42px;
         }
     }
+
     #app-bg {
+         background-image: url(/assets/images/joinhands/light.png);
         .app-bg-left {
             height: 100%;
         }
@@ -298,6 +358,7 @@
             bottom: 0;
         }
     }
+
     .features {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -338,17 +399,27 @@
             }
         }
     }
+
+    #feature-box-modal3 {
+
+        .img-only {
+            text-align: left;
+        }
+
+        .btn {
+            display: none;
+        }
+    }
 }
 
 @media screen and (min-width: 768px) {
-    .title-wrapper {
-        text-align: center;
-        max-width: unset;
-        margin-bottom: 50px;
+
+    #feature-box-modal3 {
+        --bs-modal-width: 80%;
     }
 
     .feature-box-modal {
-        --bs-modal-width: 860px;
+        --bs-modal-width: 80%;
 
         .modal-header {
             border: 0;
@@ -373,6 +444,23 @@
             }
         }
 
+        .modal-title {
+            font-size: 32px;
+        }
+    }
+}
+
+@media screen and (min-width:992px) {
+    #feature-box-modal3 {
+        .img-only {
+            .img {
+                text-align: left;
+            }
+        }
+    }
+
+
+    .feature-box-modal {
         .modal-title {
             font-size: 36px;
         }
