@@ -1,0 +1,225 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Anek Latin", sans-serif;
+  --color-1: #dee84e;
+  --color-2: #004d43;
+  --color-text-light: #fff;
+  --color-text: #000;
+  --padding-x: 3%;
+  --padding-y: 3%;
+}
+
+#app-wrapper {
+  min-height: 100dvh;
+  position: relative;
+  overflow: hidden;
+  background-color: var(--color-1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text);
+}
+#app-wrapper.dark {
+  --color-1: #004d43;
+  --color-2: #dee84e;
+  --color-text: #dee84e;
+}
+#app-wrapper.dark .object img {
+  filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7438%) hue-rotate(194deg) brightness(121%) contrast(117%);
+}
+#app-wrapper.dark #light-toggler svg {
+  color: #fff;
+}
+#app-wrapper.dark #light-toggler svg path.ob-bg {
+  fill: var(--color-2);
+}
+#app-wrapper.dark #light-toggler svg path.ob {
+  fill: var(--color-2);
+}
+#app-wrapper.dark #app-content-wrapper .visit-facebook-btn {
+  background-color: var(--color-2);
+  color: var(--color-1);
+}
+#app-wrapper.dark #copyright,
+#app-wrapper.dark #languages {
+  color: #fff;
+}
+
+#logo {
+  position: fixed;
+  left: var(--padding-x);
+  top: var(--padding-y);
+  z-index: 1;
+}
+#logo img {
+  width: 100px;
+}
+
+#light-toggler {
+  position: fixed;
+  right: var(--padding-x);
+  top: var(--padding-y);
+  z-index: 1;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+}
+#light-toggler:hover {
+  transform: translateY(-2px);
+}
+#light-toggler svg {
+  width: 55px;
+  height: auto;
+  color: var(--color-text);
+}
+#light-toggler svg path {
+  fill: currentColor;
+}
+#light-toggler svg path.ob-bg {
+  fill: transparent;
+}
+#languages {
+  position: fixed;
+  left: var(--padding-x);
+  bottom: var(--padding-y);
+  z-index: 1;
+}
+#languages a {
+  text-decoration: none;
+  color: inherit;
+}
+#languages a.active {
+  font-weight: 700;
+}
+
+#copyright {
+  position: fixed;
+  right: var(--padding-x);
+  bottom: var(--padding-y);
+  z-index: 1;
+  font-size: 10px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+  align-items: center;
+}
+
+#app-content-wrapper {
+  text-align: center;
+}
+#app-content-wrapper h1 {
+  font-weight: 700;
+  font-variation-settings: "wdth" 125;
+  font-size: 50px;
+  margin: 0;
+}
+#app-content-wrapper h3 {
+  font-weight: 400;
+  font-size: 30px;
+  margin-top: 8px;
+}
+#app-content-wrapper .object {
+  margin: 20px 0;
+}
+#app-content-wrapper .object img {
+  width: 300px;
+  transform: translateX(30px);
+}
+#app-content-wrapper .visit-facebook-mes {
+  font-size: 14px;
+  margin-top: 20px;
+  margin-bottom: 16px;
+}
+#app-content-wrapper .visit-facebook-btn {
+  background-color: var(--color-2);
+  color: #fff;
+  font-size: 16px;
+  padding: 12px 24px;
+  border-radius: 50px;
+  text-decoration: none;
+  text-transform: uppercase;
+  display: inline-block;
+}
+
+@media screen and (max-width: 600px) {
+  #app-wrapper {
+    --padding-x: 20px;
+    --padding-y: 30px;
+  }
+  #app-content-wrapper {
+    padding: 100px 20px;
+  }
+  #app-content-wrapper h1 {
+    font-size: 50px;
+    margin-bottom: 24px;
+  }
+  #app-content-wrapper h3 {
+    font-size: 18px;
+  }
+  #app-content-wrapper h3 span {
+    display: block;
+  }
+  #app-content-wrapper .visit-facebook-mes {
+    margin-top: 50px;
+  }
+  #logo,
+  #languages,
+  #light-toggler,
+  #copyright {
+    position: absolute;
+  }
+}
+@media screen and (min-width: 768px) {
+  #app-content-wrapper h1 {
+    font-size: 40px;
+  }
+  #app-content-wrapper h3 {
+    font-size: 24px;
+  }
+  #app-content-wrapper .object {
+    margin: 50px 0;
+  }
+  #app-content-wrapper .object img {
+    width: 360px;
+    transform: translateX(30px);
+  }
+  #app-content-wrapper .visit-facebook-mes {
+    font-size: 18px;
+  }
+  #app-content-wrapper .visit-facebook-btn {
+    font-size: 18px;
+  }
+}
+@media screen and (min-width: 992px) {
+  #logo img {
+    width: 150px;
+  }
+  #light-toggler svg {
+    width: 84px;
+    height: auto;
+  }
+  #app-content-wrapper h1 {
+    font-size: 50px;
+  }
+  #app-content-wrapper h3 {
+    font-size: 30px;
+  }
+  #app-content-wrapper .object {
+    margin: 20px 0;
+  }
+  #app-content-wrapper .object img {
+    width: 360px;
+    transform: translateX(30px);
+  }
+  #app-content-wrapper .visit-facebook-mes {
+    font-size: 18px;
+  }
+  #app-content-wrapper .visit-facebook-btn {
+    font-size: 18px;
+  }
+  #copyright {
+    font-size: 13px;
+    gap: 80px;
+  }
+}/*# sourceMappingURL=comming-soon.css.map */

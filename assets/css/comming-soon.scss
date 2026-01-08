@@ -1,0 +1,258 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Anek Latin", sans-serif;
+    --color-1: #dee84e;
+    --color-2: #004d43;
+    --color-text-light: #fff;
+    --color-text: #000;
+    --padding-x: 3%;
+    --padding-y: 3%;
+}
+
+#app-wrapper {
+    height: 100dvh;
+    position: relative;
+    overflow: hidden;
+    background-color: var(--color-1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text);
+    &.dark {
+        --color-1: #004d43;
+        --color-2: #dee84e;
+        --color-text: #dee84e;
+
+        .object {
+            img {
+                filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7438%) hue-rotate(194deg)
+                    brightness(121%) contrast(117%);
+            }
+        }
+        #light-toggler {
+            svg {
+                color: #fff;
+                path {
+                    &.ob-bg {
+                        fill: var(--color-2);
+                    }
+                    &.ob {
+                        fill: var(--color-2);
+                    }
+                }
+                // .ob {
+                //     fill: var(--color-text-dark);
+                // }
+            }
+        }
+        #app-content-wrapper {
+            .visit-facebook-btn {
+                background-color: var(--color-2);
+                color: var(--color-1);
+            }
+        }
+        #copyright,
+        #languages {
+            color: #fff;
+        }
+    }
+}
+
+#logo {
+    position: fixed;
+    left: var(--padding-x);
+    top: var(--padding-y);
+    z-index: 1;
+    img {
+        width: 100px;
+    }
+}
+
+#light-toggler {
+    position: fixed;
+    right: var(--padding-x);
+    top: var(--padding-y);
+    z-index: 1;
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+    &:hover {
+        transform: translateY(-2px);
+    }
+    svg {
+        width: 55px;
+        height: auto;
+        color: var(--color-text);
+        path {
+            fill: currentColor;
+            &.ob-bg {
+                fill: transparent;
+            }
+            &.ob {
+            }
+        }
+        // .ob {
+        //     fill: var(--color-text-dark);
+        // }
+    }
+}
+
+#languages {
+    position: fixed;
+    left: var(--padding-x);
+    bottom: var(--padding-y);
+    z-index: 1;
+    a {
+        text-decoration: none;
+        color: inherit;
+        &.active {
+            font-weight: 700;
+        }
+    }
+}
+
+#copyright {
+    position: fixed;
+    right: var(--padding-x);
+    bottom: var(--padding-y);
+    z-index: 1;
+    font-size: 10px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+    align-items: center;
+}
+
+#app-content-wrapper {
+    text-align: center;
+    h1 {
+        font-weight: 700;
+        font-variation-settings: "wdth" 125;
+        font-size: 50px;
+        margin: 0;
+    }
+    h3 {
+        font-weight: 400;
+        font-size: 30px;
+        margin-top: 8px;
+    }
+
+    .object {
+        margin: 20px 0;
+        img {
+            width: 300px;
+            transform: translateX(30px);
+        }
+    }
+
+    .visit-facebook-mes {
+        font-size: 14px;
+        margin-top: 20px;
+        margin-bottom: 16px;
+    }
+
+    .visit-facebook-btn {
+        background-color: var(--color-2);
+        color: #fff;
+        font-size: 16px;
+        padding: 12px 24px;
+        border-radius: 50px;
+        text-decoration: none;
+        text-transform: uppercase;
+        display: inline-block;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    #app-wrapper {
+        --padding-x: 20px;
+        --padding-y: 30px;
+    }
+    #app-content-wrapper {
+        padding: 16px 20px;
+        h1 {
+            font-size: 50px;
+            margin-bottom: 24px;
+        }
+        h3 {
+            font-size: 18px;
+            span {
+                display: block;
+            }
+        }
+
+        .visit-facebook-mes {
+            margin-top: 50px;
+        }
+    }
+}
+
+@media screen and (min-width: 768px) {
+    #app-content-wrapper {
+        h1 {
+            font-size: 40px;
+        }
+        h3 {
+            font-size: 24px;
+        }
+
+        .object {
+            margin: 50px 0;
+            img {
+                width: 360px;
+                transform: translateX(30px);
+            }
+        }
+
+        .visit-facebook-mes {
+            font-size: 18px;
+        }
+
+        .visit-facebook-btn {
+            font-size: 18px;
+        }
+    }
+}
+
+@media screen and (min-width: 992px) {
+    #logo {
+        img {
+            width: 150px;
+        }
+    }
+    #light-toggler {
+        svg {
+            width: 84px;
+            height: auto;
+        }
+    }
+    #app-content-wrapper {
+        h1 {
+            font-size: 50px;
+        }
+        h3 {
+            font-size: 30px;
+        }
+
+        .object {
+            margin: 20px 0;
+            img {
+                width: 360px;
+                transform: translateX(30px);
+            }
+        }
+
+        .visit-facebook-mes {
+            font-size: 18px;
+        }
+
+        .visit-facebook-btn {
+            font-size: 18px;
+        }
+    }
+    #copyright {
+        font-size: 13px;
+        gap: 80px;
+    }
+}
