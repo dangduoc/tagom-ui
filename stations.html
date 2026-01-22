@@ -142,20 +142,23 @@
 
         <div id="app-bg">
             <picture>
+                <source media="(min-width:992px) and (orientation: landscape)"
+                    srcset="/assets/images/stations/cloud-left.png">
+                <!-- <source media="(min-width:768px)" srcset="/assets/images/faq/cloud-left-md.png"> -->
                 <img class="cloud-left animate__animated animate__fadeInLeftSlow animate__paused"
-                    src="/assets/images/stations/cloud-left.png">
+                    src="/assets/images/stations/cloud-left-sm.png">
             </picture>
             <picture>
-
+                <source media="(min-width:992px) and (orientation: landscape)"
+                    srcset="/assets/images/stations/cloud-right.png">
                 <img class="cloud-right animate__animated animate__fadeInLeftSlow animate__paused"
-                    src="/assets/images/stations/cloud-right.png">
+                    src="/assets/images/stations/cloud-right-sm.png">
             </picture>
-            <div id="app-bg1" class="animate__animated animate__fadeInLeft animate__paused"
-                style="background-image: url(/assets/images/stations/bg4.png);">
+            <div id="bird" class="animate__animated animate__fadeInLeft animate__paused">
                 <div class="pin" id="location-pin">
                     <a class="animate__animated animate__bounceIn animate__paused animation-delay"
                         style="--delay-ms:2000ms">
-                        <img class="pin-animation"  src="/assets/images/stations/pin.png">
+                        <img class="pin-animation" src="/assets/images/stations/pin.png">
                     </a>
                 </div>
 
@@ -172,6 +175,16 @@
                     điều nhỏ bé, yêu thương có thể nảy mầm và tiếp tục bay xa.
                 </p>
                 <a class="btn orange rounded">Đăng kí đồng hành cùng với chúng tớ</a>
+                <div id="stat-box" class="animate__animated animation-delay animate__fadeInUpSlow">
+                    <div class="stat-box-inner">
+                        <div class="title">Quy mô</div>
+
+                        <div class="stat">
+                            <span class="value">10</span> <span class="label">trạm</span>
+                        </div>
+                        <div class="subtitle">Đang hoạt động</div>
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -343,7 +356,7 @@
     <script>
         const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
         const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
-   </script>
+    </script>
 </body>
 
 </html>

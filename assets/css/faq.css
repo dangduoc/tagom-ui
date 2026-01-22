@@ -183,7 +183,7 @@
   }
   #questions {
     position: absolute;
-    bottom: 65%;
+    bottom: 60%;
     top: unset;
     left: 0;
     width: 100%;
@@ -207,7 +207,7 @@
     display: none;
   }
   #questions .questions-list button img {
-    width: 105px;
+    width: 85px;
   }
   #bird {
     position: absolute;
@@ -222,9 +222,15 @@
   #questions h1 {
     font-size: 70px;
   }
+  #questions .questions-list button img {
+    width: 100px;
+  }
 }
 @media screen and (min-width: 2000px) {
   #questions h1 {
     font-size: 80px;
+  }
+  #questions .questions-list button img {
+    width: 105px;
   }
 }/*# sourceMappingURL=faq.css.map */

@@ -1,8 +1,8 @@
 #app-bg {
-    padding-top: 75px;
+    // padding-top: 75px;
     width: 100%;
-    height: 100vh;
-    height: 100dvh;
+    // height: 100vh;
+    // height: 100dvh;
     position: relative;
     background-size: 100% auto;
     background-position-y: center;
@@ -13,49 +13,53 @@
     .cloud-left {
         position: absolute;
         z-index: 1;
+        //
+
+        bottom: 15%;
+        left: 0;
     }
 
     .cloud-right {
         position: absolute;
-        z-index: 1;
+        z-index: 0;
+        right: 0;
+        top: 15%;
     }
 
+    // display: flex;
+    // flex-direction: column;
+    // justify-content: center;
+    // align-items: center;
 
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    .app-bg-inner {
-        position: relative;
-        width: 100%;
-    }
+    // .app-bg-inner {
+    //     position: relative;
+    //     width: 100%;
+    // }
 }
 
-
-#app-bg1 {
+#bird {
     animation-duration: 2s;
-    position: absolute;
+    position: relative;
     left: 0;
     top: 0;
-    width: 50%;
-    height: 100%;
+    width: 85%;
+    height: auto;
     background-repeat: no-repeat;
     background-position-x: right;
     background-position-y: bottom;
     background-size: auto 100%;
     z-index: 1;
-
+    background-image: url(/assets/images/stations/bird-sm.png);
+    aspect-ratio: 322 / 523;
     .pin {
         position: absolute;
         right: 2%;
-        top: 48%;
+        top: 40%;
         transform: translateY(-50%);
-        width: 100px;
+        width: 60px;
         cursor: pointer;
-        &:hover{
-            img{
+        &:hover {
+            img {
                 filter: drop-shadow(2px 4px 6px rgb(253, 115, 115));
                 animation-play-state: paused;
             }
@@ -79,6 +83,7 @@
     margin-left: auto;
     margin-right: auto;
     margin-top: 12px;
+    margin-bottom: 12px;
     text-align: left;
     position: relative;
 
@@ -92,7 +97,7 @@
     h3 {
         font-weight: 600;
         font-size: 13px;
-       color: var(--color-gr);
+        color: var(--color-gr);
         margin-bottom: 16px;
     }
 
@@ -100,13 +105,49 @@
         width: 300px;
         margin-left: auto;
         font-size: 12px;
-        
+        margin-bottom: 0;
         font-weight: 400;
     }
 
-    .btn{
+    .btn {
         margin-top: 16px;
-        font-size: 15px;
+        font-size: 13px;
+        padding: 8px 16px;
+    }
+}
+
+#stat-box {
+    font-family: "UTM-Dax";
+    z-index: 99;
+    margin-top: 16px;
+    .stat-box-inner {
+        text-align: left;
+        display: inline-block;
+    }
+    .title {
+        font-weight: 500;
+        font-size: 20px;
+        text-transform: uppercase;
+    }
+    .subtitle {
+        font-size: 10px;
+        text-transform: uppercase;
+    }
+
+    .stat {
+        position: relative;
+        .value {
+            font-size: 50px;
+            font-family: "Montserrat";
+            font-weight: 700;
+            line-height: 1;
+        }
+        .label {
+            font-size: 10px;
+            font-family: "UTM-Dax";
+            font-weight: 400;
+            text-transform: uppercase;
+        }
     }
 }
 
@@ -185,7 +226,8 @@
         background-image: url(/assets/images/stations/light.png);
         background-position-x: left;
         background-size: 80% auto;
-
+        height: 100vh;
+        height: 100dvh;
         .cloud-left {
             top: 6%;
             left: 0;
@@ -196,6 +238,23 @@
             bottom: 8%;
             right: 15%;
             width: 40%;
+        }
+    }
+
+    #bird {
+        position: absolute;
+        width: 50%;
+        height: 100%;
+        background-position-x: right;
+        background-position-y: bottom;
+        background-size: auto 100%;
+        background-image: url(/assets/images/stations/bg4.png);
+        aspect-ratio: unset;
+        .pin {
+            right: 2%;
+            top: 48%;
+            transform: translateY(-50%);
+            width: 100px;
         }
     }
 
@@ -249,7 +308,6 @@
 
 @media screen and (min-width: 2000px) {
     #paragraph-box {
-
         // left: 12%;
         h1 {
             font-size: 80px;

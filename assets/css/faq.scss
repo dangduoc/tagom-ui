@@ -32,7 +32,6 @@
         bottom: 8%;
         left: 0;
         width: 200px;
-
     }
 
     display: flex;
@@ -99,7 +98,7 @@
                 width: 35px;
             }
 
-            transition: transform .3s;
+            transition: transform 0.3s;
 
             &:hover {
                 transform: scale(1.4);
@@ -142,7 +141,6 @@
 
         .cloud-bottom2 {
             display: none;
-
         }
     }
 
@@ -172,7 +170,6 @@
 
             button {
                 img {
-
                     width: 60px;
                 }
             }
@@ -203,7 +200,6 @@
 
             button {
                 img {
-
                     width: 70px;
                 }
             }
@@ -236,7 +232,7 @@
 
     #questions {
         position: absolute;
-        bottom: 65%;
+        bottom: 60%;
         top: unset;
         left: 0;
         width: 100%;
@@ -263,14 +259,9 @@
             }
 
             button {
-
-
                 img {
-
-                    width: 105px;
+                    width: 85px;
                 }
-
-
             }
         }
     }
@@ -290,14 +281,27 @@
         h1 {
             font-size: 70px;
         }
+        .questions-list {
+            button {
+                img {
+                    width: 100px;
+                }
+            }
+        }
     }
-
 }
 
 @media screen and (min-width: 2000px) {
     #questions {
         h1 {
             font-size: 80px;
+        }
+        .questions-list {
+            button {
+                img {
+                    width: 105px;
+                }
+            }
         }
     }
 }
