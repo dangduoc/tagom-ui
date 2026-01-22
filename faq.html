@@ -4,15 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gom vỏ giấy - Sữa trao em</title>
+    <title>Giải đáp | Gom vỏ giấy - Sữa trao em</title>
     <link rel="preload" href="/assets/fonts/DFVN-DarumadropOne.ttf" as="font" type="font/ttf">
     <link rel="preload" href="/assets/fonts/MontserratAlternates-SemiBold.otf" as="font" type="font/otf">
     <link rel="preload" href="/assets/fonts/MontserratAlternates-Bold.otf" as="font" type="font/otf">
     <link rel="stylesheet" href="/assets/plugins/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="/assets/css/main.css">
-    <link rel="stylesheet" href="/assets/css/school.css">
-
+    <link rel="stylesheet" href="/assets/css/faq.css">
 </head>
 
 <body>
@@ -28,7 +27,7 @@
                     <a href="/" title="">
                         Chuyện kể
                     </a>
-                    <a href="/school.html" class="active" title="">
+                    <a href="/school.html" title="">
                         Mái trường
                     </a>
                     <a href="/journey.html" title="">
@@ -40,7 +39,7 @@
                     <a href="/stations.html" title="">
                         Trạm xanh
                     </a>
-                    <a href="/faq.html" title="">
+                    <a href="/faq.html" class="active" title="">
                         Giải đáp
                     </a>
                     <a href="/partners.html" title="">
@@ -86,7 +85,7 @@
                     <a href="/" title="">
                         Chuyện kể
                     </a>
-                    <a href="/school.html" class="active" title="">
+                    <a href="/school.html" title="">
                         Mái trường
                     </a>
                     <a href="/journey.html" title="">
@@ -98,7 +97,7 @@
                     <a href="/stations.html" title="">
                         Trạm xanh
                     </a>
-                    <a href="/faq.html" title="">
+                    <a href="/faq.html" class="active" title="">
                         Giải đáp
                     </a>
                     <a href="/partners.html" title="">
@@ -142,162 +141,75 @@
         </div>
 
         <div id="app-bg">
-            <!-- Hidden custom content -->
-            <div id="schoolPopover">
-                <div id="school-popover-content">
-                    <h2>Mái trường</h2>
-                    <p>Chúng mình mang theo những thùng sữa đã sẵn sàng, rồi lặng lẽ bước vào hành trình khó nhất – tìm
-                        những
-                        mái
-                        trường chịu mở lòng đón nhận. Qua từng con dốc, từng cánh cổng nhỏ, mỗi lời gõ cửa là một lần
-                        gieo
-                        niềm
-                        tin
-                        rằng, đâu đó vẫn có thầy cô và các em đang chờ.</p>
-                </div>
-            </div>
-            <a id="view-list-btn" style="--delay-ms:2000ms"
-                class="btn animate__animated animation-delay animate__fadeInUpSlow animate__paused" href="#">Xem theo
-                danh
-                sách</a>
-            <div id="stats">
-                <div style="--delay-ms:1800ms"
-                    class="stat-box animate__animated animation-delay animate__fadeInUpSlow animate__paused">
-                    <div class="title">Số hộp sữa</div>
-                    <div class="subtitle">Đã trao đi</div>
-                    <div class="stat">
-                        <span class="value">10</span> <span class="label">triệu</span>
-                    </div>
-                </div>
-                <div style="--delay-ms:2000ms"
-                    class="stat-box animate__animated animation-delay animate__fadeInUpSlow animate__paused">
-                    <div class="title">Số trường</div>
-                    <div class="subtitle">Đã nhận hồ sơ</div>
-                    <div class="stat">
-                        <span class="value">53</span>
-                    </div>
-                </div>
-            </div>
-            <div class="app-bg-inner">
-                <div id="school-wrap">
-                    <div class="inner">
-                        <div id="school" style="--delay-ms:1000ms" data-bs-toggle="popover" data-bs-placement="top"
-                            data-bs-html="true" data-bs-content="#schoolPopover"
-                            class="school animate__animated animation-delay animate__fadeInUpSlow animate__paused">
+            <picture>
+                <source media="(min-width:992px) and (orientation: landscape)" srcset="/assets/images/faq/cloud-left.png">
+                <source media="(min-width:768px)" srcset="/assets/images/faq/cloud-left-md.png">
+                <img class="cloud-left animate__animated animate__fadeInLeftSlow animate__paused"
+                    src="/assets/images/faq/cloud-left-sm.png">
+            </picture>
+            <picture>
+                <source media="(min-width:992px) and (orientation: landscape)" srcset="/assets/images/faq/cloud-bottom.png">
+                <source media="(min-width:768px)" srcset="/assets/images/faq/cloud-bottom-md.png">
+                <img class="cloud-bottom animate__animated animate__fadeInUpSlow animate__paused"
+                    src="/assets/images/faq/cloud-bottom-sm.png">
+            </picture>
+            <picture>
 
-                            <picture>
-                                <!-- Mobile -->
-                                <source media="(max-width: 768px)" srcset="/assets/images/school/mobile/school.png">
+                <img class="cloud-bottom2 animate__animated animate__fadeInUpSlow animate__paused"
+                    src="/assets/images/faq/cloud-bottom2-sm.png">
+            </picture>
+            <div id="questions">
+                <h1 style="--delay-ms:1000ms"
+                    class="questions-label animate__animated animate__fadeInLeftSlow animate__paused animation-delay">
+                    Giải Đáp</h1>
+                <div class="questions-list">
+                    <div style="--delay-ms:1200ms"
+                        class="question animate__animated animate__bounceInDown animate__paused animation-delay">
+                        <button data-bs-toggle="tooltip" data-bs-title="Cách thức thu gom" data-bs-offset="[0,-30]"
+                            data-bs-custom-class="question-tooltip"><img
+                                src="/assets/images/faq/question-mark.png"></button>
 
-                                <!-- Tablet -->
-                                <source media="(min-width: 768px) and (max-width: 1024px)"
-                                    srcset="/assets/images/school/tablet/school.png">
-
-                                <!-- Default (desktop) -->
-                                <img src="/assets/images/school/desktop/school.png">
-                            </picture>
+                        <div class="text">
+                            Cách thức thu gom
                         </div>
-
-                        <picture>
-                            <!-- Mobile -->
-                            <source media="(max-width: 767px)" srcset="/assets/images/school/mobile/tree.png">
-
-                            <!-- Tablet -->
-                            <source media="(min-width: 768px) and (max-width: 1024px)"
-                                srcset="/assets/images/school/tablet/tree.png">
-
-                            <!-- Default (desktop) -->
-                            <img style="--delay-ms:250ms"
-                                class="behind animate__animated animation-delay animate__fadeInUpSlow animate__paused"
-                                src="/assets/images/school/desktop/tree.png">
-                        </picture>
-                        <picture>
-                            <!-- Mobile -->
-                            <source media="(max-width: 767px)" srcset="/assets/images/school/mobile/tree-base.png">
-
-                            <!-- Tablet -->
-                            <source media="(min-width: 768px) and (max-width: 1024px)"
-                                srcset="/assets/images/school/tablet/tree-base.png">
-
-                            <!-- Default (desktop) -->
-                            <img style="--delay-ms:500ms"
-                                class="base animate__animated animation-delay animate__fadeInUpSlow animate__paused"
-                                src="/assets/images/school/desktop/tree-base.png">
-                        </picture>
-
-
                     </div>
-                </div>
-                <div id="children">
-                    <div class="inner">
-                        <picture>
-                            <!-- Mobile -->
-                            <source media="(max-width: 767px)" srcset="/assets/images/school/mobile/children1.png">
-
-                            <!-- Tablet -->
-                            <source media="(min-width: 768px) and (max-width: 1024px)"
-                                srcset="/assets/images/school/tablet/children1.png">
-
-                            <!-- Default (desktop) -->
-                            <img id="children1" style="--delay-ms:1250ms"
-                                src="/assets/images/school/desktop/children1.png"
-                                class="children-left animate__animated animation-delay animate__fadeInUpSlow animate__paused">
-                        </picture>
-                        <picture>
-                            <!-- Mobile -->
-                            <source media="(max-width: 767px)" srcset="/assets/images/school/mobile/children2.png">
-
-                            <!-- Tablet -->
-                            <source media="(min-width: 768px) and (max-width: 1024px)"
-                                srcset="/assets/images/school/tablet/children2.png">
-
-                            <!-- Default (desktop) -->
-                            <img id="children2" style="--delay-ms:1500ms"
-                                src="/assets/images/school/desktop/children2.png"
-                                class="children-right animate__animated animation-delay animate__fadeInUpSlow animate__paused">
-                        </picture>
-
-
+                    <div style="--delay-ms:1500ms"
+                        class="question animate__animated animate__bounceInDown animate__paused animation-delay">
+                        <button data-bs-toggle="tooltip" data-bs-title="Cách thức xử lý" data-bs-offset="[0,-30]"
+                            data-bs-custom-class="question-tooltip"><img
+                                src="/assets/images/faq/question-mark.png"></button>
+                        <div class="text">
+                            Cách thức xử lý
+                        </div>
                     </div>
+                    <div style="--delay-ms:1750ms"
+                        class="question animate__animated animate__bounceInDown animate__paused animation-delay">
+                        <button data-bs-toggle="tooltip" data-bs-title="Cách thức trao sữa" data-bs-offset="[0,-30]"
+                            data-bs-custom-class="question-tooltip"><img
+                                src="/assets/images/faq/question-mark.png"></button>
+                        <div class="text">
+                            Cách thức trao sữa
+                        </div>
+                    </div>
+                    <div style="--delay-ms:2000ms"
+                        class="question animate__animated animate__bounceInDown animate__paused animation-delay">
+                        <button data-bs-toggle="tooltip" data-bs-title="Tính bền vững của dự án"
+                            data-bs-offset="[0,-30]" data-bs-custom-class="question-tooltip"><img
+                                src="/assets/images/faq/question-mark.png"></button>
+                        <div class="text">
+                            Tính bền vững của dự án
+                        </div>
+                    </div>
+
                 </div>
-
-                <picture>
-                    <!-- Mobile -->
-                    <source media="(max-width: 767px)" srcset="/assets/images/school/mobile/ground.png">
-
-                    <!-- Tablet -->
-                    <source media="(min-width: 768px) and (max-width: 1024px)"
-                        srcset="/assets/images/school/tablet/ground.png">
-
-                    <!-- Default (desktop) -->
-                    <img id="ground" class="animate__animated animate__fadeInUpSlow animate__paused"
-                        src="/assets/images/school/desktop/ground.png" alt="Ground">
-                </picture>
-                <!-- <img id="ground" class="animate__animated animate__fadeInUpSlow animate__paused"
-                    src="/assets/images/school/desktop/ground.png"> -->
             </div>
-            <div id="title-wrap">
-                <h1 style="--delay-ms:1750ms"
-                    class="title animate__animated animation-delay animate__fadeInUpSlow animate__paused">
-                    <span class="drop-shadow">
-                        Tên trường học đại diện nào đó<br>Tên trường thay đổi
-                    </span>
-
-                </h1>
-                <p style="--delay-ms:1750ms"
-                    class="address animate__animated animation-delay animate__fadeInUpSlow animate__paused">
-                    <span class="drop-shadow">
-                        189 Trần Hưng Đạo, P. Nguyễn Trãi, Thành phố Hà Giang,<br>Hà Giang
-                    </span>
-
-                </p>
+            <div id="bird" class="animate__animated animate__fadeInBottomLeft animate__paused">
             </div>
-
         </div>
+
         <a id="top-chart" style="--delay-ms:2000ms" data-bs-toggle="modal" data-bs-target="#top-chart-modal"><img
                 class="animate__animated animation-delay animate__fadeInUpSlow animate__paused"
                 src="/assets/images/home/top-balloon.png"></a>
-
         <div id="language-contact">
             <div class="animate__animated animate__fadeInUpSlow animate__paused">
                 <div class="languages">
@@ -460,39 +372,8 @@
     <script src="/assets/plugins/imagesloaded/imagesloaded.pkgd.min.js"></script>
     <script src="/assets/js/main.js"></script>
     <script>
-        $(function () {
-            $('#school').popover({
-                html: true,
-                customClass: 'school-popover',
-                offset: [0, 30], // [skid, distance]
-                content: function () {
-                    let selector = $(this).attr("data-bs-content");
-                    return $(selector).html();
-                }
-            });
-
-            // Add/remove active status
-            $('#school').on('shown.bs.popover', function () {
-                $(this).addClass('active');   // add bootstrap .active
-                $('#app-wrapper').addClass("popover-shown");
-            });
-
-            $('#school').on('hidden.bs.popover', function () {
-                $(this).removeClass('active');
-                $('#app-wrapper').removeClass("popover-shown");
-            });
-
-            // Close when clicking outside (but not when clicking inside popover)
-            $(document).on('click', function (e) {
-                if (
-                    !$(e.target).closest('#school').length &&   // not the button
-                    !$(e.target).closest('.popover').length        // not inside the popover
-                ) {
-                    $('#school').popover('hide');
-                }
-            });
-
-        })
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
     </script>
 </body>
 

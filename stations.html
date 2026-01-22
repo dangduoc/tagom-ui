@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gom vỏ giấy - Sữa trao em</title>
+    <title>Trạm Xanh | Gom vỏ giấy - Sữa trao em</title>
     <link rel="preload" href="/assets/fonts/DFVN-DarumadropOne.ttf" as="font" type="font/ttf">
     <link rel="preload" href="/assets/fonts/MontserratAlternates-SemiBold.otf" as="font" type="font/otf">
     <link rel="preload" href="/assets/fonts/MontserratAlternates-Bold.otf" as="font" type="font/otf">
@@ -36,10 +36,10 @@
                     <a href="/joinhands.html" title="">
                         Chung tay
                     </a>
-                    <a href="#" title="">
+                    <a href="/stations.html" title="">
                         Trạm xanh
                     </a>
-                    <a href="#" title="">
+                    <a href="/faq.html" title="">
                         Giải đáp
                     </a>
                     <a href="/partners.html" class="active" title="">
@@ -94,10 +94,10 @@
                     <a href="/joinhands.html" title="">
                         Chung tay
                     </a>
-                    <a href="#" title="">
+                    <a href="/stations.html" title="">
                         Trạm xanh
                     </a>
-                    <a href="#" title="">
+                    <a href="/faq.html" title="">
                         Giải đáp
                     </a>
                     <a href="/partners.html" class="active" title="">
@@ -343,43 +343,7 @@
     <script>
         const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
         const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
-        // $(function () {
-        //     $('.partner-box').each(function () {
-        //         $(this).popover({
-        //             html: true,
-        //             customClass: 'my-popover',
-        //             //offset: [0, 30], // [skid, distance]
-        //             content: function () {
-        //                 let selector = $(this).attr("data-bs-content");
-        //                 return $(selector).html();
-        //             }
-        //         });
-        //     });
-        // })
-        document.querySelectorAll('.partner-box').forEach(box => {
-            const delay = (Math.random() * 2).toFixed(2);       // 0–2s
-            const duration = (2 + Math.random() * 2).toFixed(2); // 2–4s
-            const distance = Math.random() * 20;                // 0–20px
-
-            box.style.setProperty('--fly-delay', `${delay}s`);
-            box.style.setProperty('--fly-duration', `${duration}s`);
-            box.style.setProperty('--fly-distance', `${distance}px`);
-
-            //
-
-            // Random flap speed 0.5s – 1.2s
-            const flapDuration = (0.5 + Math.random() * 0.7).toFixed(2);
-
-            // Random flap delay (0 – 0.5s)
-            const flapDelay = (Math.random() * 0.5).toFixed(2);
-
-            box.style.setProperty('--flap-duration', `${flapDuration}s`);
-            box.style.setProperty('--flap-delay', `${flapDelay}s`);
-
-
-
-        });
-    </script>
+   </script>
 </body>
 
 </html>
