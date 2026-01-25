@@ -91,34 +91,46 @@
   padding: 8px 16px;
 }
 
-#stat-box {
+#paragraph-box-extra {
+  position: absolute;
+  right: 12%;
+  bottom: 8%;
+  text-align: right;
+  z-index: 6;
+  display: none;
+}
+#paragraph-box-extra .btn {
+  font-size: 14px;
+}
+
+.stat-box {
   font-family: "UTM-Dax";
   z-index: 99;
   margin-top: 16px;
 }
-#stat-box .stat-box-inner {
+.stat-box .stat-box-inner {
   text-align: left;
   display: inline-block;
 }
-#stat-box .title {
+.stat-box .title {
   font-weight: 500;
   font-size: 20px;
   text-transform: uppercase;
 }
-#stat-box .subtitle {
+.stat-box .subtitle {
   font-size: 10px;
   text-transform: uppercase;
 }
-#stat-box .stat {
+.stat-box .stat {
   position: relative;
 }
-#stat-box .stat .value {
+.stat-box .stat .value {
   font-size: 50px;
   font-family: "Montserrat";
   font-weight: 700;
   line-height: 1;
 }
-#stat-box .stat .label {
+.stat-box .stat .label {
   font-size: 10px;
   font-family: "UTM-Dax";
   font-weight: 400;
@@ -150,19 +162,36 @@
   transform-origin: bottom center;
 }
 
+@media screen and (max-width: 600px) {
+  #stat-box {
+    position: absolute;
+    top: -120px;
+    right: 0;
+  }
+}
 @media screen and (min-width: 768px) and (orientation: portrait) {
   #app-bg {
     background-image: url(/assets/images/joinhands/light-md.png);
   }
+  #stat-box {
+    display: none;
+  }
+  #paragraph-box-extra {
+    display: block;
+  }
   #paragraph-box {
-    width: 50%;
-    max-width: 650px;
-    margin-left: 10%;
-    margin-top: 5%;
-    text-align: left;
+    position: absolute;
+    right: 12%;
+    top: 10%;
+    width: auto;
+    margin-top: 0;
+    margin-left: 0;
+    width: 45%;
+    text-align: right;
   }
   #paragraph-box h1 {
     font-size: 50px;
+    margin-bottom: 24px;
   }
   #paragraph-box h3 {
     font-size: 16px;
@@ -170,6 +199,20 @@
   #paragraph-box p {
     font-size: 14px;
     margin: 0;
+    width: 100%;
+  }
+  #paragraph-box .btn {
+    display: none;
+  }
+  #bird {
+    background-position-x: left;
+    aspect-ratio: 1143/2128;
+    background-image: url(/assets/images/stations/bird-md.png);
+    width: 75%;
+  }
+  #bird .pin {
+    top: 44%;
+    width: 70px;
   }
 }
 @media screen and (min-width: 992px) and (orientation: portrait) {
@@ -185,6 +228,9 @@
   }
   #paragraph-box p {
     font-size: 16px;
+  }
+  #paragraph-box-extra {
+    right: 12%;
   }
 }
 @media screen and (min-width: 992px) and (orientation: landscape) {

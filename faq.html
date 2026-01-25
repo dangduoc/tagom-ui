@@ -142,13 +142,15 @@
 
         <div id="app-bg">
             <picture>
-                <source media="(min-width:992px) and (orientation: landscape)" srcset="/assets/images/faq/cloud-left.png">
+                <source media="(min-width:992px) and (orientation: landscape)"
+                    srcset="/assets/images/faq/cloud-left.png">
                 <source media="(min-width:768px)" srcset="/assets/images/faq/cloud-left-md.png">
                 <img class="cloud-left animate__animated animate__fadeInLeftSlow animate__paused"
                     src="/assets/images/faq/cloud-left-sm.png">
             </picture>
             <picture>
-                <source media="(min-width:992px) and (orientation: landscape)" srcset="/assets/images/faq/cloud-bottom.png">
+                <source media="(min-width:992px) and (orientation: landscape)"
+                    srcset="/assets/images/faq/cloud-bottom.png">
                 <source media="(min-width:768px)" srcset="/assets/images/faq/cloud-bottom-md.png">
                 <img class="cloud-bottom animate__animated animate__fadeInUpSlow animate__paused"
                     src="/assets/images/faq/cloud-bottom-sm.png">
@@ -163,7 +165,7 @@
                     class="questions-label animate__animated animate__fadeInLeftSlow animate__paused animation-delay">
                     Giải Đáp</h1>
                 <div class="questions-list">
-                    <div style="--delay-ms:1200ms"
+                    <div style="--delay-ms:1200ms" data-bs-toggle="modal" data-bs-target="#faq-modal"
                         class="question animate__animated animate__bounceInDown animate__paused animation-delay">
                         <button data-bs-toggle="tooltip" data-bs-title="Cách thức thu gom" data-bs-offset="[0,-30]"
                             data-bs-custom-class="question-tooltip"><img
@@ -364,6 +366,125 @@
             <div class="modal-info-bottom">Thông tin được cập nhật theo tháng, chỉ hiện thông tin với khách hàng cung
                 cấp thông tin đầy đủ bao gồm
                 tên, số lượng, số điện thoại</div>
+        </div>
+    </div>
+
+    <div class="modal fade c-modal" id="faq-modal" tabindex="-1" aria-labelledby="faq-modal-label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+                <div class="modal-header">
+                    <div class="modal-header-top">
+                        <h1 class="modal-title" id="faq-modal-label">Tính bền vững của dự án</h1>
+                        <form class="form-search">
+                            <div class="search-box">
+                                <!-- <input class="search-input" placeholder="Tên, Số điện thoại"> -->
+                                <img class="search-icon" src="/assets/icons/search.svg">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <table class="table w-100 table-borderless">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="width: 50%;">STT</th>
+                                <th scope="col" style="width: 50%;">Trạm Xanh</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div>Câu hỏi 1</div>
+                                    <div>
+                                        Đây là dự án gì vậy em?
+                                    </div>
+                                </td>
+                                <td class="px-3">
+                                    <button class="btn orange" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseExample" aria-expanded="false"
+                                        aria-controls="collapseExample">Đáp án</button>
+                                    <div class="collapse" id="collapseExample">
+                                        <p>
+                                            Đây là dự án “Gom vỏ giấy - Sữa trao em” ạ. Một sự án xã hội do Tagom khởi
+                                            xướng ra.
+
+                                        </p>
+                                        <p>
+                                            Mỗi chiếc vỏ hộp sữa hoặc giấy đã qua sử dụng mà mọi người mang
+                                            tới sẽ được chúng mình thu gom chuyển đến nhà máy tái chế, toàn bộ đổi thành
+                                            kinh phí để mua sữa cho các em nhỏ vùng cao đang thiếu thốn ạ.
+                                        </p>
+                                        <p>
+                                            Sau khi các em nhỏ vùng cao uống sữa, các em sẽ được hướng dẫn vệ sinh vỏ
+                                            hộp và tiếp tục vòng tuần hoàn sống xanh ạ.
+                                        </p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div>Câu hỏi 1</div>
+                                    <div>
+                                        Đây là dự án gì vậy em?
+                                    </div>
+                                </td>
+                                <td class="px-3">
+                                    <button class="btn orange" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseExample" aria-expanded="false"
+                                        aria-controls="collapseExample">Đáp án</button>
+                                    <div class="collapse" id="collapseExample">
+                                        <p>
+                                            Đây là dự án “Gom vỏ giấy - Sữa trao em” ạ. Một sự án xã hội do Tagom khởi
+                                            xướng ra.
+
+                                        </p>
+                                        <p>
+                                            Mỗi chiếc vỏ hộp sữa hoặc giấy đã qua sử dụng mà mọi người mang
+                                            tới sẽ được chúng mình thu gom chuyển đến nhà máy tái chế, toàn bộ đổi thành
+                                            kinh phí để mua sữa cho các em nhỏ vùng cao đang thiếu thốn ạ.
+                                        </p>
+                                        <p>
+                                            Sau khi các em nhỏ vùng cao uống sữa, các em sẽ được hướng dẫn vệ sinh vỏ
+                                            hộp và tiếp tục vòng tuần hoàn sống xanh ạ.
+                                        </p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <div class="total">
+                        <strong>52</strong> Trạm xanh đang hoạt động trên cả nước
+                    </div>
+                    <div>
+                        <ul class="pagination">
+
+                            <li>
+                                <a class="navigator">
+                                    <img src="/assets/icons/arrow-left.svg">
+                                </a>
+                            </li>
+                            <li>
+                                <a class="active">1</a>
+                            </li>
+                            <li>
+                                <a>2</a>
+                            </li>
+                            <li>
+                                <a>3</a>
+                            </li>
+                            <li>
+                                <a class="navigator"><img src="/assets/icons/arrow-right.svg"></a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

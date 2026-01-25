@@ -36,13 +36,13 @@
                     <a href="/joinhands.html" title="">
                         Chung tay
                     </a>
-                    <a href="/stations.html" title="">
+                    <a href="/stations.html" class="active" title="">
                         Trạm xanh
                     </a>
                     <a href="/faq.html" title="">
                         Giải đáp
                     </a>
-                    <a href="/partners.html" class="active" title="">
+                    <a href="/partners.html" title="">
                         Bạn bè
                     </a>
                 </div>
@@ -94,13 +94,13 @@
                     <a href="/joinhands.html" title="">
                         Chung tay
                     </a>
-                    <a href="/stations.html" title="">
+                    <a href="/stations.html" class="active" title="">
                         Trạm xanh
                     </a>
                     <a href="/faq.html" title="">
                         Giải đáp
                     </a>
-                    <a href="/partners.html" class="active" title="">
+                    <a href="/partners.html" title="">
                         Bạn bè
                     </a>
                 </div>
@@ -155,7 +155,7 @@
                     src="/assets/images/stations/cloud-right-sm.png">
             </picture>
             <div id="bird" class="animate__animated animate__fadeInLeft animate__paused">
-                <div class="pin" id="location-pin">
+                <div class="pin" id="location-pin" data-bs-toggle="modal" data-bs-target="#stations-modal">
                     <a class="animate__animated animate__bounceIn animate__paused animation-delay"
                         style="--delay-ms:2000ms">
                         <img class="pin-animation" src="/assets/images/stations/pin.png">
@@ -175,7 +175,21 @@
                     điều nhỏ bé, yêu thương có thể nảy mầm và tiếp tục bay xa.
                 </p>
                 <a class="btn orange rounded">Đăng kí đồng hành cùng với chúng tớ</a>
-                <div id="stat-box" class="animate__animated animation-delay animate__fadeInUpSlow">
+                <div id="stat-box" class="stat-box animate__animated animation-delay animate__fadeInUpSlow">
+                    <div class="stat-box-inner">
+                        <div class="title">Quy mô</div>
+
+                        <div class="stat">
+                            <span class="value">10</span> <span class="label">trạm</span>
+                        </div>
+                        <div class="subtitle">Đang hoạt động</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="paragraph-box-extra">
+                <a class="btn orange rounded">Đăng kí đồng hành cùng với chúng tớ</a>
+                <div class="stat-box animate__animated animation-delay animate__fadeInUpSlow">
                     <div class="stat-box-inner">
                         <div class="title">Quy mô</div>
 
@@ -346,6 +360,124 @@
             <div class="modal-info-bottom">Thông tin được cập nhật theo tháng, chỉ hiện thông tin với khách hàng cung
                 cấp thông tin đầy đủ bao gồm
                 tên, số lượng, số điện thoại</div>
+        </div>
+    </div>
+
+    <div class="modal fade c-modal" id="stations-modal" tabindex="-1" aria-labelledby="stations-modal-label"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+                <div class="modal-header">
+                    <div class="modal-header-top">
+                        <h1 class="modal-title" id="stations-modal-label">Danh sách trạm</h1>
+                        <form class="form-search">
+                            <div class="search-box">
+                                <!-- <input class="search-input" placeholder="Tên, Số điện thoại"> -->
+                                <img class="search-icon" src="/assets/icons/search.svg">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <table class="table w-100 table-borderless">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="width: 80px;">STT</th>
+                                <th scope="col">Trạm Xanh</th>
+                                <th scope="col" style="width: 300px;">Địa chỉ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td scope="row" class="text-center">
+                                    <div class="col-index" style="background-image: url(/assets/icons/star.png);">
+                                        1
+                                    </div>
+                                </td>
+                                <td class="px-3">Trạm TAGOM</td>
+                                <td class="text-muted">
+                                    Số 105, dãy B1 khu Tập thể Thanh Xuân Bắc (mặt sau), ngõ 3 Khuất Duy Tiến, Thanh
+                                    Xuân Bắc, Hà Nội
+                                </td>
+                            </tr>
+                            <tr>
+                                <td scope="row" class="text-center">
+                                    <div class="col-index" style="background-image: url(/assets/icons/star.png);">
+                                        2
+                                    </div>
+                                </td>
+                                <td class="px-3">Urban Circular Space (UCS)</td>
+                                <td class="text-muted">
+                                    Tầng 2, nhà 2X (mặt sau tòa nhà), ngõ 6 Tôn Thất Tùng, Đống Đa, Hà Nội
+                                </td>
+                            </tr>
+                            <tr>
+                                <td scope="row" class="text-center">
+                                    <div class="col-index" style="background-image: url(/assets/icons/star.png);">
+                                        3
+                                    </div>
+                                </td>
+                                <td class="px-3">Hành Trình Xanh</td>
+                                <td class="text-muted">
+                                    B10 LK5, ô số 37 Đ. Lê Trọng Tấn, khu đô thị mới Geleximco, Hà Đông, Hà Nội
+                                </td>
+                            </tr>
+                            <tr>
+                                <td scope="row" class="text-center">
+                                    <div class="col-index" style="background-image: url(/assets/icons/star.png);">
+                                        4
+                                    </div>
+                                </td>
+                                <td class="px-3">Trung Văn Green Community</td>
+                                <td class="text-muted">
+                                    CT1 Khu đô thị mới Trung Văn, Nam Từ Liêm, Hà Nội
+                                </td>
+                            </tr>
+                            <tr>
+                                <td scope="row" class="text-center">
+                                    <div class="col-index" style="background-image: url(/assets/icons/star.png);">
+                                        5
+                                    </div>
+                                </td>
+                                <td class="px-3">Tiệm Tạp Hóa Gia Lâm</td>
+                                <td class="text-muted">
+                                    Số 2, ngách 16/09 Đường Lệ Chi, Gia Lâm, Hà Nội
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <div class="total">
+                        <strong>52</strong> Trạm xanh đang hoạt động trên cả nước
+                    </div>
+                    <div>
+                        <ul class="pagination">
+
+                            <li>
+                                <a class="navigator">
+                                    <img src="/assets/icons/arrow-left.svg">
+                                </a>
+                            </li>
+                            <li>
+                                <a class="active">1</a>
+                            </li>
+                            <li>
+                                <a>2</a>
+                            </li>
+                            <li>
+                                <a>3</a>
+                            </li>
+                            <li>
+                                <a class="navigator"><img src="/assets/icons/arrow-right.svg"></a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
