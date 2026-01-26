@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gom vỏ giấy - Sữa trao em</title>
+    <title>Mái trường | Gom vỏ giấy - Sữa trao em</title>
     <link rel="preload" href="/assets/fonts/DFVN-DarumadropOne.ttf" as="font" type="font/ttf">
     <link rel="preload" href="/assets/fonts/MontserratAlternates-SemiBold.otf" as="font" type="font/otf">
     <link rel="preload" href="/assets/fonts/MontserratAlternates-Bold.otf" as="font" type="font/otf">
@@ -37,10 +37,10 @@
                     <a href="/joinhands.html" title="">
                         Chung tay
                     </a>
-                    <a href="#" title="">
+                    <a href="/stations.html" title="">
                         Trạm xanh
                     </a>
-                    <a href="#" title="">
+                    <a href="/faq.html" title="">
                         Giải đáp
                     </a>
                     <a href="/partners.html" title="">
@@ -95,10 +95,10 @@
                     <a href="/joinhands.html" title="">
                         Chung tay
                     </a>
-                    <a href="#" title="">
+                    <a href="/stations.html" title="">
                         Trạm xanh
                     </a>
-                    <a href="#" title="">
+                    <a href="/faq.html" title="">
                         Giải đáp
                     </a>
                     <a href="/partners.html" title="">
@@ -156,7 +156,7 @@
                         rằng, đâu đó vẫn có thầy cô và các em đang chờ.</p>
                 </div>
             </div>
-            <a id="view-list-btn" style="--delay-ms:2000ms"
+            <a id="view-list-btn" style="--delay-ms:2000ms" data-bs-toggle="modal" data-bs-target="#schools-modal"
                 class="btn animate__animated animation-delay animate__fadeInUpSlow animate__paused" href="#">Xem theo
                 danh
                 sách</a>
@@ -423,6 +423,105 @@
                 <div class="modal-footer">
                     <div class="total">
                         <strong>1245</strong> bàn tay đã góp sức
+                    </div>
+                    <div>
+                        <ul class="pagination">
+
+                            <li>
+                                <a class="navigator">
+                                    <img src="/assets/icons/arrow-left.svg">
+                                </a>
+                            </li>
+                            <li>
+                                <a class="active">1</a>
+                            </li>
+                            <li>
+                                <a>2</a>
+                            </li>
+                            <li>
+                                <a>3</a>
+                            </li>
+                            <li>
+                                <a class="navigator"><img src="/assets/icons/arrow-right.svg"></a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-info-bottom">Thông tin được cập nhật theo tháng, chỉ hiện thông tin với khách hàng cung
+                cấp thông tin đầy đủ bao gồm
+                tên, số lượng, số điện thoại</div>
+        </div>
+    </div>
+
+    <div class="modal fade c-modal" id="schools-modal" tabindex="-1" aria-labelledby="schools-modal-label"
+        aria-hidden="true">
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+                <div class="modal-header">
+                    <div class="modal-header-top">
+                        <h1 class="modal-title" id="schools-modal-label">Danh sách trường</h1>
+                        <form class="form-search">
+                            <div class="search-box">
+                                <!-- <input class="search-input" placeholder="Tên, Số điện thoại"> -->
+                                <img class="search-icon" src="/assets/icons/search.svg">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <table class="table w-100 table-borderless">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="width: 80px;">STT</th>
+                                <th scope="col">Trường</th>
+                                <th scope="col" style="width: 300px;">Địa chỉ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td scope="row" class="text-center">
+                                    <div class="col-index" style="background-image: url(/assets/icons/star.png);">
+                                        1
+                                    </div>
+                                </td>
+                                <td class="px-3">Tiểu học Kim Đồng</td>
+                                <td class="text-muted">
+                                    189 Trần Hưng Đạo, P. Nguyễn Trãi, Thành phố Hà Giang, Hà Giang
+                                </td>
+                            </tr>
+                            <tr>
+                                <td scope="row" class="text-center">
+                                    <div class="col-index" style="background-image: url(/assets/icons/star.png);">
+                                        2
+                                    </div>
+                                </td>
+                                <td class="px-3">Tiểu học Phú Mỹ</td>
+                                <td class="text-muted">
+                                    189 Trần Hưng Đạo, P. Nguyễn Trãi, Thành phố Hà Giang, Hà Giang
+                                </td>
+                            </tr>
+                            <tr>
+                                <td scope="row" class="text-center">
+                                    <div class="col-index" style="background-image: url(/assets/icons/star.png);">
+                                        3
+                                    </div>
+                                </td>
+                                <td class="px-3">Trường tiểu học Hồng Quân - Ngọc Hà</td>
+                                <td class="text-muted">
+                                    189 Trần Hưng Đạo, P. Nguyễn Trãi, Thành phố Hà Giang, Hà Giang
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <div class="total">
+                        <strong>53</strong> mái trường đã nhận hỗ trợ
                     </div>
                     <div>
                         <ul class="pagination">

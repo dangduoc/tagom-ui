@@ -4,22 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gom vỏ giấy - Sữa trao em</title>
-    <meta name="description" content="Ngày xửa ngày xưa, có những chiếc vỏ sữa nhỏ bé tưởng như chỉ là đồ bỏ đi. Nhưng khi được gom
-                    góp lại, chúng hóa thành phép màu – viết nên “Chuyện kể gom vỏ sữa cho em”">
-    <meta property="og:url" content="https://gomvogiay.tamer.vn" />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="Gom vỏ giấy - Sữa trao em" />
-    <meta property="og:description" content="Ngày xửa ngày xưa, có những chiếc vỏ sữa nhỏ bé tưởng như chỉ là đồ bỏ đi. Nhưng khi được gom
-                    góp lại, chúng hóa thành phép màu – viết nên “Chuyện kể gom vỏ sữa cho em”" />
-    <meta property="og:image" content="https://gomvogiay.tamer.vn/assets/images/cover.jpg" />
+    <title>Giải đáp | Gom vỏ giấy - Sữa trao em</title>
     <link rel="preload" href="/assets/fonts/DFVN-DarumadropOne.ttf" as="font" type="font/ttf">
     <link rel="preload" href="/assets/fonts/MontserratAlternates-SemiBold.otf" as="font" type="font/otf">
     <link rel="preload" href="/assets/fonts/MontserratAlternates-Bold.otf" as="font" type="font/otf">
     <link rel="stylesheet" href="/assets/plugins/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="/assets/css/main.css">
-    <link rel="stylesheet" href="/assets/css/home.css">
+    <link rel="stylesheet" href="/assets/css/faq.css">
 </head>
 
 <body>
@@ -32,10 +24,10 @@
                     </a>
                 </div>
                 <div class="nav-items animate__animated animate__fadeIn animate__paused">
-                    <a href="/" class="active" title="">
+                    <a href="/" title="">
                         Chuyện kể
                     </a>
-                    <a href="/school.html" title="Điểm trường">
+                    <a href="/school.html" title="">
                         Mái trường
                     </a>
                     <a href="/journey.html" title="">
@@ -47,7 +39,7 @@
                     <a href="/stations.html" title="">
                         Trạm xanh
                     </a>
-                    <a href="/faq.html" title="">
+                    <a href="/faq.html" class="active" title="">
                         Giải đáp
                     </a>
                     <a href="/partners.html" title="">
@@ -90,7 +82,7 @@
                     </button>
                 </div>
                 <div class="app-nav-sm-full-items">
-                    <a href="/" class="active" title="">
+                    <a href="/" title="">
                         Chuyện kể
                     </a>
                     <a href="/school.html" title="">
@@ -105,7 +97,7 @@
                     <a href="/stations.html" title="">
                         Trạm xanh
                     </a>
-                    <a href="/faq.html" title="">
+                    <a href="/faq.html" class="active" title="">
                         Giải đáp
                     </a>
                     <a href="/partners.html" title="">
@@ -147,43 +139,79 @@
                 </div>
             </div>
         </div>
+
         <div id="app-bg">
-            <div class="paragraph-box">
-                <h1 class="animate__animated animate__fadeInLeftSlow animate__paused">Chuyện Kể</h1>
-                <h3 class="animate__animated animate__fadeInRightSlow animate__paused">Những vỏ sữa biết viết nên
-                    yêu thương</h3>
-                <p class="animate__animated animate__fadeInUpSlow animate__paused">
-                    Ngày xửa ngày xưa, có những chiếc vỏ sữa nhỏ bé tưởng như chỉ là đồ bỏ đi. Nhưng khi được gom
-                    góp lại, chúng hóa thành phép màu – viết nên “Chuyện kể gom vỏ sữa cho em”. Ở đó, từng chiếc vỏ
-                    mang trong mình một ngôi sao sáng, thắp lên bầu trời ước mơ trong trẻo cho tuổi thơ.
-                </p>
-            </div>
-            <div class="app-bg-inner app-container">
+            <picture>
+                <source media="(min-width:992px) and (orientation: landscape)"
+                    srcset="/assets/images/faq/cloud-left.png">
+                <source media="(min-width:768px)" srcset="/assets/images/faq/cloud-left-md.png">
+                <img class="cloud-left animate__animated animate__fadeInLeftSlow animate__paused"
+                    src="/assets/images/faq/cloud-left-sm.png">
+            </picture>
+            <picture>
+                <source media="(min-width:992px) and (orientation: landscape)"
+                    srcset="/assets/images/faq/cloud-bottom.png">
+                <source media="(min-width:768px)" srcset="/assets/images/faq/cloud-bottom-md.png">
+                <img class="cloud-bottom animate__animated animate__fadeInUpSlow animate__paused"
+                    src="/assets/images/faq/cloud-bottom-sm.png">
+            </picture>
+            <picture>
 
-                <img class="grass animate__animated animate__fadeInUpSlow animate__paused"
-                    src="/assets/images/home/desktop/grass.png">
+                <img class="cloud-bottom2 animate__animated animate__fadeInUpSlow animate__paused"
+                    src="/assets/images/faq/cloud-bottom2-sm.png">
+            </picture>
+            <div id="questions">
+                <h1 style="--delay-ms:1000ms"
+                    class="questions-label animate__animated animate__fadeInLeftSlow animate__paused animation-delay">
+                    Giải Đáp</h1>
+                <div class="questions-list">
+                    <div style="--delay-ms:1200ms" data-bs-toggle="modal" data-bs-target="#faq-modal"
+                        class="question animate__animated animate__bounceInDown animate__paused animation-delay">
+                        <button data-bs-toggle="tooltip" data-bs-title="Cách thức thu gom" data-bs-offset="[0,-30]"
+                            data-bs-custom-class="question-tooltip"><img
+                                src="/assets/images/faq/question-mark.png"></button>
 
-                <div class="img-bird">
-                    <img class="bird animate__animated animate__fadeInLeftSlow animate__paused"
-                        src="/assets/images/home/desktop/bird.png">
+                        <div class="text">
+                            Cách thức thu gom
+                        </div>
+                    </div>
+                    <div style="--delay-ms:1500ms"
+                        class="question animate__animated animate__bounceInDown animate__paused animation-delay">
+                        <button data-bs-toggle="tooltip" data-bs-title="Cách thức xử lý" data-bs-offset="[0,-30]"
+                            data-bs-custom-class="question-tooltip"><img
+                                src="/assets/images/faq/question-mark.png"></button>
+                        <div class="text">
+                            Cách thức xử lý
+                        </div>
+                    </div>
+                    <div style="--delay-ms:1750ms"
+                        class="question animate__animated animate__bounceInDown animate__paused animation-delay">
+                        <button data-bs-toggle="tooltip" data-bs-title="Cách thức trao sữa" data-bs-offset="[0,-30]"
+                            data-bs-custom-class="question-tooltip"><img
+                                src="/assets/images/faq/question-mark.png"></button>
+                        <div class="text">
+                            Cách thức trao sữa
+                        </div>
+                    </div>
+                    <div style="--delay-ms:2000ms"
+                        class="question animate__animated animate__bounceInDown animate__paused animation-delay">
+                        <button data-bs-toggle="tooltip" data-bs-title="Tính bền vững của dự án"
+                            data-bs-offset="[0,-30]" data-bs-custom-class="question-tooltip"><img
+                                src="/assets/images/faq/question-mark.png"></button>
+                        <div class="text">
+                            Tính bền vững của dự án
+                        </div>
+                    </div>
+
                 </div>
-                <img class="mountain animate__animated animate__fadeInRightSlow animate__paused"
-                    src="/assets/images/home/desktop/mountain.png">
-                <img class="birds animate__animated animate__fadeInUpSlow animate__paused"
-                    src="/assets/images/home/desktop/birds.png">
-                <img class="cloud cloud1 animate__animated animate__fadeInRightSlow animate__paused"
-                    src="/assets/images/home/desktop/cloud1.png">
-                <img class="cloud cloud2 animate__animated animate__fadeInUpSlow animate__paused"
-                    src="/assets/images/home/desktop/cloud2.png">
-                <img class="cloud cloud3 animate__animated animate__fadeInLeftSlow animate__paused"
-                    src="/assets/images/home/desktop/cloud3.png">
-
+            </div>
+            <div id="bird" class="animate__animated animate__fadeInBottomLeft animate__paused">
             </div>
         </div>
-        <a id="top-chart" data-bs-toggle="modal" data-bs-target="#top-chart-modal"><img
-                class="animate__animated animate__fadeInUpSlow animate__paused"
-                src="/assets/images/home/top-balloon.png"></a>
 
+        <a id="top-chart" style="--delay-ms:2000ms" data-bs-toggle="modal" data-bs-target="#top-chart-modal"><img
+                class="animate__animated animation-delay animate__fadeInUpSlow animate__paused"
+                src="/assets/images/home/top-balloon.png"></a>
         <div id="language-contact">
             <div class="animate__animated animate__fadeInUpSlow animate__paused">
                 <div class="languages">
@@ -220,8 +248,8 @@
                 <div id="loading-progress" class="loading-text">40%</div>
             </div>
         </div>
-    </div>
 
+    </div>
 
     <div class="modal fade c-modal" id="top-chart-modal" tabindex="-1" aria-labelledby="top-chart-modal-label"
         aria-hidden="true">
@@ -341,10 +369,133 @@
         </div>
     </div>
 
+    <div class="modal fade c-modal" id="faq-modal" tabindex="-1" aria-labelledby="faq-modal-label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+                <div class="modal-header">
+                    <div class="modal-header-top">
+                        <h1 class="modal-title" id="faq-modal-label">Tính bền vững của dự án</h1>
+                        <form class="form-search">
+                            <div class="search-box">
+                                <!-- <input class="search-input" placeholder="Tên, Số điện thoại"> -->
+                                <img class="search-icon" src="/assets/icons/search.svg">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <table class="table w-100 table-borderless">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="width: 50%;">STT</th>
+                                <th scope="col" style="width: 50%;">Trạm Xanh</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div>Câu hỏi 1</div>
+                                    <div>
+                                        Đây là dự án gì vậy em?
+                                    </div>
+                                </td>
+                                <td class="px-3">
+                                    <button class="btn orange" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseExample" aria-expanded="false"
+                                        aria-controls="collapseExample">Đáp án</button>
+                                    <div class="collapse" id="collapseExample">
+                                        <p>
+                                            Đây là dự án “Gom vỏ giấy - Sữa trao em” ạ. Một sự án xã hội do Tagom khởi
+                                            xướng ra.
+
+                                        </p>
+                                        <p>
+                                            Mỗi chiếc vỏ hộp sữa hoặc giấy đã qua sử dụng mà mọi người mang
+                                            tới sẽ được chúng mình thu gom chuyển đến nhà máy tái chế, toàn bộ đổi thành
+                                            kinh phí để mua sữa cho các em nhỏ vùng cao đang thiếu thốn ạ.
+                                        </p>
+                                        <p>
+                                            Sau khi các em nhỏ vùng cao uống sữa, các em sẽ được hướng dẫn vệ sinh vỏ
+                                            hộp và tiếp tục vòng tuần hoàn sống xanh ạ.
+                                        </p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div>Câu hỏi 1</div>
+                                    <div>
+                                        Đây là dự án gì vậy em?
+                                    </div>
+                                </td>
+                                <td class="px-3">
+                                    <button class="btn orange" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseExample" aria-expanded="false"
+                                        aria-controls="collapseExample">Đáp án</button>
+                                    <div class="collapse" id="collapseExample">
+                                        <p>
+                                            Đây là dự án “Gom vỏ giấy - Sữa trao em” ạ. Một sự án xã hội do Tagom khởi
+                                            xướng ra.
+
+                                        </p>
+                                        <p>
+                                            Mỗi chiếc vỏ hộp sữa hoặc giấy đã qua sử dụng mà mọi người mang
+                                            tới sẽ được chúng mình thu gom chuyển đến nhà máy tái chế, toàn bộ đổi thành
+                                            kinh phí để mua sữa cho các em nhỏ vùng cao đang thiếu thốn ạ.
+                                        </p>
+                                        <p>
+                                            Sau khi các em nhỏ vùng cao uống sữa, các em sẽ được hướng dẫn vệ sinh vỏ
+                                            hộp và tiếp tục vòng tuần hoàn sống xanh ạ.
+                                        </p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <div class="total">
+                        <strong>52</strong> Trạm xanh đang hoạt động trên cả nước
+                    </div>
+                    <div>
+                        <ul class="pagination">
+
+                            <li>
+                                <a class="navigator">
+                                    <img src="/assets/icons/arrow-left.svg">
+                                </a>
+                            </li>
+                            <li>
+                                <a class="active">1</a>
+                            </li>
+                            <li>
+                                <a>2</a>
+                            </li>
+                            <li>
+                                <a>3</a>
+                            </li>
+                            <li>
+                                <a class="navigator"><img src="/assets/icons/arrow-right.svg"></a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="/assets/plugins/jquery/dist/jquery.min.js"></script>
     <script src="/assets/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/assets/plugins/imagesloaded/imagesloaded.pkgd.min.js"></script>
     <script src="/assets/js/main.js"></script>
+    <script>
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+    </script>
 </body>
 
 </html>
