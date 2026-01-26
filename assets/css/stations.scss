@@ -195,7 +195,8 @@
         top: -120px;
         right: 0;
     }
-    #app-wrapper::before, #app-wrapper::after{
+    #app-wrapper::before,
+    #app-wrapper::after {
         height: 120px;
     }
 }
@@ -301,7 +302,7 @@
         background-position-x: right;
         background-position-y: bottom;
         background-size: auto 100%;
-        background-image: url(/assets/images/stations/bg4.png);
+        background-image: url(/assets/images/stations/bird.png);
         aspect-ratio: unset;
         .pin {
             right: 2%;
