@@ -39,7 +39,8 @@
     align-items: center;
 
     .app-bg-inner {
-        position: relative;
+        position: absolute;
+        z-index: 6;
         width: 100%;
     }
 }

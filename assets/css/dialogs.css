@@ -1,5 +1,17 @@
 .c-modal .modal-title {
-  font-size: 60px;
+  font-size: 24px;
+}
+.c-modal .modal-sm-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px var(--bs-modal-padding, 16px);
+}
+.c-modal .modal-sm-header .logo img {
+  width: 65px;
+}
+.c-modal .modal-sm-header .modal-sm-header-btn-close {
+  color: #000;
 }
 .c-modal .modal-header {
   display: block;
@@ -62,12 +74,13 @@
   text-align: center;
   text-transform: uppercase;
   font-weight: 800;
-  font-size: 20px;
+  font-size: 16px;
 }
 .c-modal table td {
   vertical-align: middle;
   border-bottom: 3px dashed #54ab47;
   font-weight: 500;
+  font-size: 14px;
 }
 .c-modal table tr:last-child td {
   border-bottom: 0;
@@ -104,6 +117,7 @@
   align-items: center;
   justify-content: flex-end;
   gap: 5px;
+  margin-bottom: 0;
 }
 .c-modal .modal-footer ul li a {
   color: #000;
@@ -164,49 +178,152 @@
   margin: auto;
 }
 
-#schools-modal {
-  --bs-modal-width: 900px;
-}
-#schools-modal .modal-title {
-  font-size: 50px;
-}
 #schools-modal .text-muted {
   font-size: 14px;
   text-align: right;
 }
 
-#stations-modal {
-  --bs-modal-width: 900px;
-}
-#stations-modal .modal-title {
-  font-size: 50px;
-}
 #stations-modal .text-muted {
   font-size: 14px;
   text-align: right;
 }
 
-#faq-modal {
-  --bs-modal-width: 900px;
-}
-#faq-modal .modal-title {
-  font-size: 50px;
-}
 #faq-modal .text-muted {
   font-size: 14px;
   text-align: right;
 }
 #faq-modal table td {
   vertical-align: top;
+  padding: 16px 0;
+}
+#faq-modal .question-line {
+  border-bottom: 3px dashed #54ab47;
+  padding: 24px 0;
+  display: flex;
+}
+#faq-modal .question-line:first-child {
+  padding-top: 0;
+}
+#faq-modal .question-line .question {
+  flex: 1;
+}
+#faq-modal .question-line .answer {
+  flex: 1;
+}
+#faq-modal .question-line .question-index {
+  font-weight: 700;
+}
+#faq-modal .question-line .question-text {
+  font-weight: 500;
+}
+#faq-modal .question-line .answer-content {
+  margin-top: 16px;
+  font-weight: 400;
+}
+#faq-modal .question-line .answer-content p {
+  margin-bottom: 0;
+}
+#faq-modal .question-line .answer-btn {
+  min-width: 160px;
+  text-transform: uppercase;
 }
 #faq-modal .modal-body {
   max-height: 80vh;
   overflow: auto;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (max-width: 600px) {
+  .c-modal .modal-dialog table th {
+    font-size: 12px;
+  }
+  .c-modal .modal-dialog table td {
+    vertical-align: top;
+    border-bottom: 1px dashed #54ab47;
+    font-size: 10px;
+  }
+  .c-modal .modal-dialog table td.text-muted {
+    font-size: 10px !important;
+  }
+  .c-modal .modal-dialog table tr:last-child td {
+    border-bottom: 0;
+  }
+  .c-modal .modal-dialog table .col-index {
+    width: 28px;
+    height: 26px;
+    font-size: 12px;
+    line-height: 28px;
+  }
+  .c-modal .modal-footer {
+    gap: 12px;
+    padding-bottom: 12px;
+    font-size: 14px;
+  }
+  .c-modal .modal-footer .total {
+    flex: 1;
+    font-style: italic;
+    font-size: 10px;
+  }
+  .c-modal .modal-footer ul li a {
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+  }
+}
+@media screen and (max-width: 800px) {
+  .c-modal .modal-dialog {
+    --bs-modal-width: 100%;
+    --bs-modal-border-radius: 0;
+    --bs-modal-margin: 0;
+    --bs-modal-border-width: 0;
+    height: 100%;
+  }
+  .c-modal .modal-dialog .modal-content {
+    min-height: 100%;
+  }
+  .c-modal .modal-footer {
+    gap: 12px;
+    padding-bottom: 16px;
+  }
+  #faq-modal .form-search {
+    display: none;
+  }
+  #faq-modal .question-line {
+    display: block;
+    border-width: 2px;
+    font-size: 14px;
+  }
+  #faq-modal .question-line .question {
+    margin-bottom: 16px;
+  }
+  #faq-modal .question-line .answer-btn {
+    font-size: 14px;
+    min-width: 120px;
+  }
+  #stations-modal .form-search {
+    display: none;
+  }
+  #stations-modal table th:nth-child(2) {
+    width: 40%;
+  }
+  #schools-modal .form-search {
+    display: none;
+  }
+  #schools-modal th:nth-child(2) {
+    width: 40%;
+  }
+}
+@media screen and (min-width: 800px) {
+  .c-modal {
+    --bs-modal-width: 80%;
+  }
+  .c-modal .modal-title {
+    font-size: 42px;
+  }
+  .c-modal .modal-sm-header {
+    display: none;
+  }
   .c-modal .modal-content {
-    padding: 12px 50px;
+    padding: 12px 20px;
     --bs-modal-border-radius: 30px;
   }
   .c-modal .modal-content .btn-close {
@@ -219,5 +336,37 @@
     font-size: 30px;
     cursor: pointer;
     display: inline-block;
+  }
+}
+@media screen and (min-width: 992px) {
+  .c-modal .modal-title {
+    font-size: 40px;
+  }
+  .c-modal .modal-content {
+    padding: 12px 50px;
+  }
+  .c-modal table th {
+    font-size: 20px;
+  }
+  .c-modal table td {
+    font-size: inherit;
+  }
+  #schools-modal {
+    --bs-modal-width: 900px;
+  }
+  #schools-modal .modal-title {
+    font-size: 50px;
+  }
+  #stations-modal {
+    --bs-modal-width: 900px;
+  }
+  #stations-modal .modal-title {
+    font-size: 50px;
+  }
+  #faq-modal {
+    --bs-modal-width: 900px;
+  }
+  #faq-modal .modal-title {
+    font-size: 50px;
   }
 }/*# sourceMappingURL=dialogs.css.map */

@@ -175,7 +175,7 @@
                             Cách thức thu gom
                         </div>
                     </div>
-                    <div style="--delay-ms:1500ms"
+                    <div style="--delay-ms:1500ms" data-bs-toggle="modal" data-bs-target="#faq-modal"
                         class="question animate__animated animate__bounceInDown animate__paused animation-delay">
                         <button data-bs-toggle="tooltip" data-bs-title="Cách thức xử lý" data-bs-offset="[0,-30]"
                             data-bs-custom-class="question-tooltip"><img
@@ -184,7 +184,7 @@
                             Cách thức xử lý
                         </div>
                     </div>
-                    <div style="--delay-ms:1750ms"
+                    <div style="--delay-ms:1750ms" data-bs-toggle="modal" data-bs-target="#faq-modal"
                         class="question animate__animated animate__bounceInDown animate__paused animation-delay">
                         <button data-bs-toggle="tooltip" data-bs-title="Cách thức trao sữa" data-bs-offset="[0,-30]"
                             data-bs-custom-class="question-tooltip"><img
@@ -193,7 +193,7 @@
                             Cách thức trao sữa
                         </div>
                     </div>
-                    <div style="--delay-ms:2000ms"
+                    <div style="--delay-ms:2000ms" data-bs-toggle="modal" data-bs-target="#faq-modal"
                         class="question animate__animated animate__bounceInDown animate__paused animation-delay">
                         <button data-bs-toggle="tooltip" data-bs-title="Tính bền vững của dự án"
                             data-bs-offset="[0,-30]" data-bs-custom-class="question-tooltip"><img
@@ -372,6 +372,20 @@
     <div class="modal fade c-modal" id="faq-modal" tabindex="-1" aria-labelledby="faq-modal-label" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
+                <div class="modal-sm-header">
+                    <a class="logo" title="">
+                        <img src="/assets/images/logo.png">
+                    </a>
+                    <button type="button" class="modal-sm-header-btn-close btn" data-bs-dismiss="modal"
+                        aria-label="Close">
+                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15.6663 2.33313L2.33301 15.6665" stroke="currentColor" stroke-width="3"
+                                stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M2.33301 2.33313L15.6663 15.6665" stroke="currentColor" stroke-width="3"
+                                stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                    </button>
+                </div>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                     aria-label="Close"></button>
                 <div class="modal-header">
@@ -386,79 +400,129 @@
                     </div>
                 </div>
                 <div class="modal-body">
-                    <table class="table w-100 table-borderless">
-                        <thead>
-                            <tr>
-                                <th scope="col" style="width: 50%;">STT</th>
-                                <th scope="col" style="width: 50%;">Trạm Xanh</th>
+                    <div class="questions-wrapper">
+                        <div class="question-line">
+                            <div class="question">
+                                <div class="question-index">Câu hỏi 1</div>
+                                <div class="question-text">
+                                    Đây là dự án gì vậy em?
+                                </div>
+                            </div>
+                            <div class="answer">
+                                <button class="answer-btn btn orange rounded" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseQ1" aria-expanded="false" aria-controls="collapseQ1">Đáp
+                                    án</button>
+                                <div class="collapse answer-content" id="collapseQ1">
+                                    <p>
+                                        Đây là dự án “Gom vỏ giấy - Sữa trao em” ạ. Một sự án xã hội do Tagom khởi
+                                        xướng ra.
 
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <div>Câu hỏi 1</div>
-                                    <div>
-                                        Đây là dự án gì vậy em?
-                                    </div>
-                                </td>
-                                <td class="px-3">
-                                    <button class="btn orange" data-bs-toggle="collapse"
-                                        data-bs-target="#collapseExample" aria-expanded="false"
-                                        aria-controls="collapseExample">Đáp án</button>
-                                    <div class="collapse" id="collapseExample">
-                                        <p>
-                                            Đây là dự án “Gom vỏ giấy - Sữa trao em” ạ. Một sự án xã hội do Tagom khởi
-                                            xướng ra.
+                                    </p>
+                                    <p>
+                                        Mỗi chiếc vỏ hộp sữa hoặc giấy đã qua sử dụng mà mọi người mang
+                                        tới sẽ được chúng mình thu gom chuyển đến nhà máy tái chế, toàn bộ đổi thành
+                                        kinh phí để mua sữa cho các em nhỏ vùng cao đang thiếu thốn ạ.
+                                    </p>
+                                    <p>
+                                        Sau khi các em nhỏ vùng cao uống sữa, các em sẽ được hướng dẫn vệ sinh vỏ
+                                        hộp và tiếp tục vòng tuần hoàn sống xanh ạ.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="question-line">
+                            <div class="question">
+                                <div class="question-index">Câu hỏi 2</div>
+                                <div class="question-text">
+                                    Dự án này hoạt động trong bao lâu?
+                                </div>
+                            </div>
+                            <div class="answer">
+                                <button class="answer-btn btn orange rounded" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseQ2" aria-expanded="false" aria-controls="collapseQ2">Đáp
+                                    án</button>
+                                <div class="collapse answer-content" id="collapseQ2">
+                                    <p>
+                                        Đây là dự án “Gom vỏ giấy - Sữa trao em” ạ. Một sự án xã hội do Tagom khởi
+                                        xướng ra.
 
-                                        </p>
-                                        <p>
-                                            Mỗi chiếc vỏ hộp sữa hoặc giấy đã qua sử dụng mà mọi người mang
-                                            tới sẽ được chúng mình thu gom chuyển đến nhà máy tái chế, toàn bộ đổi thành
-                                            kinh phí để mua sữa cho các em nhỏ vùng cao đang thiếu thốn ạ.
-                                        </p>
-                                        <p>
-                                            Sau khi các em nhỏ vùng cao uống sữa, các em sẽ được hướng dẫn vệ sinh vỏ
-                                            hộp và tiếp tục vòng tuần hoàn sống xanh ạ.
-                                        </p>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div>Câu hỏi 1</div>
-                                    <div>
-                                        Đây là dự án gì vậy em?
-                                    </div>
-                                </td>
-                                <td class="px-3">
-                                    <button class="btn orange" data-bs-toggle="collapse"
-                                        data-bs-target="#collapseExample" aria-expanded="false"
-                                        aria-controls="collapseExample">Đáp án</button>
-                                    <div class="collapse" id="collapseExample">
-                                        <p>
-                                            Đây là dự án “Gom vỏ giấy - Sữa trao em” ạ. Một sự án xã hội do Tagom khởi
-                                            xướng ra.
+                                    </p>
+                                    <p>
+                                        Mỗi chiếc vỏ hộp sữa hoặc giấy đã qua sử dụng mà mọi người mang
+                                        tới sẽ được chúng mình thu gom chuyển đến nhà máy tái chế, toàn bộ đổi thành
+                                        kinh phí để mua sữa cho các em nhỏ vùng cao đang thiếu thốn ạ.
+                                    </p>
+                                    <p>
+                                        Sau khi các em nhỏ vùng cao uống sữa, các em sẽ được hướng dẫn vệ sinh vỏ
+                                        hộp và tiếp tục vòng tuần hoàn sống xanh ạ.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="question-line">
+                            <div class="question">
+                                <div class="question-index">Câu hỏi 3</div>
+                                <div class="question-text">
+                                    Dự án này hoạt động trong bao lâu?
+                                </div>
+                            </div>
+                            <div class="answer">
+                                <button class="answer-btn btn orange rounded" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseQ3" aria-expanded="false" aria-controls="collapseQ3">Đáp
+                                    án</button>
+                                <div class="collapse answer-content" id="collapseQ3">
+                                    <p>
+                                        Đây là dự án “Gom vỏ giấy - Sữa trao em” ạ. Một sự án xã hội do Tagom khởi
+                                        xướng ra.
 
-                                        </p>
-                                        <p>
-                                            Mỗi chiếc vỏ hộp sữa hoặc giấy đã qua sử dụng mà mọi người mang
-                                            tới sẽ được chúng mình thu gom chuyển đến nhà máy tái chế, toàn bộ đổi thành
-                                            kinh phí để mua sữa cho các em nhỏ vùng cao đang thiếu thốn ạ.
-                                        </p>
-                                        <p>
-                                            Sau khi các em nhỏ vùng cao uống sữa, các em sẽ được hướng dẫn vệ sinh vỏ
-                                            hộp và tiếp tục vòng tuần hoàn sống xanh ạ.
-                                        </p>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                    </p>
+                                    <p>
+                                        Mỗi chiếc vỏ hộp sữa hoặc giấy đã qua sử dụng mà mọi người mang
+                                        tới sẽ được chúng mình thu gom chuyển đến nhà máy tái chế, toàn bộ đổi thành
+                                        kinh phí để mua sữa cho các em nhỏ vùng cao đang thiếu thốn ạ.
+                                    </p>
+                                    <p>
+                                        Sau khi các em nhỏ vùng cao uống sữa, các em sẽ được hướng dẫn vệ sinh vỏ
+                                        hộp và tiếp tục vòng tuần hoàn sống xanh ạ.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="question-line">
+                            <div class="question">
+                                <div class="question-index">Câu hỏi 4</div>
+                                <div class="question-text">
+                                    Dự án này hoạt động trong bao lâu?
+                                </div>
+                            </div>
+                            <div class="answer">
+                                <button class="answer-btn btn orange rounded" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseQ4" aria-expanded="false" aria-controls="collapseQ4">Đáp
+                                    án</button>
+                                <div class="collapse answer-content" id="collapseQ4">
+                                    <p>
+                                        Đây là dự án “Gom vỏ giấy - Sữa trao em” ạ. Một sự án xã hội do Tagom khởi
+                                        xướng ra.
+
+                                    </p>
+                                    <p>
+                                        Mỗi chiếc vỏ hộp sữa hoặc giấy đã qua sử dụng mà mọi người mang
+                                        tới sẽ được chúng mình thu gom chuyển đến nhà máy tái chế, toàn bộ đổi thành
+                                        kinh phí để mua sữa cho các em nhỏ vùng cao đang thiếu thốn ạ.
+                                    </p>
+                                    <p>
+                                        Sau khi các em nhỏ vùng cao uống sữa, các em sẽ được hướng dẫn vệ sinh vỏ
+                                        hộp và tiếp tục vòng tuần hoàn sống xanh ạ.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <div class="total">
-                        <strong>52</strong> Trạm xanh đang hoạt động trên cả nước
+                       
                     </div>
                     <div>
                         <ul class="pagination">
