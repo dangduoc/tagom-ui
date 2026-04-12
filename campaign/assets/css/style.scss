@@ -1,0 +1,175 @@
+@font-face {
+    font-family: "Courier";
+    src: url("/assets/fonts/Courier-Regular.ttf");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Courier";
+    src: url("/assets/fonts/Courier-Italic.ttf");
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Courier";
+    src: url("/assets/fonts/Courier-Bold.ttf");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Courier";
+    src: url("/assets/fonts/Courier-BoldItalic.ttf");
+    font-weight: 700;
+    font-style: italic;
+    font-display: swap;
+}
+
+body {
+    font-family: "Montserrat", sans-serif;
+    --color-orange: #f29328;
+    --color-green: #699d36;
+    background-color: #f9fcf4;
+}
+#app-nav {
+    position: fixed;
+    top: 0;
+    z-index: 9;
+    width: 100%;
+    height: 225px;
+    background-image: linear-gradient(to bottom, #ffffff, transparent);
+    .nav-items {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        justify-content: center;
+
+        a {
+            font-size: 16px;
+            font-weight: 500;
+            color: #000;
+            text-decoration: none;
+            padding: 10px 0;
+            position: relative;
+            &::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                width: 100%;
+                height: 2px;
+                background-color: #000;
+                transform: scaleX(0);
+                transition: transform 0.3s ease-in-out;
+            }
+            &:hover::after {
+                transform: scaleX(1);
+            }
+        }
+    }
+}
+#app-banner {
+    aspect-ratio: 1919/1190;
+    position: relative;
+    &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        height: 60%;
+        width: 100%;
+        background-image: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
+    }
+    .inner {
+        height: 100%;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+    }
+    .app-banner-content {
+        margin-top: 125px;
+        color: #fff;
+        .label {
+            text-transform: uppercase;
+        }
+        .title {
+        }
+        .description {
+        }
+        .actions {
+            .btn-cta {
+                text-transform: uppercase;
+                color: inherit;
+                border-radius: 8px;
+                background-color: var(--color-orange);
+            }
+        }
+    }
+    & > .text-banner {
+        width: 100%;
+        margin-top: -150px;
+        position: relative;
+        margin-bottom: -150px;
+    }
+}
+#section1 {
+    padding-top: 150px;
+    & > .inner {
+    }
+    .section-title {
+        position: relative;
+        .background-text {
+            font-size: 100px;
+            font-weight: 900;
+            text-align: center;
+            width: 100%;
+            text-transform: uppercase;
+            line-height: 1.1;
+            display: block;
+            color: #fff;
+        }
+        h2 {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+    }
+    h2 {
+        font-family: "Courier";
+        text-align: center;
+        color: var(--color-green);
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: 40px;
+        & > span {
+            font-size: 50px;
+        }
+    }
+
+    .section1-inner {
+        display: flex;
+        align-items: center;
+        gap: 50px;
+        .img {
+            width: 30%;
+            img {
+                width: 100%;
+            }
+        }
+        .content {
+            flex: 1;
+            p {
+                line-height: 1.8;
+            }
+        }
+    }
+}
