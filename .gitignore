@@ -1,2 +1,5 @@
 # Ignore node modules for JavaScript projects
 node_modules/
+campaign/node_modules/
+comming/node_modules/
+gomvosua/node_modules/
