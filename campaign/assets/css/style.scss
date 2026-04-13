@@ -173,3 +173,110 @@ body {
         }
     }
 }
+#section2 {
+    padding-top: 150px;
+
+    & > .inner {
+    }
+    .section-title {
+        position: relative;
+        margin-bottom: -230px;
+        z-index: 1;
+        .section-title-inner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+        & > .bg {
+            width: 100%;
+        }
+        & > .waving-text {
+            position: absolute;
+            top: 100%;
+            margin-top: 65px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .background-text {
+            font-size: 100px;
+            font-weight: 900;
+            text-align: center;
+            width: 100%;
+            text-transform: uppercase;
+            line-height: 1.1;
+            display: block;
+            color: #fff;
+        }
+        h2 {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            margin-bottom: 0;
+            img {
+                width: 300px;
+            }
+        }
+    }
+    // h2 {
+    //     font-family: "Courier";
+    //     text-align: center;
+    //     color: var(--color-green);
+    //     text-transform: uppercase;
+    //     font-weight: 700;
+    //     font-size: 40px;
+    //     & > span {
+    //         font-size: 50px;
+    //     }
+    // }
+
+    .section2-inner {
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        aspect-ratio: 2013/1316;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        color: #fff;
+        padding-bottom: 5%;
+        position: relative;
+        &::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            height: 50%;
+            width: 100%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
+        }
+        .content {
+            position: relative;
+            p {
+                line-height: 1.8;
+            }
+        }
+    }
+}
+#section3 {
+    .grid {
+        padding: 100px 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 50px;
+        .text {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .img {
+            img {
+                max-width: 100%;
+            }
+        }
+    }
+}

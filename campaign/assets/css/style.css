@@ -161,4 +161,94 @@ body {
 }
 #section1 .section1-inner .content p {
   line-height: 1.8;
+}
+
+#section2 {
+  padding-top: 150px;
+}
+#section2 .section-title {
+  position: relative;
+  margin-bottom: -230px;
+  z-index: 1;
+}
+#section2 .section-title .section-title-inner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+#section2 .section-title > .bg {
+  width: 100%;
+}
+#section2 .section-title > .waving-text {
+  position: absolute;
+  top: 100%;
+  margin-top: 65px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+#section2 .section-title .background-text {
+  font-size: 100px;
+  font-weight: 900;
+  text-align: center;
+  width: 100%;
+  text-transform: uppercase;
+  line-height: 1.1;
+  display: block;
+  color: #fff;
+}
+#section2 .section-title h2 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  margin-bottom: 0;
+}
+#section2 .section-title h2 img {
+  width: 300px;
+}
+#section2 .section2-inner {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  aspect-ratio: 2013/1316;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  color: #fff;
+  padding-bottom: 5%;
+  position: relative;
+}
+#section2 .section2-inner::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  height: 50%;
+  width: 100%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
+}
+#section2 .section2-inner .content {
+  position: relative;
+}
+#section2 .section2-inner .content p {
+  line-height: 1.8;
+}
+
+#section3 .grid {
+  padding: 100px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+}
+#section3 .grid .text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+#section3 .grid .img img {
+  max-width: 100%;
 }/*# sourceMappingURL=style.css.map */
