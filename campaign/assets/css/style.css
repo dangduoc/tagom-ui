@@ -26,6 +26,15 @@
   font-style: italic;
   font-display: swap;
 }
+@font-face {
+  font-family: "STARSHINES";
+  src: url("/assets/fonts/DFVN-STARSHINES-ITALIC.TTF");
+  font-style: italic;
+}
+@font-face {
+  font-family: "STARSHINES";
+  src: url("/assets/fonts/DFVN-STARSHINES-REGULAR.TTF");
+}
 body {
   font-family: "Montserrat", sans-serif;
   --color-orange: #f29328;
@@ -251,4 +260,111 @@ body {
 }
 #section3 .grid .img img {
   max-width: 100%;
+}
+#section3 .section-title {
+  margin-top: 250px;
+}
+#section3 .section-title img.bg {
+  width: 100%;
+}
+#section3 .section-title .container {
+  position: relative;
+}
+#section3 .section-title .container .text {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0;
+  width: 100%;
+  padding: 0 15%;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 32px;
+}
+#section3 .section-title .container .star {
+  position: absolute;
+}
+#section3 .section-title .container .star.star-top {
+  top: -35%;
+  left: 0;
+  width: 30%;
+  transform: rotate(15deg);
+  transform-origin: center;
+}
+#section3 .section-title .container .star.star-bottom {
+  bottom: 0;
+  right: 5%;
+  width: 16%;
+  transform: rotate(45deg);
+  transform-origin: top;
+}
+
+#section4 .section-title {
+  position: relative;
+}
+#section4 .section-title .background-text {
+  font-size: 100px;
+  font-weight: 900;
+  text-align: center;
+  width: 100%;
+  text-transform: uppercase;
+  line-height: 1.1;
+  display: block;
+  color: #fff;
+}
+#section4 .section-title h2 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+#section4 h2 {
+  font-family: "Courier";
+  text-align: center;
+  color: var(--color-green);
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 50px;
+}
+
+#section5 {
+  position: relative;
+}
+#section5 .bg {
+  width: 100%;
+}
+#section5 .section5-inner {
+  padding-right: 40%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  color: #fff;
+}
+#section5 .section5-inner .star {
+  position: absolute;
+}
+#section5 .section5-inner .star.star1 {
+  width: 20%;
+  bottom: -35%;
+  left: -5%;
+  transform: rotate(-45deg);
+  transform-origin: left;
+}
+#section5 .section5-inner .star.star2 {
+  width: 10%;
+  bottom: -10%;
+  left: 15%;
+  transform: rotate(5deg);
+}
+#section5 > .bag {
+  width: 40%;
+  position: absolute;
+  bottom: -15%;
+  right: 0;
 }/*# sourceMappingURL=style.css.map */
