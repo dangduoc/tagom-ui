@@ -10,7 +10,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="/assets/plugins/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/a.css">
 </head>
 
 <body>
@@ -210,9 +211,86 @@
                         <p>Túi được sản xuất từ nhựa PP tái sinh, vừa giúp giảm lượng nhựa nguyên sinh, vừa đảm bảo độ
                             bền cao, chịu lực tốt và sử dụng lâu dài.</p>
                     </div>
-                     <div class="item img">
+                    <div class="item img">
                         <img src="/assets/images/section6-img3.png">
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="section7">
+            <div class="inner container">
+                <div class="row g-0 align-items-start">
+
+                    <!-- LEFT -->
+                    <div class="col-12 col-md-6">
+                        <div id="mainImgWrap">
+                            <img id="mainImg" src="/assets/images/bags/img-0.png" alt="Túi vải" />
+                        </div>
+                        <div class="thumb-list" id="thumbList">
+                            <div class="thumb-item active" data-src="/assets/images/bags/img-0.png"><img
+                                    src="/assets/images/bags/img-0.png" alt="" /></div>
+                            <div class="thumb-item" data-src="/assets/images/bags/img-1.png"><img
+                                    src="/assets/images/bags/img-1.png" alt="" /></div>
+                            <div class="thumb-item" data-src="/assets/images/bags/img-2.png"><img
+                                    src="/assets/images/bags/img-2.png" alt="" /></div>
+                            <div class="thumb-item" data-src="/assets/images/bags/img-3.png"><img
+                                    src="/assets/images/bags/img-3.png" alt="" /></div>
+                            <div class="thumb-item" data-src="/assets/images/bags/img-4.png"><img
+                                    src="/assets/images/bags/img-4.png" alt="" /></div>
+                            <div class="thumb-item" data-src="/assets/images/bags/img-5.png"><img
+                                    src="/assets/images/bags/img-5.png" alt="" /></div>
+                            <div class="thumb-item" data-src="/assets/images/bags/img-5.png"><img
+                                    src="/assets/images/bags/img-5.png" alt="" /></div>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT -->
+                    <div class="col-12 col-md-6 ps-4 ps-md-5">
+                        <p class="label-small">Tên túi</p>
+                        <p class="product-name">"TẮT NILON, BẬT SỰ SỐNG!"</p>
+
+                        <div class="price-row">
+                            <span class="price-label">Giá tiền:</span>
+                            <span class="price-value">15.000</span>
+                            <span class="price-unit">VND</span>
+                        </div>
+
+                        <p class="spec-line"><strong>Kích thước:</strong> 40cm x 60cm x 25cm</p>
+                        <p class="spec-line"><strong>Chất liệu:</strong> Vải PP dệt</p>
+
+                        <p class="meaning-text">
+                            <strong>Ý nghĩa:</strong> Giảm thiểu rác thải đồng nghĩa với việc môi trường trở nên
+                            xanh sạch hơn. Hình ảnh cây xanh vươn ra từ chữ ON thể hiện sự
+                            sống quay lại khi chúng ta thay đổi.
+                        </p>
+
+                        <button class="btn-order" id="orderBtn">
+                            ĐẶT HÀNG
+                            <span class="orb"></span>
+                        </button>
+                    </div>
+
+                </div>
+
+                <!-- Bottom CTA -->
+                <div class="cta-section">
+                    <a href="#" class="btn-cta">
+                        XEM THÊM MẪU TÚI
+                        <span class="orb">
+                            <svg viewBox="0 0 24 24">
+                                <polyline points="9 18 15 12 9 6" />
+                            </svg>
+                        </span>
+                    </a>
+                    <a href="#" class="btn-cta">
+                        XEM THÊM CÁC SẢN PHẨM CỦA TLP
+                        <span class="orb">
+                            <svg viewBox="0 0 24 24">
+                                <polyline points="9 18 15 12 9 6" />
+                            </svg>
+                        </span>
+                    </a>
                 </div>
             </div>
         </div>
@@ -220,6 +298,25 @@
     <script src="/assets/plugins/jquery/dist/jquery.min.js"></script>
     <script src="/assets/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/assets/plugins/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script>
+        $(function () {
+            $('#thumbList .thumb-item').on('click', function () {
+                $('#thumbList .thumb-item').removeClass('active');
+                $(this).addClass('active');
+                const src = $(this).data('src');
+                $('#mainImg').animate({ opacity: 0 }, 100, function () {
+                    $(this).attr('src', src).animate({ opacity: 1 }, 150);
+                });
+            });
+
+            $('#orderBtn').on('click', function () {
+                const $btn = $(this);
+                const orig = $btn.html();
+                $btn.html('✔ Đã đặt hàng! <span class="orb"></span>').css('background', '#2a9d2a');
+                setTimeout(() => { $btn.html(orig).css('background', ''); }, 2000);
+            });
+        });
+    </script>
 </body>
 
 </html>
