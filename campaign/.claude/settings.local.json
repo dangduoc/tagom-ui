@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__claude_ai_Figma__whoami",
+      "mcp__figma__get_design_context",
+      "mcp__figma__get_metadata"
+    ]
+  }
+}

@@ -52,9 +52,10 @@ body {
 }
 #app-nav .nav-items {
   display: flex;
-  gap: 20px;
+  gap: 60px;
   align-items: center;
   justify-content: center;
+  margin-top: 24px;
 }
 #app-nav .nav-items a {
   font-size: 16px;
@@ -80,7 +81,8 @@ body {
 }
 
 #app-banner {
-  aspect-ratio: 1919/1190;
+  height: 100dvh;
+  width: 100%;
   position: relative;
 }
 #app-banner::before {
@@ -101,16 +103,26 @@ body {
   position: relative;
 }
 #app-banner .app-banner-content {
-  margin-top: 125px;
   color: #fff;
 }
 #app-banner .app-banner-content .label {
   text-transform: uppercase;
 }
+#app-banner .app-banner-content .title {
+  font-family: "StarShines";
+  margin: 20px 0;
+  font-size: 45px;
+}
+#app-banner .app-banner-content .description {
+  margin-bottom: 24px;
+  font-size: 18px;
+}
 #app-banner .app-banner-content .actions .btn-cta {
   text-transform: uppercase;
   color: inherit;
-  border-radius: 8px;
+  padding: 0 32px;
+  font-weight: 500;
+  font-size: 18px;
   background-color: var(--color-orange);
 }
 #app-banner > .text-banner {
@@ -127,7 +139,7 @@ body {
   position: relative;
 }
 #section1 .section-title .background-text {
-  font-size: 100px;
+  font-size: 8vw;
   font-weight: 900;
   text-align: center;
   width: 100%;
@@ -149,14 +161,15 @@ body {
   color: var(--color-green);
   text-transform: uppercase;
   font-weight: 700;
-  font-size: 40px;
+  font-size: 44px;
 }
 #section1 h2 > span {
-  font-size: 50px;
+  font-size: 60px;
 }
 #section1 .section1-inner {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
+  justify-content: center;
   gap: 50px;
 }
 #section1 .section1-inner .img {
@@ -167,9 +180,10 @@ body {
 }
 #section1 .section1-inner .content {
   flex: 1;
+  max-width: 570px;
 }
 #section1 .section1-inner .content p {
-  line-height: 1.8;
+  line-height: 1.6;
 }
 
 #section2 {
@@ -190,15 +204,8 @@ body {
 #section2 .section-title > .bg {
   width: 100%;
 }
-#section2 .section-title > .waving-text {
-  position: absolute;
-  top: 100%;
-  margin-top: 65px;
-  left: 50%;
-  transform: translateX(-50%);
-}
 #section2 .section-title .background-text {
-  font-size: 100px;
+  font-size: 8vw;
   font-weight: 900;
   text-align: center;
   width: 100%;
@@ -218,11 +225,19 @@ body {
 #section2 .section-title h2 img {
   width: 300px;
 }
+#section2 .waving-text {
+  position: absolute;
+  top: 50%;
+  margin-top: 12%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 600px;
+}
 #section2 .section2-inner {
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  aspect-ratio: 2013/1316;
+  aspect-ratio: 1909/1058;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -244,6 +259,7 @@ body {
 }
 #section2 .section2-inner .content p {
   line-height: 1.8;
+  max-width: 600px;
 }
 
 #section3 .grid {
@@ -304,7 +320,7 @@ body {
   position: relative;
 }
 #section4 .section-title .background-text {
-  font-size: 100px;
+  font-size: 8vw;
   font-weight: 900;
   text-align: center;
   width: 100%;
@@ -326,17 +342,28 @@ body {
   color: var(--color-green);
   text-transform: uppercase;
   font-weight: 700;
-  font-size: 50px;
+  font-size: 55px;
+}
+#section4 .inner {
+  padding: 100px 0;
+}
+#section4 .img {
+  padding: 30px 0;
+  text-align: center;
+}
+#section4 .img img {
+  max-width: 800px;
 }
 
 #section5 {
   position: relative;
+  padding-top: 100px;
 }
 #section5 .bg {
   width: 100%;
 }
 #section5 .section5-inner {
-  padding-right: 40%;
+  padding-right: 36%;
   position: absolute;
   top: 0;
   left: 0;
@@ -346,25 +373,105 @@ body {
   align-items: center;
   color: #fff;
 }
+#section5 .section5-inner .container {
+  margin-top: 60px;
+}
+#section5 .section5-inner .container p {
+  max-width: 700px;
+  margin: auto;
+  line-height: 1.6;
+}
 #section5 .section5-inner .star {
   position: absolute;
 }
 #section5 .section5-inner .star.star1 {
-  width: 20%;
-  bottom: -35%;
-  left: -5%;
+  width: 160px;
+  bottom: -120px;
+  left: -40px;
   transform: rotate(-45deg);
   transform-origin: left;
 }
 #section5 .section5-inner .star.star2 {
-  width: 10%;
+  width: 80px;
   bottom: -10%;
-  left: 15%;
+  left: 140px;
   transform: rotate(5deg);
 }
 #section5 > .bag {
   width: 40%;
   position: absolute;
-  bottom: -15%;
-  right: 0;
+  right: -5%;
+  bottom: -35%;
+}
+
+#section6 > .inner {
+  padding: 200px 0;
+  padding-bottom: 0;
+}
+#section6 .grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 32px 80px;
+  padding: 30px 0;
+}
+#section6 .grid .item {
+  text-align: center;
+}
+#section6 .grid .item.text {
+  text-align: left;
+}
+#section6 .grid .item.text .title {
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 12px;
+}
+#section6 .grid .item.img img {
+  height: 160px;
+  margin-bottom: 40px;
+}
+#section6 .grid .item.last img {
+  margin-bottom: 0;
+  margin-top: -70px;
+  height: auto;
+  max-width: 100%;
+}
+
+#section7 .section-title {
+  position: relative;
+  z-index: 1;
+}
+#section7 .section-title .section-title-inner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  margin-top: 10%;
+}
+#section7 .section-title > .bg {
+  width: 100%;
+}
+#section7 .section-title .background-text {
+  font-size: 8vw;
+  font-weight: 900;
+  text-align: center;
+  width: 100%;
+  text-transform: uppercase;
+  line-height: 1.1;
+  display: block;
+  color: #57921d;
+}
+#section7 .section-title h2 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  margin-bottom: 0;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-family: "Courier";
+  font-size: 55px;
 }/*# sourceMappingURL=style.css.map */
