@@ -1,0 +1,270 @@
+@font-face {
+    font-family: "Courier";
+    src: url("/assets/fonts/Courier-Bold.ttf");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+#pc1 {
+    --color-orange: #f29328;
+    --color-green: #699d36;
+
+    background-color: #f9fcf4;
+    font-family: "Montserrat", sans-serif;
+    position: relative;
+    overflow: hidden;
+    padding-bottom: 160px;
+
+    // ── Background decorative text ──────────────────────────────────────
+    .pc1__bg-text {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        font-weight: 900;
+        font-size: clamp(60px, 8.42vw, 160px);
+        color: #fff;
+        line-height: 1.5;
+        pointer-events: none;
+        z-index: 0;
+        padding-top: 10px;
+
+        span {
+            display: block;
+        }
+    }
+
+    // ── SVG connecting lines overlay ────────────────────────────────────
+    .pc1__lines {
+        position: absolute;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        z-index: 2;
+        overflow: visible;
+    }
+
+    // ── Stars ───────────────────────────────────────────────────────────
+    .pc1__star {
+        position: absolute;
+        pointer-events: none;
+        z-index: 0;
+
+        &--tl {
+            left: 160px;
+            top: 425px;
+            width: 273px;
+            transform: rotate(-50.54deg);
+        }
+
+        &--tr {
+            right: 160px;
+            top: 392px;
+            width: 273px;
+            transform: rotate(-50.54deg);
+        }
+
+        &--ml {
+            left: calc(25% + 121px);
+            top: 1300px;
+            width: 167px;
+            transform: rotate(-50.54deg);
+        }
+
+        &--br-big {
+            right: calc(25% - 45px);
+            bottom: 400px;
+            width: 272px;
+            transform: rotate(-127.61deg);
+        }
+
+        &--br-sm {
+            left: 111px;
+            bottom: 300px;
+            width: 157px;
+            transform: rotate(-127.61deg);
+        }
+    }
+
+    .pc1__heading {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+        min-height: 503px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        h2 {
+            font-family: "Courier", monospace;
+            font-weight: 700;
+            color: var(--color-green);
+            text-transform: uppercase;
+            font-size: clamp(28px, 2.1vw, 40px);
+            line-height: 1.5;
+            margin: 0;
+        }
+    }
+
+    .pc1__heading-big {
+        font-size: clamp(48px, 4.2vw, 80px);
+    }
+
+    // ── Partners layout ─────────────────────────────────────────────────
+    .pc1__partners {
+        position: relative;
+        z-index: 1;
+        margin: 0 auto;
+        padding: 0 160px;
+    }
+
+    .pc1__partners_row {
+        display: flex;
+        gap: 20px;
+        .pc1__partners_col {
+            flex: 1;
+            overflow: hidden;
+        }
+        .pc1__partners_col:nth-child(2) {
+            width: 40%;
+            flex: unset;
+            overflow: hidden;
+        }
+    }
+
+    // ── Partner column ──────────────────────────────────────────────────
+    .pc1__partner {
+        position: relative;
+        .pc1__partner-photo {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            overflow: hidden;
+            position: relative;
+            max-width: 100%;
+            flex-shrink: 0;
+
+            &::after {
+                content: "";
+                display: block;
+                position: absolute;
+                inset: 0;
+                background-color: rgba(0, 0, 0, 0.2);
+            }
+
+            img:not(.pc1__partner-logo) {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
+
+            .pc1__partner-logo {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 1;
+                height: 77px;
+                max-width: 80%;
+                object-fit: contain;
+            }
+        }
+    }
+
+    .pc1-desc {
+        margin-top: 24px;
+        font-size: 14px;
+        line-height: 1.8;
+        text-align: justify;
+        color: #000;
+        margin-bottom: 0;
+    }
+
+    .pc1__btn-more {
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-top: 28px;
+        padding: 0 12px 0 20px;
+        height: 52px;
+        border: 3px solid var(--color-orange);
+        border-radius: 88px;
+        font-size: 14px;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: #000;
+        text-decoration: none;
+        white-space: nowrap;
+        width: 100%;
+        box-sizing: border-box;
+        transition:
+            background-color 0.2s,
+            color 0.2s;
+
+        img {
+            width: 40px;
+            height: 40px;
+            transform: rotate(-90deg);
+            flex-shrink: 0;
+        }
+
+        &:hover {
+            background-color: var(--color-orange);
+            color: #fff;
+        }
+    }
+
+    // ── Center column ───────────────────────────────────────────────────
+    .pc1__center {
+        position: relative;
+        .pc1__bag {
+            position: relative;
+            width: 72%;
+            margin: auto;
+            margin-bottom: 40px;
+            &::before {
+                content: "";
+                width: 100%;
+                display: block;
+                aspect-ratio: 1;
+                background-color: #ffcf5f;
+                border-radius: 100%;
+                opacity: 0.53;
+            }
+
+            img {
+                width: 105%;
+                display: block;
+                position: absolute;
+                left: -12%;
+                top: 18%;
+            }
+        }
+    }
+
+    // ── GVS Project section ─────────────────────────────────────────────
+    .pc1__project {
+        position: relative;
+        z-index: 1;
+        margin-top: 80px;
+        .pc1__project-img {
+            width: 72%;
+            margin: auto;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+            margin-bottom: 40px;
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
+        }
+    }
+}

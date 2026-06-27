@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PC1 - Giới Thiệu Chiến Dịch</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style2.css">
+</head>
+
+<body>
+
+    <section id="pc1">
+
+        <!-- Background decorative text -->
+        <div class="pc1__bg-text">
+            <span>GIỚI THIỆU</span>
+            <span>CHIẾN DỊCH</span>
+        </div>
+
+        <!-- Decorative stars -->
+        <img class="pc1__star pc1__star--tl" src="/assets/images/star.png" alt="">
+        <img class="pc1__star pc1__star--tr" src="/assets/images/star.png" alt="">
+
+        <!-- Middle star decoration -->
+        <img class="pc1__star pc1__star--ml" src="/assets/images/star.png" alt="">
+
+        <!-- Bottom star decorations -->
+        <img class="pc1__star pc1__star--br-big" src="/assets/images/star.png" alt="">
+        <img class="pc1__star pc1__star--br-sm" src="/assets/images/star.png" alt="">
+
+        <!-- SVG connecting lines: paths drawn by JS on load/resize -->
+        <svg id="pc1Lines" class="pc1__lines" aria-hidden="true">
+            <path id="pc1LineTLP" fill="none" stroke="#699d36" stroke-width="2.5" stroke-dasharray="8 6"
+                stroke-linecap="round" />
+            <path id="pc1LineTagom" fill="none" stroke="#699d36" stroke-width="2.5" stroke-dasharray="8 6"
+                stroke-linecap="round" />
+            <circle id="pc1DotTLP" r="6" fill="#699d36" />
+            <circle id="pc1DotTagom" r="6" fill="#699d36" />
+            <circle id="pc1DotBag" r="6" fill="#699d36" />
+            <!-- bag right-center → project circle right-center -->
+            <path id="pc1LineProj" fill="none" stroke="#699d36" stroke-width="2.5" stroke-dasharray="8 6"
+                stroke-linecap="round" />
+            <circle id="pc1DotBagRight" r="6" fill="#699d36" />
+            <circle id="pc1DotProjRight" r="6" fill="#699d36" />
+            <!-- project circle left-edge (2/3 down) → partners bottom (15% from left) -->
+            <path id="pc1LineProjLeft" fill="none" stroke="#699d36" stroke-width="2.5" stroke-dasharray="8 6"
+                stroke-linecap="round" />
+            <circle id="pc1DotProjLeft" r="6" fill="#699d36" />
+            <circle id="pc1DotPartnersBot" r="6" fill="#699d36" />
+        </svg>
+
+        <!-- Heading overlay -->
+        <div class="pc1__heading">
+            <h2>
+                <span class="pc1__heading-big">TẮT</span> NILON<br>
+                <span class="pc1__heading-big">BẬT</span> SỰ SỐNG
+            </h2>
+        </div>
+
+        <!-- Partners layout -->
+        <div class="pc1__partners">
+            <div class="pc1__partners_row">
+                <div class="pc1__partners_col">
+                    <div class="pc1__partner pc1__partner--tlp">
+                        <div class="pc1__partner-photo">
+                            <img src="/assets/images/partner2.png" alt="Trường Long Phát">
+                            <img class="pc1__partner-logo" src="/assets/images/tlp-white.png" alt="TLP Logo">
+                        </div>
+                        <p class="pc1-desc">Trường Long Phát là đơn vị chuyên sản xuất và phân phối các dòng
+                            túi đi siêu thị, túi mua sắm thân thiện với môi trường nhằm giảm thiểu rác thải nhựa dùng
+                            một lần và lan tỏa thói quen tiêu dùng xanh đến cộng đồng.</p>
+                        <a class="pc1__btn-more" href="#">
+                            XEM THÊM VỀ TRƯỜNG LONG PHÁT
+                            <img src="https://www.figma.com/api/mcp/asset/04da9e04-a3de-40a0-9d02-c871b029b611" alt="">
+                        </a>
+                    </div>
+                </div>
+                <div class="pc1__partners_col"></div>
+                <div class="pc1__partners_col">
+                    <div class="pc1__partner pc1__partner--tagom">
+                        <div class="pc1__partner-photo">
+                            <img src="/assets/images/partner1.png" alt="TAGOM">
+                            <img class="pc1__partner-logo" src="/assets/images/tagom-white.png" alt="TAGOM Logo">
+                        </div>
+                        <p class="pc1-desc">TAGOM là tổ chức môi trường với mục tiêu thúc đẩy thói quen phân
+                            loại rác tại nguồn trong cộng đồng. Thông qua các chương trình giáo dục nhằm góp phần nâng
+                            cao nhận thức và xây dựng lối sống xanh, bền vững hơn.</p>
+                        <a class="pc1__btn-more" href="#">
+                            XEM THÊM VỀ TAGOM
+                            <img src="https://www.figma.com/api/mcp/asset/04da9e04-a3de-40a0-9d02-c871b029b611" alt="">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="pc1__partners_row" style="margin-top: -150px;">
+                <div class="pc1__partners_col"></div>
+                <div class="pc1__partners_col">
+                    <div class="pc1__center">
+                        <div class="pc1__bag">
+                            <img src="/assets/images/bag0.png" alt="Túi xanh">
+                        </div>
+                        <p class="pc1-desc">Một chiến dịch do <strong>Trường Long Phát</strong> cùng
+                            <strong>TAGOM</strong> thực hiện nhằm kêu gọi mọi người thay đổi thói quen sử dụng túi
+                            nilon khi đi chợ và mua sắm hằng ngày bằng một chiếc túi cá nhân có thể tái sử dụng nhiều
+                            lần. Chỉ cần một chiếc túi được dùng bền bỉ, hàng trăm đến hàng nghìn túi nilon dùng một
+                            lần có thể được giảm bớt, từ đó hạn chế rác thải nhựa trôi ra môi trường và đại dương.
+                        </p>
+                    </div>
+                </div>
+                <div class="pc1__partners_col"></div>
+            </div>
+            <div class="pc1__partners_row">
+                <div class="pc1__partners_col"></div>
+                <div class="pc1__partners_col">
+                    <div class="pc1__project">
+                        <div class="pc1__project-img">
+                            <img src="/assets/images/project.png" alt="Gom vỏ giấy - Sữa trao em">
+                        </div>
+                        <p class="pc1-desc"><strong>Toàn bộ lợi nhuận từ chiến dịch sẽ được dành để hỗ
+                                trợ dự án "Gom vỏ giấy - Sữa trao em"</strong>. Với mỗi chiếc túi trao đi đồng
+                            nghĩa với việc đóng góp thêm một hộp sữa cho các em nhỏ, cùng lan tỏa tinh thần bảo
+                            vệ môi trường và sẻ chia với cộng đồng.</p>
+                    </div>
+                </div>
+                <div class="pc1__partners_col"></div>
+            </div>
+        </div>
+
+
+
+    </section>
+
+    <script>
+        (function () {
+            function drawLines() {
+                var section = document.getElementById('pc1');
+                var svg = document.getElementById('pc1Lines');
+                if (!svg || !section) return;
+
+                var tlpEl = section.querySelector('.pc1__partner--tlp .pc1__partner-photo');
+                var tagomEl = section.querySelector('.pc1__partner--tagom .pc1__partner-photo');
+                var bagEl = section.querySelector('.pc1__bag');
+                var projEl = section.querySelector('.pc1__project-img');
+                var partnersEl = section.querySelector('.pc1__partners');
+                if (!tlpEl || !tagomEl || !bagEl || !projEl || !partnersEl) return;
+
+                var sr = section.getBoundingClientRect();
+
+                // Returns bounding rect relative to the section
+                function relRect(el) {
+                    var r = el.getBoundingClientRect();
+                    return {
+                        left: r.left - sr.left,
+                        top: r.top - sr.top,
+                        width: r.width,
+                        height: r.height,
+                        cx: r.left - sr.left + r.width / 2,
+                        cy: r.top - sr.top + r.height / 2
+                    };
+                }
+
+                var tlp = relRect(tlpEl);
+                var tagom = relRect(tagomEl);
+                var bag = relRect(bagEl);
+                var proj = relRect(projEl);
+                var partners = relRect(partnersEl);
+
+                // Single origin: top-centre of the bag element
+                var bagPt = { x: bag.cx, y: bag.top };
+
+                // Point on each circle's perimeter toward the bag.
+                // yBias (0–1): 0 = aim straight at bag (bottom edge),
+                //              1 = aim purely horizontal (circle's vertical centre).
+                function edgePt(circle, target, yBias) {
+                    var r = circle.width / 2;
+                    var dx = target.x - circle.cx;
+                    // Blend target.y toward circle.cy so the dot moves upward
+                    var blendedY = target.y + (circle.cy - target.y) * yBias;
+                    var dy = blendedY - circle.cy;
+                    var len = Math.sqrt(dx * dx + dy * dy);
+                    if (len === 0) return { x: circle.cx, y: circle.cy - r };
+                    return {
+                        x: circle.cx + r * (dx / len),
+                        y: circle.cy + r * (dy / len)
+                    };
+                }
+
+                // 0.8 → endpoint sits near the vertical centre of each circle
+                var tlpPt = edgePt(tlp, bagPt, 0.8);
+                var tagomPt = edgePt(tagom, bagPt, 0.8);
+
+                // Vertical distances from bag origin to each circle edge point
+                var dyTLP = bagPt.y - tlpPt.y;
+                var dyTagom = bagPt.y - tagomPt.y;
+
+                // Y-shape cubic beziers:
+                // CP1 points straight UP from the bag — both lines share this initial direction,
+                //   creating the visual "stem" of the Y
+                // CP2 is slightly below each circle edge — gives a smooth arrival angle
+                var dTLP =
+                    'M ' + bagPt.x + ' ' + bagPt.y +
+                    ' C ' + bagPt.x + ' ' + (bagPt.y - dyTLP * 1) +
+                    ', ' + tlpPt.x + ' ' + (tlpPt.y + dyTLP * 0) +
+                    ', ' + tlpPt.x + ' ' + tlpPt.y;
+
+                var dTagom =
+                    'M ' + bagPt.x + ' ' + bagPt.y +
+                    ' C ' + bagPt.x + ' ' + (bagPt.y - dyTagom * 1) +
+                    ', ' + tagomPt.x + ' ' + (tagomPt.y + dyTagom * 0) +
+                    ', ' + tagomPt.x + ' ' + tagomPt.y;
+
+                svg.querySelector('#pc1LineTLP').setAttribute('d', dTLP);
+                svg.querySelector('#pc1LineTagom').setAttribute('d', dTagom);
+
+                // Place dots at each anchor point
+                [
+                    ['#pc1DotBag', bagPt.x, bagPt.y],
+                    ['#pc1DotTLP', tlpPt.x, tlpPt.y],
+                    ['#pc1DotTagom', tagomPt.x, tagomPt.y]
+                ].forEach(function (item) {
+                    var el = svg.querySelector(item[0]);
+                    if (el) { el.setAttribute('cx', item[1]); el.setAttribute('cy', item[2]); }
+                });
+
+                // ── Bag right-centre → project circle right-centre ──────────
+                var bagRightPt = { x: bag.cx + bag.width / 2, y: bag.cy };
+                var projRightPt = { x: proj.cx + proj.width / 2, y: proj.cy };
+
+                // C-curve that bulges 80 px to the right of both endpoints
+                var bulge = 240;
+                var dProj =
+                    'M ' + bagRightPt.x + ' ' + bagRightPt.y +
+                    ' C ' + (bagRightPt.x + bulge) + ' ' + bagRightPt.y +
+                    ', ' + (projRightPt.x + bulge) + ' ' + projRightPt.y +
+                    ', ' + projRightPt.x + ' ' + projRightPt.y;
+
+                svg.querySelector('#pc1LineProj').setAttribute('d', dProj);
+
+                [
+                    ['#pc1DotBagRight', bagRightPt.x, bagRightPt.y],
+                    ['#pc1DotProjRight', projRightPt.x, projRightPt.y]
+                ].forEach(function (item) {
+                    var el = svg.querySelector(item[0]);
+                    if (el) { el.setAttribute('cx', item[1]); el.setAttribute('cy', item[2]); }
+                });
+
+                // ── Project circle left-edge (2/3 down) → partners bottom (15% from left) ──
+                var projLeftPt = { x: proj.left, y: proj.top + proj.height * (2 / 3) };
+                var partBotPt = { x: partners.left + partners.width * 0.15, y: partners.top + partners.height };
+
+                // Tangent at the left edge is vertical → CP1 goes straight down.
+                // CP2 arrives from directly above the destination.
+                var dyPL = partBotPt.y - projLeftPt.y;
+                var dProjLeft =
+                    'M ' + projLeftPt.x + ' ' + projLeftPt.y +
+                    ' C ' + projLeftPt.x + ' ' + (projLeftPt.y + dyPL * 0.5) +
+                    ', ' + partBotPt.x + ' ' + (partBotPt.y - dyPL * 0.5) +
+                    ', ' + partBotPt.x + ' ' + partBotPt.y;
+
+                svg.querySelector('#pc1LineProjLeft').setAttribute('d', dProjLeft);
+
+                [
+                    ['#pc1DotProjLeft', projLeftPt.x, projLeftPt.y],
+                    ['#pc1DotPartnersBot', partBotPt.x, partBotPt.y]
+                ].forEach(function (item) {
+                    var el = svg.querySelector(item[0]);
+                    if (el) { el.setAttribute('cx', item[1]); el.setAttribute('cy', item[2]); }
+                });
+
+                // Sync SVG canvas to section dimensions
+                svg.setAttribute('width', sr.width);
+                svg.setAttribute('height', sr.height);
+                svg.setAttribute('viewBox', '0 0 ' + sr.width + ' ' + sr.height);
+            }
+
+            document.addEventListener('DOMContentLoaded', drawLines);
+            window.addEventListener('resize', drawLines);
+        })();
+    </script>
+
+</body>
+
+</html>
