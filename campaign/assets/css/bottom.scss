@@ -17,97 +17,10 @@ body {
     margin: 0;
 }
 
-// ── Cards ──────────────────────────────────────────────────────────────────
-#pc1-cards {
-    padding: 60px 0;
-}
-
-.card-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    gap: 16px;
-}
-
-.card-item {
-    border-radius: 30px;
-    overflow: hidden;
-    position: relative;
-    height: 420px;
-
-    img.card-bg {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-    }
-
-    .card-overlay {
-        position: absolute;
-        inset: 0;
-        background: rgba(177, 177, 177, 0.5);
-        mix-blend-mode: multiply;
-    }
-
-    .card-content {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        padding: 32px;
-        color: #fff;
-        height: 100%;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .card-logo {
-        height: 48px;
-        object-fit: contain;
-        object-position: left;
-        display: block;
-        margin-bottom: 14px;
-    }
-
-    .card-desc {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-        p {
-            font-size: 14px;
-            font-weight: 500;
-            line-height: 1.8;
-            margin-bottom: 20px;
-            max-width: 380px;
-        }
-    }
-}
-
-.btn-arrow {
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    border: 2.5px solid rgba(255, 255, 255, 0.8);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    font-size: 22px;
-    text-decoration: none;
-    line-height: 1;
-    transition: background 0.25s;
-
-    &:hover {
-        background: rgba(255, 255, 255, 0.2);
-        color: #fff;
-    }
-}
-
 // ── Partner ────────────────────────────────────────────────────────────────
 #pc1-partner {
     position: relative;
-    overflow: hidden;
+
     padding: 80px 0 120px;
     .wave-bg {
         position: absolute;
@@ -186,186 +99,185 @@ body {
 
 // ── FAQ ────────────────────────────────────────────────────────────────────
 #pc1-faq {
-    padding: 80px 40px 60px;
-}
-
-.faq-title {
-    font-size: clamp(32px, 3.5vw, 60px);
-    font-weight: 700;
-    text-align: center;
-    color: #000;
-    margin-bottom: 56px;
-}
-
-.faq-wrap {
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-.faq-item {
-    border-bottom: 1.5px solid #000;
-
-    &:first-child {
-        border-top: 1.5px solid #000;
+    padding: 150px 0;
+    .faq-title {
+        font-size: clamp(32px, 3.5vw, 60px);
+        font-weight: 700;
+        text-align: center;
+        color: #000;
+        margin-bottom: 56px;
     }
 
-    &.open {
-        .faq-toggle::after {
-            opacity: 0;
-            transform: translate(-50%, -50%) rotate(90deg);
+    .faq-wrap {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .faq-item {
+        border-bottom: 1.5px solid #000;
+
+        &:first-child {
+            border-top: 1.5px solid #000;
+        }
+
+        &.open {
+            .faq-toggle::after {
+                opacity: 0;
+                transform: translate(-50%, -50%) rotate(90deg);
+            }
         }
     }
-}
 
-.faq-question {
-    display: flex;
-    align-items: center;
-    gap: 24px;
-    padding: 22px 0;
-    cursor: pointer;
-    user-select: none;
-}
-
-.faq-toggle {
-    flex-shrink: 0;
-    width: 28px;
-    height: 28px;
-    position: relative;
-
-    &::before,
-    &::after {
-        content: "";
-        position: absolute;
-        background-color: #000;
-        border-radius: 2px;
-        transition:
-            transform 0.3s ease,
-            opacity 0.3s ease;
-        top: 50%;
-        left: 50%;
+    .faq-question {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        padding: 22px 0;
+        cursor: pointer;
+        user-select: none;
     }
 
-    &::before {
-        width: 18px;
-        height: 3px;
-        transform: translate(-50%, -50%);
+    .faq-toggle {
+        flex-shrink: 0;
+        width: 28px;
+        height: 28px;
+        position: relative;
+
+        &::before,
+        &::after {
+            content: "";
+            position: absolute;
+            background-color: #000;
+            border-radius: 2px;
+            transition:
+                transform 0.3s ease,
+                opacity 0.3s ease;
+            top: 50%;
+            left: 50%;
+        }
+
+        &::before {
+            width: 18px;
+            height: 3px;
+            transform: translate(-50%, -50%);
+        }
+
+        &::after {
+            width: 3px;
+            height: 18px;
+            transform: translate(-50%, -50%);
+        }
     }
 
-    &::after {
-        width: 3px;
-        height: 18px;
-        transform: translate(-50%, -50%);
-    }
-}
-
-.faq-question-text {
-    font-size: 19px;
-    font-weight: 800;
-    color: #000;
-    flex: 1;
-    line-height: 1.4;
-}
-
-.faq-answer {
-    display: none;
-    padding: 0 0 20px 52px;
-    font-size: 16px;
-    line-height: 1.8;
-    color: #444;
-}
-
-.faq-cta-row {
-    padding: 20px 0;
     .faq-question-text {
         font-size: 19px;
         font-weight: 800;
         color: #000;
-        margin-bottom: 16px;
-    }
-}
-
-.faq-cta-buttons {
-    display: flex;
-    gap: 16px;
-    button {
         flex: 1;
+        line-height: 1.4;
     }
-}
 
-.btn-yes {
-    background-color: $orange;
-    color: #fff;
-    font-weight: 800;
-    font-size: 18px;
-    padding: 14px 70px;
-    border-radius: 10px;
-    border: none;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: opacity 0.2s;
-
-    &:hover {
-        opacity: 0.85;
+    .faq-answer {
+        display: none;
+        padding: 0 0 20px 52px;
+        font-size: 16px;
+        line-height: 1.8;
+        color: #444;
     }
-}
 
-.btn-no {
-    background-color: $light-green;
-    color: #000;
-    font-weight: 800;
-    font-size: 18px;
-    padding: 14px 70px;
-    border-radius: 10px;
-    border: none;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: opacity 0.2s;
-
-    &:hover {
-        opacity: 0.75;
+    .faq-cta-row {
+        padding: 20px 0;
+        .faq-question-text {
+            font-size: 19px;
+            font-weight: 800;
+            color: #000;
+            margin-bottom: 16px;
+        }
     }
-}
 
-.btn-ask {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    background-color: $green;
-    color: #fff;
-    font-size: 18px;
-    font-weight: 600;
-    padding: 10px 24px 10px 10px;
-    border-radius: 10px;
-    border: none;
-    margin-top: 0;
-    text-transform: uppercase;
-    text-decoration: none;
-    cursor: pointer;
-    transition: opacity 0.25s;
-    width: 100%;
+    .faq-cta-buttons {
+        display: flex;
+        gap: 16px;
+        button {
+            flex: 1;
+        }
+    }
 
-    &:hover {
-        opacity: 0.88;
+    .btn-yes {
+        background-color: $orange;
         color: #fff;
+        font-weight: 800;
+        font-size: 18px;
+        padding: 14px 70px;
+        border-radius: 10px;
+        border: none;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: opacity 0.2s;
+
+        &:hover {
+            opacity: 0.85;
+        }
     }
 
-    .circle-arrow {
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        border: 2px solid rgba(255, 255, 255, 0.7);
+    .btn-no {
+        background-color: $light-green;
+        color: #000;
+        font-weight: 800;
+        font-size: 18px;
+        padding: 14px 70px;
+        border-radius: 10px;
+        border: none;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: opacity 0.2s;
+
+        &:hover {
+            opacity: 0.75;
+        }
+    }
+
+    .btn-ask {
         display: flex;
         align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-        transform: rotate(180deg);
-        font-size: 45px;
+        gap: 20px;
+        background-color: $green;
+        color: #fff;
+        font-size: 18px;
+        font-weight: 600;
+        padding: 10px 24px 10px 10px;
+        border-radius: 10px;
+        border: none;
+        margin-top: 0;
+        text-transform: uppercase;
+        text-decoration: none;
+        cursor: pointer;
+        transition: opacity 0.25s;
+        width: 100%;
+
+        &:hover {
+            opacity: 0.88;
+            color: #fff;
+        }
+
+        .circle-arrow {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transform: rotate(180deg);
+            font-size: 45px;
+        }
     }
 }
 
 .back-to-top-wrap {
     text-align: center;
-    padding: 50px 0 80px;
+    margin-top: 100px;
 }
 
 .btn-back-top {
@@ -373,10 +285,10 @@ body {
     align-items: center;
     gap: 16px;
     border: 3px solid $green;
-    color: $green;
+    color: #000;
     font-weight: 600;
-    font-size: 18px;
-    padding: 14px 28px 14px 20px;
+    font-size: 16px;
+    padding: 5px 5px 5px 24px;
     border-radius: 30px;
     text-decoration: none;
     text-transform: uppercase;
@@ -388,15 +300,10 @@ body {
         color: $green;
     }
 
-    .circle-arrow {
-        width: 52px;
-        height: 52px;
-        border-radius: 50%;
-        border: 2px solid $green;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 28px;
+    i {
+        font-size: 40px;
+        line-height: 1;
+        color: $green;
     }
 }
 
@@ -736,14 +643,6 @@ body {
 
 // ── Responsive ─────────────────────────────────────────────────────────────
 @media (max-width: 991px) {
-    .card-grid {
-        grid-template-columns: 1fr 1fr;
-
-        > .card-item:first-child {
-            grid-column: 1 / -1;
-        }
-    }
-
     #pc1-partner .inner {
         flex-direction: column;
     }
@@ -762,12 +661,6 @@ body {
 }
 
 @media (max-width: 575px) {
-    .card-grid {
-        grid-template-columns: 1fr;
-    }
-    #pc1-cards {
-        padding: 32px 16px;
-    }
     #pc1-partner {
         padding: 60px 16px 100px;
     }

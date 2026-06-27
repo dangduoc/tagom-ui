@@ -58,6 +58,7 @@
             </div>
             <img class="text-banner" src="./assets/images/a.png">
         </div>
+
         <div id="section1">
             <div class="inner container">
                 <div class="section-title">
@@ -68,84 +69,230 @@
                     </h2>
                 </div>
                 <div class="section1-inner">
-                    <div class="img">
-                        <img src="./assets/images/bag.png">
-                    </div>
-                    <div class="content">
-                        <p>
-                            Một chiến dịch do <strong>Trường Long Phát</strong> cùng <strong>TAGOM</strong> thực hiện:
-                            kêu gọi mọi người thay đổi thói quen sử dụng túi nilon khi đi chợ và mua sắm hằng ngày bằng
-                            một chiếc túi cá nhân có thể tái sử dụng
-                            nhiều lần. Chỉ cần một chiếc túi được dùng bền bỉ, hàng trăm đến hàng nghìn túi nilon dùng
-                            một lần có thể được giảm bớt, từ đó hạn chế rác thải nhựa trôi ra môi trường và đại dương.
-                        </p>
-                        <p>
-                            <strong>Toàn bộ lợi nhuận từ chiến dịch sẽ được dành để hỗ trợ dự án "Gom vỏ giấy - Sữa trao
-                                em"</strong>. Với
-                            mỗi chiếc túi trao đi đồng nghĩa với việc đóng góp thêm một hộp sữa cho các em nhỏ, cùng lan
-                            tỏa tinh thần bảo vệ môi trường và sẻ chia với cộng đồng.
-                        </p>
+                    <!-- Decorative stars -->
+                    <img class="pc1__star pc1__star--tl" src="/assets/images/star.png" alt="">
+                    <img class="pc1__star pc1__star--tr" src="/assets/images/star.png" alt="">
+
+                    <!-- Middle star decoration -->
+                    <img class="pc1__star pc1__star--ml" src="/assets/images/star.png" alt="">
+
+                    <!-- Bottom star decorations -->
+                    <img class="pc1__star pc1__star--br-big" src="/assets/images/star.png" alt="">
+                    <img class="pc1__star pc1__star--br-sm" src="/assets/images/star.png" alt="">
+
+                    <!-- SVG connecting lines: paths drawn by JS on load/resize -->
+                    <svg id="pc1Lines" class="pc1__lines" aria-hidden="true">
+                        <path id="pc1LineTLP" fill="none" stroke="#699d36" stroke-width="2.5" stroke-dasharray="8 6"
+                            stroke-linecap="round" />
+                        <path id="pc1LineTagom" fill="none" stroke="#699d36" stroke-width="2.5" stroke-dasharray="8 6"
+                            stroke-linecap="round" />
+                        <circle id="pc1DotTLP" r="6" fill="#699d36" />
+                        <circle id="pc1DotTagom" r="6" fill="#699d36" />
+                        <circle id="pc1DotBag" r="6" fill="#699d36" />
+                        <!-- bag right-center → project circle right-center -->
+                        <path id="pc1LineProj" fill="none" stroke="#699d36" stroke-width="2.5" stroke-dasharray="8 6"
+                            stroke-linecap="round" />
+                        <circle id="pc1DotBagRight" r="6" fill="#699d36" />
+                        <circle id="pc1DotProjRight" r="6" fill="#699d36" />
+                        <!-- project circle left-edge (2/3 down) → partners bottom (15% from left) -->
+                        <path id="pc1LineProjLeft" fill="none" stroke="#699d36" stroke-width="2.5"
+                            stroke-dasharray="8 6" stroke-linecap="round" />
+                        <circle id="pc1DotProjLeft" r="6" fill="#699d36" />
+                        <circle id="pc1DotPartnersBot" r="6" fill="#699d36" />
+                    </svg>
+
+                    <!-- Partners layout -->
+                    <div class="pc1__partners">
+                        <div class="pc1__partners_row">
+                            <div class="pc1__partners_col">
+                                <div class="pc1__partner pc1__partner--tlp">
+                                    <div class="pc1__partner-photo">
+                                        <img src="/assets/images/partner2.png" alt="Trường Long Phát">
+                                        <img class="pc1__partner-logo" src="/assets/images/tlp-white.png"
+                                            alt="TLP Logo">
+                                    </div>
+                                    <p class="pc1-desc">Trường Long Phát là đơn vị chuyên sản xuất và phân phối các dòng
+                                        túi đi siêu thị, túi mua sắm thân thiện với môi trường nhằm giảm thiểu rác thải
+                                        nhựa
+                                        dùng
+                                        một lần và lan tỏa thói quen tiêu dùng xanh đến cộng đồng.</p>
+                                    <a href="#" class="btn-cta btn-cta-outline">
+                                        XEM THÊM VỀ TRƯỜNG LONG PHÁT
+                                        <i class="bi bi-arrow-right-circle"></i>
+                                    </a>
+
+                                    <!-- <a class="pc1__btn-more" href="#">
+                                        XEM THÊM VỀ TRƯỜNG LONG PHÁT
+                                        <img src="https://www.figma.com/api/mcp/asset/04da9e04-a3de-40a0-9d02-c871b029b611"
+                                            alt="">
+                                    </a> -->
+                                </div>
+                            </div>
+                            <div class="pc1__partners_col"></div>
+                            <div class="pc1__partners_col">
+                                <div class="pc1__partner pc1__partner--tagom">
+                                    <div class="pc1__partner-photo">
+                                        <img src="/assets/images/partner1.png" alt="TAGOM">
+                                        <img class="pc1__partner-logo" src="/assets/images/tagom-white.png"
+                                            alt="TAGOM Logo">
+                                    </div>
+                                    <p class="pc1-desc">TAGOM là tổ chức môi trường với mục tiêu thúc đẩy thói quen phân
+                                        loại rác tại nguồn trong cộng đồng. Thông qua các chương trình giáo dục nhằm góp
+                                        phần
+                                        nâng
+                                        cao nhận thức và xây dựng lối sống xanh, bền vững hơn.</p>
+
+                                    <a href="#" class="btn-cta btn-cta-outline">
+                                        XEM THÊM VỀ TAGOM
+                                        <i class="bi bi-arrow-right-circle"></i>
+                                    </a>
+
+                                    <!-- <a class="pc1__btn-more" href="#">
+                                        XEM THÊM VỀ TAGOM
+                                        <img src="https://www.figma.com/api/mcp/asset/04da9e04-a3de-40a0-9d02-c871b029b611"
+                                            alt="">
+                                    </a> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pc1__partners_row" style="margin-top: -150px;">
+                            <div class="pc1__partners_col"></div>
+                            <div class="pc1__partners_col">
+                                <div class="pc1__center">
+                                    <div class="pc1__bag">
+                                        <img src="/assets/images/bag0.png" alt="Túi xanh">
+                                    </div>
+                                    <p class="pc1-desc">Một chiến dịch do <strong>Trường Long Phát</strong> cùng
+                                        <strong>TAGOM</strong> thực hiện nhằm kêu gọi mọi người thay đổi thói quen sử
+                                        dụng
+                                        túi
+                                        nilon khi đi chợ và mua sắm hằng ngày bằng một chiếc túi cá nhân có thể tái sử
+                                        dụng
+                                        nhiều
+                                        lần. Chỉ cần một chiếc túi được dùng bền bỉ, hàng trăm đến hàng nghìn túi nilon
+                                        dùng
+                                        một
+                                        lần có thể được giảm bớt, từ đó hạn chế rác thải nhựa trôi ra môi trường và đại
+                                        dương.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="pc1__partners_col"></div>
+                        </div>
+                        <div class="pc1__partners_row">
+                            <div class="pc1__partners_col"></div>
+                            <div class="pc1__partners_col">
+                                <div class="pc1__project">
+                                    <div class="pc1__project-img">
+                                        <img src="/assets/images/project.png" alt="Gom vỏ giấy - Sữa trao em">
+                                    </div>
+                                    <p class="pc1-desc"><strong>Toàn bộ lợi nhuận từ chiến dịch sẽ được dành để hỗ
+                                            trợ dự án "Gom vỏ giấy - Sữa trao em"</strong>. Với mỗi chiếc túi trao đi
+                                        đồng
+                                        nghĩa với việc đóng góp thêm một hộp sữa cho các em nhỏ, cùng lan tỏa tinh thần
+                                        bảo
+                                        vệ môi trường và sẻ chia với cộng đồng.</p>
+                                </div>
+                            </div>
+                            <div class="pc1__partners_col"></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         <div id="section2">
-            <div class="inner">
-                <div class="section-title">
-                    <img class="bg" src="/assets/images/section2-title-bg.png">
-                    <div class="section-title-inner">
-                        <span class="background-text">Giới thiệu<br>Dự án</span>
-                        <h2>
-                            <img src="/assets/images/gomvogiay.png">
-                        </h2>
-                    </div>
-                    <img class="waving-text" src="./assets/images/section2-text.png">
+            <div class="inner container">
+                <div class="paragraph-box">
+                    <img class="govogiay-logo" src="/assets/images/gomvogiay.png">
+                    <h3 class="animate__animated animate__fadeInRightSlow animate__paused">Về dự án</h3>
+                    <p class="animate__animated animate__fadeInUpSlow animate__paused">
+                        Trong quá trình thu gom vỏ hộp sữa tại các trường học, chúng tôi nhiều lần bắt gặp những hộp sữa
+                        bị uống dở hoặc bị vứt bỏ khi còn nguyên. Điều đó khiến chúng tôi trăn trở, bởi ở nhiều điểm
+                        trường vùng xa, các em nhỏ vẫn phải băng qua núi đồi để đến lớp, những bữa cơm còn thiếu thốn
+                        dinh dưỡng, và tình trạng suy dinh dưỡng vẫn còn hiện hữu.
+                    </p>
                 </div>
-
-                <div class="section2-inner" style="background-image: url(./assets/images/section2-bg.png);">
-                    <div class="content container">
-                        <p>
-                            Trong quá trình thu gom vỏ hộp sữa tại các trường học, chúng tôi nhiều lần bắt gặp những hộp
-                            sữa bị uống dở hoặc bị vứt bỏ. Điều đó khiến chúng tôi trăn trở, bởi ở nhiều điểm trường
-                            vùng xa, các em nhỏ vẫn phải băng qua núi đồi để đến lớp, những bữa cơm còn thiếu thốn dinh
-                            dưỡng, và tình trạng suy dinh dưỡng vẫn còn hiện hữu.
-                        </p>
-                    </div>
-                </div>
+                <picture>
+                    <!-- <source media="(min-width:768px)" srcset="/assets/images/home/md/grass.png">
+                        <source media="(min-width:992px)" srcset="/assets/images/home/xl/grass.png">
+                        <source media="(min-width:1600px)" srcset="/assets/images/home/xxl/grass.png">
+                        <source media="(min-width:2000px)" srcset="/assets/images/home/xxxl/grass.png"> -->
+                    <img class="img-bg animate__animated animate__fadeInUpSlow" src="/assets/images/gomvosua.png">
+                </picture>
             </div>
         </div>
         <div id="section3">
             <div class="inner container">
+
                 <div class="grid">
-                    <div class="img"><img src="./assets/images/section3-img1.png"></div>
-                    <div class="text">
-                        <p>Từ những suy nghĩ đó, dự án ra đời với một mong muốn giản dị: biến những chiếc vỏ hộp sữa đã
-                            qua sử dụng thành những hộp sữa mới, trao lại cho các em nhỏ đang cần được tiếp sức trên
-                            hành trình đến trường. Không chỉ góp phần giảm rác thải và bảo vệ môi trường, mỗi vỏ hộp sữa
-                            được gom lại còn mang theo một niềm hy vọng nhỏ – rằng sẽ có thêm một em bé được uống sữa,
-                            được khỏe mạnh hơn và vui vẻ hơn khi đến lớp.</p>
+                    <div class="photos">
+                        <div class="img"><img src="./assets/images/section3-img1.png"></div>
+                        <div class="img"><img src="./assets/images/section3-img2.png"></div>
                     </div>
 
                     <div class="text">
-                        <p>Từ những suy nghĩ đó, dự án ra đời với một mong muốn giản dị: biến những chiếc vỏ hộp sữa đã
-                            qua sử dụng thành những hộp sữa mới, trao lại cho các em nhỏ đang cần được tiếp sức trên
-                            hành trình đến trường. Không chỉ góp phần giảm rác thải và bảo vệ môi trường, mỗi vỏ hộp sữa
-                            được gom lại còn mang theo một niềm hy vọng nhỏ – rằng sẽ có thêm một em bé được uống sữa,
-                            được khỏe mạnh hơn và vui vẻ hơn khi đến lớp.</p>
+                        <p>Từ những suy nghĩ ấy, <strong>Dự án “Gom Vỏ Giấy – Sữa Trao Em”</strong> được hình thành với
+                            mong muốn kết nối
+                            giá trị môi trường và giá trị cộng đồng. Mỗi vỏ hộp sữa được thu gom không chỉ góp phần giảm
+                            rác thải, thúc đẩy tái chế mà còn trở thành một phần của hành trình mang những hộp sữa dinh
+                            dưỡng đến với trẻ em tại các điểm trường khó khăn.</p>
+                        <p>Tiếp nối tinh thần đó, <strong>chiến dịch “Tắt Nilon – Bật Sự Sống”</strong> ra đời với một
+                            niềm tin đơn giản:
+                            những thay đổi nhỏ trong thói quen hằng ngày cũng có thể tạo nên những tác động tích cực cho
+                            xã hội. Khi lựa chọn sử dụng túi tái sử dụng thay cho túi nilon dùng một lần, bạn không chỉ
+                            góp phần bảo vệ môi trường mà còn chung tay tạo thêm nguồn kinh phí để trao những hộp sữa
+                            đến trẻ em vùng cao. Mỗi chiếc túi được sử dụng là một hành động nhỏ hôm nay, nhưng có thể
+                            mang đến những thay đổi ý nghĩa cho tương lai của các em.</p>
                     </div>
-                    <div class="img"><img src="./assets/images/section3-img2.png"></div>
                 </div>
-                <div class="section-title">
-                    <div class="container">
-                        <img class="bg" src="./assets/images/section3-title-bg.png">
-                        <div class="text">
-                            Một hành động nhỏ hôm nay có thể mang lại thêm dinh dưỡng, thêm sức khỏe và thêm
-                            động lực học tập cho các em ngày mai.
+                <div class="achievements">
+                    <div class="achievement-title">
+                        <img class="star" src="/assets/images/star.png">
+                        <h2>Thành tựu</h2>
+                    </div>
+                    <div class="achievements-grid">
+                        <div class="achievement-box">
+                            <div class="achievement-inner">
+                                <img src="/assets/images/achievement.png">
+                                <div class="achievement-values">
+                                    <div class="number">03</div>
+                                    <div class="unit"></div>
+                                </div>
+                            </div>
+                            <p>Trường học đã nhận hỗ trợ</p>
                         </div>
-                        <img class="star star-top" src="/assets/images/star.png">
-                        <img class="star star-bottom" src="/assets/images/star.png">
+                        <div class="achievement-box">
+                            <div class="achievement-inner">
+                                <img src="/assets/images/achievement.png">
+                                <div class="achievement-values">
+                                    <div class="number">4.692</div>
+                                    <div class="unit">(680 Lít)</div>
+                                </div>
+                            </div>
+                            <p>Số hộp sữa đã trao tặng</p>
+                        </div>
+                        <div class="achievement-box">
+                            <div class="achievement-inner">
+                                <img src="/assets/images/achievement.png">
+                                <div class="achievement-values">
+                                    <div class="number">4.692</div>
+                                    <div class="unit">(680 Lít)</div>
+                                </div>
+                            </div>
+                            <p>Lượng giấy được tái chế</p>
+                        </div>
                     </div>
+                    <div class="actions">
+                        <a href="#" class="btn-cta btn-cta-outline">
+                            <span>
+                                Xem thêm về dự án “gom vỏ giấy - sữa trao em”
+                            </span>
+                            <i class="bi bi-arrow-right-circle"></i>
+                        </a>
+                    </div>
+
                 </div>
+
             </div>
         </div>
         <div id="section4">
@@ -160,25 +307,6 @@
                     <img src="/assets/images/ynghiatuixanh.png">
                 </div>
             </div>
-        </div>
-        <div id="section5">
-            <img src="/assets/images/section5-banner-bg.png" class="bg">
-            <div class="section5-inner">
-                <div class="container">
-                    <p>
-                        Mỗi lần tái sử dụng túi là một lần giảm bớt túi nilon dùng một lần, góp phần bảo vệ môi trường
-                        và
-                        xây dựng thói quen tiêu dùng xanh. Không chỉ vậy, mỗi chiếc túi được mua còn góp phần gây quỹ
-                        cho dự
-                        án “Gom Vỏ Giấy Sữa – Trao Em”, chung tay mang thêm những ly sữa dinh dưỡng đến với các em nhỏ ở
-                        vùng khó khăn.
-                    </p>
-                </div>
-
-                <img class="star star1" src="/assets/images/star.png">
-                <img class="star star2" src="/assets/images/star.png">
-            </div>
-            <img class="bag" src="/assets/images/bag3.png">
         </div>
         <div id="section6">
             <div class="inner container">
@@ -303,54 +431,6 @@
             </div>
         </div>
 
-        <!-- ===== CARDS SECTION ===== -->
-        <section id="pc1-cards">
-            <div class="inner container">
-                <div class="card-grid">
-
-                    <!-- Card 1: TLP -->
-                    <div class="card-item">
-                        <img class="card-bg" src="/assets/images/card1.png" alt="Trường Long Phát">
-                        <div class="card-overlay"></div>
-                        <div class="card-content">
-                            <img class="card-logo" src="/assets/images/tlp-white.png" alt="TLP Logo">
-                            <div class="card-desc">
-                                <p>Công ty cổ phần quốc tế Trường Long Phát là doanh nghiệp được thành lập từ
-                                    năm
-                                    2017 dẫn đầu trong lĩnh vực về nhựa.</p>
-                                <a href="#" class="btn-arrow">&#8594;</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Card 2: Tagom -->
-                    <div class="card-item">
-                        <img class="card-bg" src="/assets/images/card2.png" alt="Tagom">
-                        <div class="card-overlay"></div>
-                        <div class="card-content">
-                            <img class="card-logo" src="/assets/images/tagom-white.png" alt="Tagom Logo">
-                            <div class="card-desc">
-                                <a href="#" class="btn-arrow">&#8594;</a>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <!-- Card 3: Partner -->
-                    <div class="card-item">
-                        <img class="card-bg" src="/assets/images/card3.png" alt="Partner">
-                        <div class="card-overlay"></div>
-                        <div class="card-content">
-                            <img class="card-logo" src="/assets/images/gomvogiay-white.png" alt="Partner Logo">
-                            <div class="card-desc">
-                                <a href="#" class="btn-arrow">&#8594;</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <!-- ===== PARTNER SECTION ===== -->
         <section id="pc1-partner">
             <img class="wave-bg" src="/assets/images/wave.png" alt="">
@@ -474,7 +554,7 @@
             <div class="back-to-top-wrap">
                 <a href="#" class="btn-back-top js-back-top">
                     TRỞ VỀ ĐẦU TRANG
-                    <div class="circle-arrow"><i class="bi bi-arrow-up"></i></div>
+                    <i class="bi bi-arrow-up-circle"></i>
                 </a>
             </div>
         </section>
@@ -670,6 +750,153 @@
             }
 
         });
+    </script>
+    <script>
+        (function () {
+            function drawLines() {
+                var section = document.getElementById('section1');
+                var svg = document.getElementById('pc1Lines');
+                if (!svg || !section) return;
+
+                var tlpEl = section.querySelector('.pc1__partner--tlp .pc1__partner-photo');
+                var tagomEl = section.querySelector('.pc1__partner--tagom .pc1__partner-photo');
+                var bagEl = section.querySelector('.pc1__bag');
+                var projEl = section.querySelector('.pc1__project-img');
+                var partnersEl = section.querySelector('.pc1__partners');
+                if (!tlpEl || !tagomEl || !bagEl || !projEl || !partnersEl) return;
+
+                var sr = section.getBoundingClientRect();
+
+                // Returns bounding rect relative to the section
+                function relRect(el) {
+                    var r = el.getBoundingClientRect();
+                    return {
+                        left: r.left - sr.left,
+                        top: r.top - sr.top,
+                        width: r.width,
+                        height: r.height,
+                        cx: r.left - sr.left + r.width / 2,
+                        cy: r.top - sr.top + r.height / 2
+                    };
+                }
+
+                var tlp = relRect(tlpEl);
+                var tagom = relRect(tagomEl);
+                var bag = relRect(bagEl);
+                var proj = relRect(projEl);
+                var partners = relRect(partnersEl);
+
+                // Single origin: top-centre of the bag element
+                var bagPt = { x: bag.cx, y: bag.top };
+
+                // Point on each circle's perimeter toward the bag.
+                // yBias (0–1): 0 = aim straight at bag (bottom edge),
+                //              1 = aim purely horizontal (circle's vertical centre).
+                function edgePt(circle, target, yBias) {
+                    var r = circle.width / 2;
+                    var dx = target.x - circle.cx;
+                    // Blend target.y toward circle.cy so the dot moves upward
+                    var blendedY = target.y + (circle.cy - target.y) * yBias;
+                    var dy = blendedY - circle.cy;
+                    var len = Math.sqrt(dx * dx + dy * dy);
+                    if (len === 0) return { x: circle.cx, y: circle.cy - r };
+                    return {
+                        x: circle.cx + r * (dx / len),
+                        y: circle.cy + r * (dy / len)
+                    };
+                }
+
+                // 0.8 → endpoint sits near the vertical centre of each circle
+                var tlpPt = edgePt(tlp, bagPt, 0.8);
+                var tagomPt = edgePt(tagom, bagPt, 0.8);
+
+                // Vertical distances from bag origin to each circle edge point
+                var dyTLP = bagPt.y - tlpPt.y;
+                var dyTagom = bagPt.y - tagomPt.y;
+
+                // Y-shape cubic beziers:
+                // CP1 points straight UP from the bag — both lines share this initial direction,
+                //   creating the visual "stem" of the Y
+                // CP2 is slightly below each circle edge — gives a smooth arrival angle
+                var dTLP =
+                    'M ' + bagPt.x + ' ' + bagPt.y +
+                    ' C ' + bagPt.x + ' ' + (bagPt.y - dyTLP * 1) +
+                    ', ' + tlpPt.x + ' ' + (tlpPt.y + dyTLP * 0) +
+                    ', ' + tlpPt.x + ' ' + tlpPt.y;
+
+                var dTagom =
+                    'M ' + bagPt.x + ' ' + bagPt.y +
+                    ' C ' + bagPt.x + ' ' + (bagPt.y - dyTagom * 1) +
+                    ', ' + tagomPt.x + ' ' + (tagomPt.y + dyTagom * 0) +
+                    ', ' + tagomPt.x + ' ' + tagomPt.y;
+
+                svg.querySelector('#pc1LineTLP').setAttribute('d', dTLP);
+                svg.querySelector('#pc1LineTagom').setAttribute('d', dTagom);
+
+                // Place dots at each anchor point
+                [
+                    ['#pc1DotBag', bagPt.x, bagPt.y],
+                    ['#pc1DotTLP', tlpPt.x, tlpPt.y],
+                    ['#pc1DotTagom', tagomPt.x, tagomPt.y]
+                ].forEach(function (item) {
+                    var el = svg.querySelector(item[0]);
+                    if (el) { el.setAttribute('cx', item[1]); el.setAttribute('cy', item[2]); }
+                });
+
+                // ── Bag right-centre → project circle right-centre ──────────
+                var bagRightPt = { x: bag.cx + bag.width / 2, y: bag.cy };
+                var projRightPt = { x: proj.cx + proj.width / 2, y: proj.cy };
+
+                // C-curve that bulges 80 px to the right of both endpoints
+                var bulge = 240;
+                var dProj =
+                    'M ' + bagRightPt.x + ' ' + bagRightPt.y +
+                    ' C ' + (bagRightPt.x + bulge) + ' ' + bagRightPt.y +
+                    ', ' + (projRightPt.x + bulge) + ' ' + projRightPt.y +
+                    ', ' + projRightPt.x + ' ' + projRightPt.y;
+
+                svg.querySelector('#pc1LineProj').setAttribute('d', dProj);
+
+                [
+                    ['#pc1DotBagRight', bagRightPt.x, bagRightPt.y],
+                    ['#pc1DotProjRight', projRightPt.x, projRightPt.y]
+                ].forEach(function (item) {
+                    var el = svg.querySelector(item[0]);
+                    if (el) { el.setAttribute('cx', item[1]); el.setAttribute('cy', item[2]); }
+                });
+
+                // ── Project circle left-edge (2/3 down) → partners bottom (15% from left) ──
+                var projLeftPt = { x: proj.left, y: proj.top + proj.height * (2 / 3) };
+                var partBotPt = { x: partners.left + partners.width * 0.15, y: partners.top + partners.height };
+
+                // Tangent at the left edge is vertical → CP1 goes straight down.
+                // CP2 arrives from directly above the destination.
+                var dyPL = partBotPt.y - projLeftPt.y;
+                var dProjLeft =
+                    'M ' + projLeftPt.x + ' ' + projLeftPt.y +
+                    ' C ' + projLeftPt.x + ' ' + (projLeftPt.y + dyPL * 0.5) +
+                    ', ' + partBotPt.x + ' ' + (partBotPt.y - dyPL * 0.5) +
+                    ', ' + partBotPt.x + ' ' + partBotPt.y;
+
+                svg.querySelector('#pc1LineProjLeft').setAttribute('d', dProjLeft);
+
+                [
+                    ['#pc1DotProjLeft', projLeftPt.x, projLeftPt.y],
+                    ['#pc1DotPartnersBot', partBotPt.x, partBotPt.y]
+                ].forEach(function (item) {
+                    var el = svg.querySelector(item[0]);
+                    if (el) { el.setAttribute('cx', item[1]); el.setAttribute('cy', item[2]); }
+                });
+
+                // Sync SVG canvas to section dimensions
+                svg.setAttribute('width', sr.width);
+                svg.setAttribute('height', sr.height);
+                svg.setAttribute('viewBox', '0 0 ' + sr.width + ' ' + sr.height);
+            }
+
+            document.addEventListener('DOMContentLoaded', drawLines);
+            window.addEventListener('resize', drawLines);
+        })();
     </script>
 </body>
 
