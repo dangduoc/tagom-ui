@@ -11,16 +11,15 @@ body {
 
 #pc1-partner {
   position: relative;
-  padding: 80px 0 120px;
+  padding: 150px 0;
 }
 #pc1-partner .wave-bg {
   position: absolute;
   bottom: -20px;
-  left: -5%;
-  width: 110%;
+  left: 0;
+  width: 100%;
   pointer-events: none;
   z-index: 0;
-  opacity: 0.9;
 }
 #pc1-partner .inner {
   position: relative;
@@ -65,7 +64,7 @@ body {
 
 .btn-order {
   display: inline-block;
-  background-color: #f29328;
+  background-color: #e07a2a;
   color: #fff;
   font-size: 18px;
   font-weight: 600;
@@ -84,6 +83,13 @@ body {
 
 #pc1-faq {
   padding: 150px 0;
+}
+#pc1-faq .faq-title-star {
+  text-align: center;
+  margin-bottom: 80px;
+}
+#pc1-faq .faq-title-star img {
+  width: 140px;
 }
 #pc1-faq .faq-title {
   font-size: clamp(32px, 3.5vw, 60px);
@@ -172,7 +178,7 @@ body {
   flex: 1;
 }
 #pc1-faq .btn-yes {
-  background-color: #f29328;
+  background-color: #e07a2a;
   color: #fff;
   font-weight: 800;
   font-size: 18px;
@@ -331,7 +337,7 @@ body {
 }
 .footer-email form {
   display: flex;
-  border: 3px solid #f29328;
+  border: 3px solid #e07a2a;
   border-radius: 30px;
   overflow: hidden;
 }
@@ -352,7 +358,7 @@ body {
   color: rgba(255, 255, 255, 0.65);
 }
 .footer-email .btn-enter {
-  background-color: #f29328;
+  background-color: #e07a2a;
   color: #fff;
   border: none;
   padding: 12px 40px;
@@ -452,7 +458,7 @@ body {
   font-family: "Courier New", monospace;
   font-weight: 700;
   font-size: 32px;
-  color: #f29328;
+  color: #e07a2a;
   text-align: center;
   text-transform: uppercase;
   margin-bottom: 36px;
@@ -471,7 +477,7 @@ body {
   width: 100%;
   height: 63px;
   border-radius: 30px;
-  border: 1.5px solid #f29328;
+  border: 1.5px solid #e07a2a;
   padding: 0 24px;
   font-size: 15px;
   font-family: "Montserrat", sans-serif;
@@ -503,7 +509,7 @@ body {
 .modal-submit {
   display: block;
   margin: 0 auto;
-  background-color: #f29328;
+  background-color: #e07a2a;
   color: #fff;
   font-size: 18px;
   font-weight: 600;
@@ -529,7 +535,7 @@ body {
   width: 24px;
   height: 24px;
   flex-shrink: 0;
-  accent-color: #f29328;
+  accent-color: #e07a2a;
   margin-top: 2px;
   cursor: pointer;
 }
@@ -543,21 +549,21 @@ body {
 .modal-stars {
   display: flex;
   justify-content: center;
-  gap: 10px;
-  margin-bottom: 28px;
-  margin-top: -60px;
+  gap: 24px;
+  margin-bottom: 50px;
+  margin-top: -120px;
 }
 .modal-stars img {
-  width: 120px;
-  height: 120px;
+  width: 140px;
+  height: 140px;
   -o-object-fit: contain;
      object-fit: contain;
 }
 .modal-stars img:nth-child(1) {
-  transform: rotate(-18deg);
+  transform: rotate(-18deg) translateY(20px);
 }
 .modal-stars img:nth-child(3) {
-  transform: rotate(18deg) scaleY(-1);
+  transform: rotate(18deg) translateY(20px);
 }
 
 .modal-thankyou-text {
@@ -567,6 +573,7 @@ body {
   text-align: center;
   line-height: 1.6;
   margin-bottom: 36px;
+  text-transform: uppercase;
 }
 
 .modal-close-x {

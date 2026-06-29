@@ -1,6 +1,6 @@
 // ── Variables ──────────────────────────────────────────────────────────────
 $green: #699d36;
-$orange: #f29328;
+$orange: #e07a2a;
 $bg: #f9fcf4;
 $light-green: #d3fbd2;
 $green-54: #54ab47;
@@ -21,15 +21,14 @@ body {
 #pc1-partner {
     position: relative;
 
-    padding: 80px 0 120px;
+    padding: 150px 0;
     .wave-bg {
         position: absolute;
         bottom: -20px;
-        left: -5%;
-        width: 110%;
+        left: 0;
+        width: 100%;
         pointer-events: none;
         z-index: 0;
-        opacity: 0.9;
     }
 
     .inner {
@@ -100,6 +99,15 @@ body {
 // ── FAQ ────────────────────────────────────────────────────────────────────
 #pc1-faq {
     padding: 150px 0;
+
+    .faq-title-star {
+        text-align: center;
+        margin-bottom: 80px;
+        img {
+            width: 140px;
+        }
+    }
+
     .faq-title {
         font-size: clamp(32px, 3.5vw, 60px);
         font-weight: 700;
@@ -592,20 +600,20 @@ body {
 .modal-stars {
     display: flex;
     justify-content: center;
-    gap: 10px;
-    margin-bottom: 28px;
-    margin-top: -60px;
+    gap: 24px;
+    margin-bottom: 50px;
+    margin-top: -120px;
 
     img {
-        width: 120px;
-        height: 120px;
+        width: 140px;
+        height: 140px;
         object-fit: contain;
 
         &:nth-child(1) {
-            transform: rotate(-18deg);
+            transform: rotate(-18deg) translateY(20px);
         }
         &:nth-child(3) {
-            transform: rotate(18deg) scaleY(-1);
+            transform: rotate(18deg) translateY(20px);
         }
     }
 }
@@ -617,6 +625,7 @@ body {
     text-align: center;
     line-height: 1.6;
     margin-bottom: 36px;
+    text-transform: uppercase;
 }
 
 .modal-close-x {
