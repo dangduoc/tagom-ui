@@ -78,7 +78,7 @@ body {
         color: #e07a2a;
     }
 
-    &.no-icon{
+    &.no-icon {
         padding-right: 24px;
     }
 
@@ -102,7 +102,7 @@ body {
     filter: drop-shadow(0 -80px 5px #fff);
 
     .nav-items {
-        display: flex;
+        display: none;
         gap: 60px;
         align-items: center;
         justify-content: center;
@@ -133,6 +133,88 @@ body {
             }
         }
     }
+
+    .app-nav-sm-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 24px;
+    }
+
+    .app-nav-brands {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        a {
+            display: none;
+            &.tagom {
+                margin-top: 4px;
+                img {
+                    height: 20px;
+                }
+            }
+            img {
+                opacity: 0.6;
+                height: 24px;
+            }
+        }
+    }
+
+    .menu-toggler {
+        svg:last-child {
+            display: none;
+        }
+    }
+
+    &.open {
+        height: 100vh;
+        height: 100dvh;
+        background: var(--color-green);
+        .app-nav-inner {
+            height: 100%;
+            width: 100%;
+            position: relative;
+        }
+        .app-nav-brands {
+            a {
+                display: inline-block;
+            }
+        }
+
+        .menu-toggler {
+            svg:last-child {
+                display: inline-block;
+            }
+            svg:first-child {
+                display: none;
+            }
+        }
+
+        .nav-items {
+            margin-top: 32px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 24px;
+            gap: 24px;
+            color: #fff;
+            a {
+                font-size: inherit;
+                color: inherit;
+                &::after {
+                    color: inherit;
+                }
+            }
+        }
+    }
+}
+
+#app-nav-sm-menu-toggler {
+    padding: 0;
+    border: 0;
+    background: none;
+    width: 22px;
 }
 
 #app-banner {
@@ -191,7 +273,7 @@ body {
         }
     }
 
-    &>.text-banner {
+    .text-banner {
         width: 100%;
         margin-top: -120px;
         position: relative;
@@ -240,7 +322,7 @@ body {
         font-weight: 700;
         font-size: 44px;
 
-        &>span {
+        & > span {
             font-size: 60px;
         }
     }
@@ -487,7 +569,8 @@ body {
         left: 0;
         top: -50px;
         height: 50px;
-        filter: brightness(0) saturate(100%) invert(100%) sepia(100%) saturate(0%) hue-rotate(101deg) brightness(105%) contrast(102%);
+        filter: brightness(0) saturate(100%) invert(100%) sepia(100%) saturate(0%) hue-rotate(101deg) brightness(105%)
+            contrast(102%);
     }
 
     &::after {
@@ -502,7 +585,8 @@ body {
         left: 0;
         bottom: -50px;
         height: 50px;
-        filter: brightness(0) saturate(100%) invert(100%) sepia(100%) saturate(0%) hue-rotate(101deg) brightness(105%) contrast(102%);
+        filter: brightness(0) saturate(100%) invert(100%) sepia(100%) saturate(0%) hue-rotate(101deg) brightness(105%)
+            contrast(102%);
     }
 
     // padding-top: 150px;
@@ -533,7 +617,7 @@ body {
         }
     }
 
-    &>.inner {
+    & > .inner {
         position: relative;
         padding: 50px 0;
     }
@@ -544,7 +628,7 @@ body {
 }
 
 #section3 {
-    &>.inner {
+    & > .inner {
         padding: 150px 0;
     }
 
@@ -569,6 +653,10 @@ body {
                     object-fit: cover;
                     border-radius: 30px;
                     object-position: center;
+                }
+
+                p {
+                    display: none;
                 }
             }
         }
@@ -745,7 +833,7 @@ body {
 }
 
 #section6 {
-    &>.inner {
+    & > .inner {
         padding: 150px 0;
         padding-bottom: 0;
     }
@@ -808,7 +896,8 @@ body {
         left: 0;
         bottom: -50px;
         height: 50px;
-        filter: brightness(0) saturate(100%) invert(100%) sepia(100%) saturate(0%) hue-rotate(101deg) brightness(105%) contrast(102%);
+        filter: brightness(0) saturate(100%) invert(100%) sepia(100%) saturate(0%) hue-rotate(101deg) brightness(105%)
+            contrast(102%);
     }
 
     .section-title {
@@ -825,7 +914,7 @@ body {
             margin-top: 10%;
         }
 
-        &>.bg {
+        & > .bg {
             width: 100%;
         }
 
@@ -861,7 +950,7 @@ body {
         background-size: cover;
         background-repeat: no-repeat;
 
-        &>.inner {
+        & > .inner {
             justify-content: flex-end;
             padding-bottom: 30%;
         }
@@ -895,7 +984,8 @@ body {
     }
 
     #section1 {
-        &>.inner {
+        padding-top: 60px;
+        & > .inner {
             padding: 50px 0;
         }
 
@@ -921,7 +1011,6 @@ body {
 
         .pc1__project {
             margin-top: 20px;
-
         }
 
         .pc1__partners_row {
@@ -948,7 +1037,6 @@ body {
         }
 
         .pc1__partner {
-
             .pc1__partner-photo {
                 max-width: 220px;
                 margin: auto;
@@ -986,6 +1074,7 @@ body {
                     padding: 0 30px;
 
                     p {
+                        display: block;
                         margin-top: 20px;
                         margin-bottom: 0;
                     }
@@ -1069,7 +1158,7 @@ body {
     #section6 .grid {
         display: block;
         padding: 30px;
-        .slick-dots{
+        .slick-dots {
             left: 0;
         }
         .item {
@@ -1084,7 +1173,8 @@ body {
                 }
             }
 
-            .title,p{
+            .title,
+            p {
                 max-width: 100% !important;
                 text-align: left !important;
             }
@@ -1104,8 +1194,20 @@ body {
             }
         }
 
-        .cta-section{
+        .cta-section {
             flex-direction: column;
+        }
+    }
+}
+
+@media screen and (min-width: 992px) {
+    #app-nav {
+        .app-nav-sm-header {
+            display: none;
+        }
+        .nav-items {
+            display: flex;
+            flex-direction: row;
         }
     }
 }
