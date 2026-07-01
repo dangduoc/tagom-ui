@@ -108,41 +108,7 @@
 
 
   /* ── Bottom CTA buttons ── */
-  .btn-cta {
-    display: inline-flex;
-    align-items: center;
-    background: #e07a2a;
-    color: #fff;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.4px;
-    border: none;
-    border-radius: 50px;
-    padding-left: 24px;
-    padding-right: 8px;
-    height: 48px;
-    cursor: pointer;
-    text-transform: uppercase;
-    text-decoration: none;
-    white-space: nowrap;
-    transition: background 0.2s;
-  }
-
-  .btn-cta i {
-    font-size: 32px;
-    margin-left: 12px;
-  }
-
-  .btn-cta.btn-cta-outline {
-    border: 1px solid #e07a2a;
-    background: transparent;
-    color: #e07a2a;
-  }
-
-  .btn-cta:hover {
-    background: #c86a1e;
-    color: #fff;
-  }
+  
 
 
   .cta-section {

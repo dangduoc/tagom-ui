@@ -22,6 +22,7 @@ body {
     position: relative;
 
     padding: 150px 0;
+
     .wave-bg {
         position: absolute;
         bottom: -20px;
@@ -77,25 +78,6 @@ body {
     z-index: 0;
 }
 
-.btn-order {
-    display: inline-block;
-    background-color: $orange;
-    color: #fff;
-    font-size: 18px;
-    font-weight: 600;
-    padding: 14px 36px;
-    border-radius: 30px;
-    border: none;
-    text-decoration: none;
-    text-transform: uppercase;
-    transition: opacity 0.25s;
-    cursor: pointer;
-    &:hover {
-        opacity: 0.85;
-        color: #fff;
-    }
-}
-
 // ── FAQ ────────────────────────────────────────────────────────────────────
 #pc1-faq {
     padding: 150px 0;
@@ -103,13 +85,14 @@ body {
     .faq-title-star {
         text-align: center;
         margin-bottom: 80px;
+
         img {
             width: 140px;
         }
     }
 
     .faq-title {
-        font-size: clamp(32px, 3.5vw, 60px);
+        font-size: clamp(28px, 3.5vw, 60px);
         font-weight: 700;
         text-align: center;
         color: #000;
@@ -195,6 +178,7 @@ body {
 
     .faq-cta-row {
         padding: 20px 0;
+
         .faq-question-text {
             font-size: 19px;
             font-weight: 800;
@@ -206,6 +190,7 @@ body {
     .faq-cta-buttons {
         display: flex;
         gap: 16px;
+
         button {
             flex: 1;
         }
@@ -268,18 +253,23 @@ body {
             color: #fff;
         }
 
-        .circle-arrow {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.7);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            transform: rotate(180deg);
-            font-size: 45px;
+        i {
+            font-size: 30px;
+            line-height: 1;
         }
+
+        // .circle-arrow {
+        //     width: 60px;
+        //     height: 60px;
+        //     border-radius: 50%;
+        //     border: 2px solid rgba(255, 255, 255, 0.7);
+        //     display: flex;
+        //     align-items: center;
+        //     justify-content: center;
+        //     flex-shrink: 0;
+        //     transform: rotate(180deg);
+        //     font-size: 45px;
+        // }
     }
 }
 
@@ -327,17 +317,20 @@ body {
     background-color: $green;
 
     padding: 100px 60px;
-    & > .container {
+
+    &>.container {
         align-items: flex-start;
         display: flex;
         gap: 80px;
         flex-wrap: wrap;
     }
 }
+
 .footer-content {
     flex: 1;
     text-align: center;
 }
+
 .footer-brand {
     display: flex;
     flex-direction: column;
@@ -474,6 +467,7 @@ body {
         opacity: 0;
         transform: translateY(-20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -539,9 +533,11 @@ body {
     &:focus {
         border-color: $green;
     }
+
     &.first-field {
         border-color: $green-54;
     }
+
     &::placeholder {
         color: #999;
     }
@@ -612,6 +608,7 @@ body {
         &:nth-child(1) {
             transform: rotate(-18deg) translateY(20px);
         }
+
         &:nth-child(3) {
             transform: rotate(18deg) translateY(20px);
         }
@@ -655,6 +652,7 @@ body {
     #pc1-partner .inner {
         flex-direction: column;
     }
+
     #pc1-partner .right {
         width: 100%;
     }
@@ -673,8 +671,30 @@ body {
     #pc1-partner {
         padding: 60px 16px 100px;
     }
+
     #pc1-faq {
         padding: 60px 16px;
+
+        .faq-title {
+            margin-bottom: 40px;
+        }
+
+        .faq-question-text {
+            font-size: 14px;
+        }
+
+        .faq-cta-row .faq-question-text {
+            display: none;
+        }
+
+        .btn-yes,
+        .btn-no {
+            padding: 14px 0;
+        }
+
+        .btn-ask {
+            font-size: 14px;
+        }
     }
 
     #pc1-footer {
@@ -682,12 +702,5 @@ body {
         margin: 0 8px 8px;
     }
 
-    .faq-cta-buttons {
-        flex-direction: column;
-    }
 
-    .btn-yes,
-    .btn-no {
-        padding: 14px 40px;
-    }
 }

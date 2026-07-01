@@ -42,6 +42,42 @@ body {
   background-color: #f9fcf4;
 }
 
+.btn-cta {
+  display: inline-flex;
+  align-items: center;
+  background: #e07a2a;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  border: none;
+  border-radius: 50px;
+  padding-left: 24px;
+  padding-right: 8px;
+  height: 48px;
+  cursor: pointer;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+.btn-cta i {
+  font-size: 32px;
+  margin-left: 12px;
+}
+.btn-cta.btn-cta-outline {
+  border: 1px solid #e07a2a;
+  background: transparent;
+  color: #e07a2a;
+}
+.btn-cta.no-icon {
+  padding-right: 24px;
+}
+.btn-cta:hover {
+  background: #c86a1e;
+  color: #fff;
+}
+
 #app-wrapper {
   overflow-x: hidden;
 }
@@ -232,6 +268,9 @@ body {
   display: flex;
   gap: 20px;
 }
+#section1 .pc1__partners_row:nth-child(2) {
+  margin-top: -150px;
+}
 #section1 .pc1__partners_row .pc1__partners_col {
   flex: 1;
   overflow: hidden;
@@ -348,7 +387,7 @@ body {
   content: "";
   width: 100%;
   background-image: url(/assets/images/section4-border.png);
-  background-size: 100% auto;
+  background-size: auto 100%;
   background-position: top center;
   display: block;
   position: absolute;
@@ -362,7 +401,7 @@ body {
   width: 100%;
   background-image: url(/assets/images/section4-border.png);
   transform: scaleY(-1);
-  background-size: 100% auto;
+  background-size: auto 100%;
   background-position: top center;
   display: block;
   position: absolute;
@@ -508,7 +547,7 @@ body {
   content: "";
   width: 100%;
   background-image: url(/assets/images/section4-border.png);
-  background-size: 100% auto;
+  background-size: auto 100%;
   background-position: top center;
   display: block;
   position: absolute;
@@ -521,7 +560,7 @@ body {
   width: 100%;
   background-image: url(/assets/images/section4-border.png);
   transform: scaleY(-1);
-  background-size: 100% auto;
+  background-size: auto 100%;
   background-position: top center;
   display: block;
   position: absolute;
@@ -565,6 +604,7 @@ body {
 }
 #section4 .img img {
   max-width: 680px;
+  width: 100%;
 }
 
 #section6 > .inner {
@@ -615,7 +655,7 @@ body {
   width: 100%;
   background-image: url(/assets/images/section4-border.png);
   transform: scaleY(-1);
-  background-size: 100% auto;
+  background-size: auto 100%;
   background-position: top center;
   display: block;
   position: absolute;
@@ -664,6 +704,181 @@ body {
   font-size: 55px;
 }
 
+@media screen and (max-width: 600px) {
+  #app-banner {
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  #app-banner > .inner {
+    justify-content: flex-end;
+    padding-bottom: 30%;
+  }
+  #app-banner .app-banner-content {
+    padding: 0 20px;
+  }
+  #app-banner .app-banner-content .title {
+    font-size: 30px;
+    line-height: 1.5;
+    margin: 16px 0;
+  }
+  #app-banner .app-banner-content .title span {
+    display: block;
+  }
+  #app-banner .app-banner-content .description {
+    font-size: 14px;
+  }
+  #app-banner .app-banner-content .actions .btn-cta {
+    font-size: 16px;
+  }
+  .btn-cta {
+    height: 40px;
+    font-size: 12px;
+  }
+  #section1 > .inner {
+    padding: 50px 0;
+  }
+  #section1 .section-title .background-text {
+    font-size: 55px;
+  }
+  #section1 .section-title h2 {
+    white-space: nowrap;
+    font-size: 20px;
+  }
+  #section1 .section-title h2 span {
+    font-size: 36px;
+  }
+  #section1 .pc1__partners {
+    margin-top: 20px;
+    padding-bottom: 50px;
+  }
+  #section1 .pc1__project {
+    margin-top: 20px;
+  }
+  #section1 .pc1__partners_row {
+    flex-direction: column;
+    margin-bottom: 16px;
+  }
+  #section1 .pc1__partners_row:nth-child(2) {
+    margin-top: 0;
+  }
+  #section1 .pc1__partners_row .pc1__partners_col:nth-child(2) {
+    width: 100%;
+  }
+  #section1 .pc1__partners_row .pc1__center .pc1__bag {
+    width: 220px;
+  }
+  #section1 .pc1__partners_row .pc1__partners_col {
+    padding: 0 30px;
+  }
+  #section1 .pc1__partner .pc1__partner-photo {
+    max-width: 220px;
+    margin: auto;
+  }
+  #section1 .btn-cta {
+    width: auto;
+  }
+  #section2 .paragraph-box {
+    width: auto;
+    padding: 0 30px;
+  }
+  #section2 .paragraph-box .govogiay-logo {
+    width: 150px;
+    margin-bottom: 30px;
+  }
+  #section3 .grid {
+    flex-direction: column;
+    margin-bottom: 70px;
+  }
+  #section3 .grid .photos {
+    flex: unset;
+    gap: 40px;
+    flex-direction: column;
+  }
+  #section3 .grid .photos .img {
+    padding: 0 30px;
+  }
+  #section3 .grid .photos .img p {
+    margin-top: 20px;
+    margin-bottom: 0;
+  }
+  #section3 .grid .text {
+    display: none;
+  }
+  #section3 .achievements .actions {
+    margin-top: 50px;
+  }
+  #section3 .achievements .btn-cta {
+    padding-left: 16px;
+    font-size: 10px;
+  }
+  #section3 .achievement-title {
+    margin-bottom: 40px;
+  }
+  #section3 .achievement-title .star {
+    width: 55px;
+  }
+  #section3 .achievement-title h2 {
+    font-size: 22px;
+    margin-top: 12px;
+  }
+  #section3 .achievements-grid {
+    gap: 20px;
+    padding: 0 30px;
+  }
+  #section3 .achievements-grid .achievement-box p {
+    font-size: 12px;
+  }
+  #section3 .achievements-grid .achievement-box .achievement-inner .achievement-values .number {
+    font-size: 18px;
+  }
+  #section3 .achievements-grid .achievement-box .achievement-inner .achievement-values .number.single {
+    font-size: 22px;
+  }
+  #section3 .achievements-grid .achievement-box .achievement-inner .achievement-values .unit {
+    font-size: 11px;
+  }
+  #section4 .section-title .background-text {
+    font-size: 55px;
+  }
+  #section4 .section-title h2 {
+    white-space: nowrap;
+    font-size: 36px;
+  }
+  #section4 .img {
+    padding: 0 30px;
+  }
+  #section6 .grid {
+    display: block;
+    padding: 30px;
+  }
+  #section6 .grid .slick-dots {
+    left: 0;
+  }
+  #section6 .grid .item .img {
+    margin-bottom: 24px;
+  }
+  #section6 .grid .item .img img {
+    height: auto;
+    max-width: 90%;
+    max-height: 160px;
+    margin: auto;
+  }
+  #section6 .grid .item .title, #section6 .grid .item p {
+    max-width: 100% !important;
+    text-align: left !important;
+  }
+  #section7 .section-title .background-text {
+    font-size: 44px;
+    white-space: nowrap;
+  }
+  #section7 .section-title h2 {
+    white-space: nowrap;
+    font-size: 36px;
+  }
+  #section7 .cta-section {
+    flex-direction: column;
+  }
+}
 @media screen and (min-width: 768px) and (orientation: portrait) {
   #section2 .paragraph-box {
     width: 50%;

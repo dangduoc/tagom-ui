@@ -11,6 +11,8 @@
         rel="stylesheet">
     <link rel="stylesheet" href="/assets/plugins/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/css/a.css">
     <link rel="stylesheet" href="/assets/css/bottom.css">
@@ -45,7 +47,7 @@
                 <div class="app-banner-content">
                     <div class="label">Chiến dịch</div>
                     <h1 class="title">
-                        Tắt NiLon - Bật Sự Sống
+                        Tắt NiLon - <span>Bật Sự Sống</span>
                     </h1>
                     <p class="description">
                         <strong>100% lợi nhuận</strong> thu được sẽ dùng làm kinh phí cho
@@ -155,7 +157,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="pc1__partners_row" style="margin-top: -150px;">
+                        <div class="pc1__partners_row">
                             <div class="pc1__partners_col"></div>
                             <div class="pc1__partners_col">
                                 <div class="pc1__center">
@@ -226,8 +228,33 @@
 
                 <div class="grid">
                     <div class="photos">
-                        <div class="img"><img src="./assets/images/section3-img1.png"></div>
-                        <div class="img"><img src="./assets/images/section3-img2.png"></div>
+                        <div class="img">
+                            <img src="./assets/images/section3-img1.png">
+                            <p>Từ những suy nghĩ ấy, <strong>Dự án “Gom Vỏ Giấy – Sữa Trao Em”</strong> được hình thành
+                                với
+                                mong muốn kết nối
+                                giá trị môi trường và giá trị cộng đồng. Mỗi vỏ hộp sữa được thu gom không chỉ góp phần
+                                giảm
+                                rác thải, thúc đẩy tái chế mà còn trở thành một phần của hành trình mang những hộp sữa
+                                dinh
+                                dưỡng đến với trẻ em tại các điểm trường khó khăn.</p>
+
+                        </div>
+                        <div class="img">
+                            <img src="./assets/images/section3-img2.png">
+                            <p>Tiếp nối tinh thần đó, <strong>chiến dịch “Tắt Nilon – Bật Sự Sống”</strong> ra đời với
+                                một
+                                niềm tin đơn giản:
+                                những thay đổi nhỏ trong thói quen hằng ngày cũng có thể tạo nên những tác động tích cực
+                                cho
+                                xã hội. Khi lựa chọn sử dụng túi tái sử dụng thay cho túi nilon dùng một lần, bạn không
+                                chỉ
+                                góp phần bảo vệ môi trường mà còn chung tay tạo thêm nguồn kinh phí để trao những hộp
+                                sữa
+                                đến trẻ em vùng cao. Mỗi chiếc túi được sử dụng là một hành động nhỏ hôm nay, nhưng có
+                                thể
+                                mang đến những thay đổi ý nghĩa cho tương lai của các em.</p>
+                        </div>
                     </div>
 
                     <div class="text">
@@ -255,7 +282,7 @@
                             <div class="achievement-inner">
                                 <img src="/assets/images/achievement.png">
                                 <div class="achievement-values">
-                                    <div class="number">03</div>
+                                    <div class="number single">03</div>
                                     <div class="unit"></div>
                                 </div>
                             </div>
@@ -413,9 +440,8 @@
                             sống quay lại khi chúng ta thay đổi.
                         </p>
 
-                        <button class="btn-order" id="orderBtn">
+                        <button class="btn-cta no-icon" id="orderBtn">
                             ĐẶT HÀNG
-                            <span class="orb"></span>
                         </button>
                     </div>
 
@@ -456,7 +482,7 @@
                 <div class="left" style="max-width: 600px;">
                     <h2 class="section-title">ĐỒNG HÀNH CÙNG CHÚNG TỚ</h2>
                     <p class="section-subtitle">Một lựa chọn nhỏ – Tạo nên thay đổi lớn</p>
-                    <a id="btnOrder" class="btn-order">Đặt Hàng</a>
+                    <a id="btnOrder" class="btn-cta no-icon">Đặt Hàng</a>
                 </div>
                 <div class="right">
                     <img class="bag-img" src="/assets/images/bag3.png" alt="Túi Xanh">
@@ -552,7 +578,7 @@
 
                 <!-- Ask us -->
                 <a href="#" class="btn-ask" id="dialog1Btn">
-                    <div class="circle-arrow"><i class="bi bi-plus-lg"></i></div>
+                    <i class="bi bi-plus-circle"></i>
                     ĐẶT CÂU HỎI CHO CHÚNG TÔI
                 </a>
 
@@ -669,10 +695,18 @@
         </div>
     </div>
     <script src="/assets/plugins/jquery/dist/jquery.min.js"></script>
-    <script src="/assets/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/assets/plugins/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <!-- <script src="/assets/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/plugins/imagesloaded/imagesloaded.pkgd.min.js"></script> -->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script>
         $(function () {
+            $('#section6 .grid').slick({
+                dots: true,
+                infinite: true,
+                speed: 300,
+                slidesToShow: 1,
+                adaptiveHeight: true
+            });
             $('#thumbList .thumb-item').on('click', function () {
                 $('#thumbList .thumb-item').removeClass('active');
                 $(this).addClass('active');
@@ -764,7 +798,7 @@
 
         });
     </script>
-    <script>
+    <!-- <script>
         (function () {
             function drawLines() {
                 var section = document.getElementById('section1');
@@ -910,7 +944,9 @@
             document.addEventListener('DOMContentLoaded', drawLines);
             window.addEventListener('resize', drawLines);
         })();
-    </script>
+    </script> -->
+
+
 </body>
 
 </html>

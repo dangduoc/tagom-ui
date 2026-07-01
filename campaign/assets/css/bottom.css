@@ -62,25 +62,6 @@ body {
   z-index: 0;
 }
 
-.btn-order {
-  display: inline-block;
-  background-color: #e07a2a;
-  color: #fff;
-  font-size: 18px;
-  font-weight: 600;
-  padding: 14px 36px;
-  border-radius: 30px;
-  border: none;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: opacity 0.25s;
-  cursor: pointer;
-}
-.btn-order:hover {
-  opacity: 0.85;
-  color: #fff;
-}
-
 #pc1-faq {
   padding: 150px 0;
 }
@@ -92,7 +73,7 @@ body {
   width: 140px;
 }
 #pc1-faq .faq-title {
-  font-size: clamp(32px, 3.5vw, 60px);
+  font-size: clamp(28px, 3.5vw, 60px);
   font-weight: 700;
   text-align: center;
   color: #000;
@@ -229,17 +210,9 @@ body {
   opacity: 0.88;
   color: #fff;
 }
-#pc1-faq .btn-ask .circle-arrow {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  transform: rotate(180deg);
-  font-size: 45px;
+#pc1-faq .btn-ask i {
+  font-size: 30px;
+  line-height: 1;
 }
 
 .back-to-top-wrap {
@@ -617,15 +590,24 @@ body {
   #pc1-faq {
     padding: 60px 16px;
   }
+  #pc1-faq .faq-title {
+    margin-bottom: 40px;
+  }
+  #pc1-faq .faq-question-text {
+    font-size: 14px;
+  }
+  #pc1-faq .faq-cta-row .faq-question-text {
+    display: none;
+  }
+  #pc1-faq .btn-yes,
+  #pc1-faq .btn-no {
+    padding: 14px 0;
+  }
+  #pc1-faq .btn-ask {
+    font-size: 14px;
+  }
   #pc1-footer {
     padding: 40px 24px;
     margin: 0 8px 8px;
-  }
-  .faq-cta-buttons {
-    flex-direction: column;
-  }
-  .btn-yes,
-  .btn-no {
-    padding: 14px 40px;
   }
 }/*# sourceMappingURL=bottom.css.map */
