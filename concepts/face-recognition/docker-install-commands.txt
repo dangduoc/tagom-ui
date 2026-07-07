@@ -1,0 +1,8 @@
+Step 1 - Download the installer (any PowerShell window):
+
+Invoke-WebRequest -Uri "https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe" -OutFile "D:\DockerDesktopInstaller.exe"
+
+
+Step 2 - Install to D: (PowerShell "Run as Administrator"):
+
+& "D:\DockerDesktopInstaller.exe" install --installation-dir="D:\Docker\App" --wsl-default-data-root="D:\Docker\wsl" --accept-license
