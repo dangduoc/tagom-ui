@@ -1,0 +1,20 @@
+# Postgres + pgvector for the production-like setup.
+# The local demo defaults to SQLite and does NOT need this.
+# Start with: docker compose up -d
+# Then run the backend with: DB_BACKEND=postgres DATABASE_URL=postgresql://face:face@localhost:5433/facedb
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    container_name: face-recognition-db
+    environment:
+      POSTGRES_USER: face
+      POSTGRES_PASSWORD: face
+      POSTGRES_DB: facedb
+    ports:
+      - "5433:5432"   # 5433 to avoid clashing with a locally installed Postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./backend/db/schema.sql:/docker-entrypoint-initdb.d/schema.sql:ro
+
+volumes:
+  pgdata:

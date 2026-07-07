@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Live recognition</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="toolbar">
+    @if (!running()) {
+      <ion-button (click)="start()" [disabled]="starting()">
+        {{ starting() ? 'Starting…' : 'Start camera' }}
+      </ion-button>
+    } @else {
+      <ion-button fill="outline" (click)="stop()">Stop</ion-button>
+    }
+
+    @if (cameras().length > 1) {
+      <ion-select
+        interface="popover"
+        [value]="selectedCameraId()"
+        (ionChange)="onCameraChange($event.detail.value)"
+        aria-label="Camera"
+      >
+        @for (cam of cameras(); track cam.deviceId) {
+          <ion-select-option [value]="cam.deviceId">{{ cam.label || 'Camera' }}</ion-select-option>
+        }
+      </ion-select>
+    }
+  </div>
+
+  @if (error()) {
+    <ion-text color="danger"><p>{{ error() }}</p></ion-text>
+  }
+
+  <div class="stage">
+    <video #video playsinline muted></video>
+    <canvas #overlay></canvas>
+  </div>
+
+  <ion-note>
+    Green = recognized, red = unknown, yellow = checking. Names refresh every few
+    seconds per tracked face; detection itself runs entirely in the browser.
+  </ion-note>
+</ion-content>

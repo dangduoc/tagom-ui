@@ -1,0 +1,10 @@
+/* Ionic core + recommended utilities */
+@import "@ionic/angular/css/core.css";
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/* The app is always dark (camera-centric UI) */
+@import "@ionic/angular/css/palettes/dark.always.css";

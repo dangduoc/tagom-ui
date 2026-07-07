@@ -1,0 +1,23 @@
+# Python
+backend/.venv/
+__pycache__/
+*.pyc
+backend/*.db
+backend/local_store.db
+
+# insightface downloaded models
+backend/models/
+.insightface/
+
+# Node / Angular
+node_modules/
+frontend/dist/
+frontend/.angular/
+
+# Env / secrets
+.env
+*.local.env
+
+# OS / editor
+.DS_Store
+Thumbs.db

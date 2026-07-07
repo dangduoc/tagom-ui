@@ -1,0 +1,91 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Take photos ({{ photos().length }}/{{ maxPhotos }})</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="toggleGuide()" aria-label="Show photo guide">
+        <ion-icon slot="icon-only" name="help-circle-outline" />
+      </ion-button>
+      <ion-button (click)="cancel()" aria-label="Close">
+        <ion-icon slot="icon-only" name="close-outline" />
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  @if (cameraError()) {
+    <ion-text color="danger"><p>{{ cameraError() }}</p></ion-text>
+    <ion-button size="small" (click)="startCamera()">Try again</ion-button>
+  }
+
+  @if (showGuide()) {
+    <ol class="guide">
+      @for (step of steps; track step.short; let i = $index) {
+        <li [class.done]="photos().length > i" [class.current]="photos().length === i">
+          <span class="step-title">{{ step.title }}</span>
+          <span class="step-hint"> — {{ step.hint }}</span>
+        </li>
+      }
+    </ol>
+  }
+
+  <div class="video-wrap">
+    <video #video playsinline muted></video>
+
+    @if (review(); as photo) {
+      <img class="preview" [src]="photo.url" alt="Captured photo preview" />
+      <div class="prompt">
+        <strong>Happy with this photo?</strong>
+        <span>Confirm to continue, or retake it.</span>
+      </div>
+      <ion-button class="retake" fill="outline" color="light" size="small" (click)="retake()">
+        <ion-icon slot="start" name="refresh-outline" />
+        Retake
+      </ion-button>
+    } @else {
+      @if (currentStep(); as step) {
+        <div class="prompt">
+          <strong>{{ photos().length + 1 }}/{{ maxPhotos }} · {{ step.title }}</strong>
+          <span>{{ step.hint }}</span>
+        </div>
+      } @else {
+        <div class="prompt done">
+          <strong>All {{ maxPhotos }} photos taken — tap Finish.</strong>
+        </div>
+      }
+      @if (faceStatus(); as status) {
+        <div class="face-status" [class.ok]="status.ok">{{ status.text }}</div>
+      }
+    }
+  </div>
+
+  @if (photos().length > 0) {
+    <div class="thumbs">
+      @for (photo of photos(); track photo.url; let i = $index) {
+        <div class="thumb">
+          <img [src]="photo.url" [alt]="photo.label" />
+          <span class="tag">{{ photo.label }}</span>
+          <button class="remove" (click)="removePhoto(i)" aria-label="Remove photo">×</button>
+        </div>
+      }
+    </div>
+  }
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <div class="actions">
+      <ion-button
+        expand="block"
+        [color]="review() ? 'success' : 'primary'"
+        [disabled]="primaryDisabled()"
+        (click)="primaryAction()"
+      >
+        @if (!review() && !allTaken()) {
+          <ion-icon slot="start" name="camera-outline" />
+        }
+        {{ primaryLabel() }}
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-footer>

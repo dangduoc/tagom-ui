@@ -1,0 +1,135 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Enroll an employee</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-note>
+    Take the {{ maxPhotos }} guided shots with the camera, or upload photos
+    matching the checklist — exactly one face per photo.
+  </ion-note>
+
+  <ol class="guide">
+    @for (step of steps; track step.short; let i = $index) {
+      <li [class.done]="photos().length > i">
+        <span class="step-title">{{ step.title }}</span>
+        <span class="step-hint"> — {{ step.hint }}</span>
+      </li>
+    }
+  </ol>
+
+  <div class="photo-actions">
+    <ion-button (click)="openCaptureModal()">
+      <ion-icon slot="start" name="camera-outline" />
+      {{ photos().length > 0 ? 'Retake photos' : 'Take photos' }}
+    </ion-button>
+    <ion-button fill="outline" (click)="fileInput.click()">
+      <ion-icon slot="start" name="cloud-upload-outline" />
+      Upload photos
+    </ion-button>
+    <input
+      #fileInput
+      type="file"
+      accept="image/*"
+      multiple
+      hidden
+      (change)="onFilesSelected($event)"
+    />
+  </div>
+
+  @if (photos().length > 0) {
+    <div class="thumbs">
+      @for (photo of photos(); track photo.url; let i = $index) {
+        <div class="thumb">
+          <img [src]="photo.url" [alt]="photo.label" />
+          <span class="tag">{{ photo.label }}</span>
+          <button class="remove" (click)="removePhoto(i)" aria-label="Remove photo">×</button>
+        </div>
+      }
+    </div>
+  }
+
+  <form #enrollForm="ngForm" (ngSubmit)="submit(enrollForm)">
+    <ion-list [inset]="true" class="form-list">
+      <ion-item>
+        <ion-input
+          label="Employee code *"
+          labelPlacement="stacked"
+          name="code"
+          [(ngModel)]="employeeCode"
+          required
+          placeholder="e.g. EMP001"
+        />
+      </ion-item>
+      <ion-item>
+        <ion-input
+          label="Full name *"
+          labelPlacement="stacked"
+          name="name"
+          [(ngModel)]="fullName"
+          required
+          placeholder="e.g. Nguyen Van A"
+        />
+      </ion-item>
+      <ion-item>
+        <ion-input
+          label="Department"
+          labelPlacement="stacked"
+          name="department"
+          [(ngModel)]="department"
+          placeholder="optional"
+        />
+      </ion-item>
+    </ion-list>
+
+    <ion-button type="submit" expand="block" class="submit" [disabled]="!canSubmit()">
+      {{ submitting() ? 'Enrolling…' : 'Enroll' }}
+    </ion-button>
+
+    @if (message()) {
+      <ion-text [color]="messageIsError() ? 'danger' : 'success'">
+        <p class="message">{{ message() }}</p>
+      </ion-text>
+    }
+    @if (fileResults().length > 0) {
+      <ul class="file-results">
+        @for (r of fileResults(); track r.file) {
+          <li [class.error]="!r.ok">{{ r.file }} — {{ r.ok ? 'ok' : r.error }}</li>
+        }
+      </ul>
+    }
+  </form>
+
+  <ion-list class="employees">
+    <ion-list-header>
+      <ion-label>Enrolled employees</ion-label>
+    </ion-list-header>
+    @if (employees().length === 0) {
+      <ion-item lines="none">
+        <ion-label color="medium">No one enrolled yet.</ion-label>
+      </ion-item>
+    } @else {
+      @for (emp of employees(); track emp.id) {
+        <ion-item>
+          <ion-label>
+            <h3>{{ emp.full_name }}</h3>
+            <p>
+              {{ emp.employee_code }} · {{ emp.department || '—' }} ·
+              {{ emp.embedding_count }} photo(s)
+            </p>
+          </ion-label>
+          <ion-button
+            slot="end"
+            fill="clear"
+            color="danger"
+            (click)="deleteEmployee(emp.employee_code)"
+            aria-label="Delete employee"
+          >
+            <ion-icon slot="icon-only" name="trash-outline" />
+          </ion-button>
+        </ion-item>
+      }
+    }
+  </ion-list>
+</ion-content>
