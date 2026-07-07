@@ -1,7 +1,12 @@
-# Postgres + pgvector for the production-like setup.
-# The local demo defaults to SQLite and does NOT need this.
-# Start with: docker compose up -d
-# Then run the backend with: DB_BACKEND=postgres DATABASE_URL=postgresql://face:face@localhost:5433/facedb
+# Full stack: pgvector database + FastAPI backend + Angular/Ionic frontend.
+#
+# Start everything:            docker compose up --build -d
+# Frontend:                    http://localhost:4200
+# Backend:                     http://localhost:8000/api/health
+# Database (host access):      postgresql://face:face@localhost:5433/facedb
+#
+# To run only the database (e.g. while iterating on backend/frontend locally
+# with `uvicorn`/`ng serve`), use: docker compose up -d db
 services:
   db:
     image: pgvector/pgvector:pg16
@@ -15,6 +20,36 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./backend/db/schema.sql:/docker-entrypoint-initdb.d/schema.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U face -d facedb"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build: ./backend
+    container_name: face-recognition-backend
+    environment:
+      DB_BACKEND: postgres
+      DATABASE_URL: postgresql://face:face@db:5432/facedb
+      ALLOWED_ORIGINS: "*"
+    ports:
+      - "8000:8000"
+    volumes:
+      # Cache the ~30MB insightface model download across container rebuilds
+      - insightface_models:/root/.insightface
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build: ./frontend
+    container_name: face-recognition-frontend
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
 
 volumes:
   pgdata:
+  insightface_models:

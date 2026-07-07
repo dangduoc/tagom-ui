@@ -21,6 +21,28 @@ seconds (insightface embedding + vector search). See
     `docker-compose.yml` provides it; `backend/db/schema.sql` is applied
     automatically on backend startup.
 
+## Run everything with Docker Compose
+
+No local Python/Node setup needed — builds and runs the database, backend, and
+frontend together:
+
+```powershell
+docker compose up --build -d
+```
+
+- Frontend: http://localhost:4200
+- Backend: http://localhost:8000/api/health
+- Database (host access, e.g. `psql`): `postgresql://face:face@localhost:5433/facedb`
+
+First backend start downloads the ~30 MB buffalo_s model into the
+`insightface_models` volume (cached across rebuilds/restarts). Enrolled
+data lives in the `pgdata` volume. Tear down with `docker compose down`
+(add `-v` to also wipe both volumes).
+
+To run only the database in a container while iterating on backend/frontend
+locally with `uvicorn`/`ng serve`, use `docker compose up -d db` and follow the
+local-dev instructions below.
+
 ## Run the local demo
 
 Backend (first start downloads the ~30 MB buffalo_s model):
@@ -59,7 +81,7 @@ Settings live in `backend/.env` (copy `backend/.env.example`; gitignored).
 With `DB_BACKEND=postgres` in that file, just make sure the database is up:
 
 ```powershell
-docker compose up -d
+docker compose up -d db
 ```
 
 To move existing SQLite enrollments over: `.venv\Scripts\python -m scripts.migrate_sqlite_to_pg`

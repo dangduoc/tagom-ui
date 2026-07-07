@@ -3,8 +3,11 @@
 
 $root = $PSScriptRoot
 
-# 1. Database (needs Docker Desktop running; harmless if already up)
-docker compose --project-directory $root up -d
+# 1. Database only (needs Docker Desktop running; harmless if already up).
+#    docker-compose.yml also defines backend/frontend services for a full
+#    containerized run (see README) — not used here since this script runs
+#    them locally instead, on the same ports.
+docker compose --project-directory $root up -d db
 
 # 2. Backend (reads backend\.env for DB settings) — own window
 Start-Process powershell -ArgumentList @(

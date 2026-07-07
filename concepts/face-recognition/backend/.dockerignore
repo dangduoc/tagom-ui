@@ -1,0 +1,7 @@
+.venv
+__pycache__
+*.pyc
+*.db
+local_store.db
+.env
+scripts
