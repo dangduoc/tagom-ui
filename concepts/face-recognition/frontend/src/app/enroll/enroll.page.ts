@@ -18,7 +18,7 @@ import {
 } from '@ionic/angular/standalone';
 
 import { ApiService, EmployeeInfo, EnrollFileResult } from '../api.service';
-import { CAPTURE_STEPS, CapturedPhoto, CaptureModal } from './capture-modal';
+import { CAPTURE_STEPS, CapturedPhoto, CaptureModal } from './capture-modal/capture-modal';
 
 @Component({
   selector: 'app-enroll',
@@ -38,10 +38,10 @@ import { CAPTURE_STEPS, CapturedPhoto, CaptureModal } from './capture-modal';
     IonTitle,
     IonToolbar,
   ],
-  templateUrl: './enroll.html',
-  styleUrl: './enroll.css',
+  templateUrl: './enroll.page.html',
+  styleUrl: './enroll.page.scss',
 })
-export class Enroll implements OnInit, OnDestroy {
+export class EnrollPage implements OnInit, OnDestroy {
   private readonly api = inject(ApiService);
   private readonly modalCtrl = inject(ModalController);
 
@@ -84,7 +84,7 @@ export class Enroll implements OnInit, OnDestroy {
       if (this.photos().length >= this.maxPhotos) break;
       this.photos.update((list) => [
         ...list,
-        { blob: file, url: URL.createObjectURL(file), label: 'Upload' },
+        { blob: file, url: URL.createObjectURL(file), label: 'Tải lên' },
       ]);
     }
     input.value = '';
@@ -119,7 +119,7 @@ export class Enroll implements OnInit, OnDestroy {
       );
       this.fileResults.set(res.files);
       this.showMessage(
-        `Enrolled ${res.enrolled_photos} photo(s) for ${this.fullName.trim()}.`,
+        `Đã đăng ký ${res.enrolled_photos} ảnh cho ${this.fullName.trim()}.`,
         false,
       );
       this.photos().forEach((p) => URL.revokeObjectURL(p.url));
@@ -134,7 +134,7 @@ export class Enroll implements OnInit, OnDestroy {
   }
 
   async deleteEmployee(code: string): Promise<void> {
-    if (!confirm(`Delete ${code} and all their face data?`)) return;
+    if (!confirm(`Xóa ${code} và toàn bộ dữ liệu khuôn mặt?`)) return;
     try {
       await this.api.deleteEmployee(code);
       await this.refreshEmployees();
@@ -147,7 +147,7 @@ export class Enroll implements OnInit, OnDestroy {
     try {
       this.employees.set(await this.api.listEmployees());
     } catch {
-      this.showMessage('Could not load employee list — is the backend running?', true);
+      this.showMessage('Không tải được danh sách nhân viên — máy chủ đã chạy chưa?', true);
     }
   }
 

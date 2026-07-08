@@ -1,12 +1,17 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Take photos ({{ photos().length }}/{{ maxPhotos }})</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="cancel()" aria-label="Đóng">
+        <ion-icon slot="icon-only" name="close-outline" />
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Chụp ảnh ({{ photos().length }}/{{ maxPhotos }})</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="toggleGuide()" aria-label="Show photo guide">
+      <ion-button (click)="toggleGuide()" aria-label="Xem hướng dẫn chụp">
         <ion-icon slot="icon-only" name="help-circle-outline" />
       </ion-button>
-      <ion-button (click)="cancel()" aria-label="Close">
-        <ion-icon slot="icon-only" name="close-outline" />
+      <ion-button (click)="switchCamera()" aria-label="Đổi camera trước/sau">
+        <ion-icon slot="icon-only" name="camera-reverse-outline" />
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -15,7 +20,7 @@
 <ion-content class="ion-padding">
   @if (cameraError()) {
     <ion-text color="danger"><p>{{ cameraError() }}</p></ion-text>
-    <ion-button size="small" (click)="startCamera()">Try again</ion-button>
+    <ion-button size="small" (click)="startCamera()">Thử lại</ion-button>
   }
 
   @if (showGuide()) {
@@ -35,13 +40,9 @@
     @if (review(); as photo) {
       <img class="preview" [src]="photo.url" alt="Captured photo preview" />
       <div class="prompt">
-        <strong>Happy with this photo?</strong>
-        <span>Confirm to continue, or retake it.</span>
+        <strong>Ảnh này được chứ?</strong>
+        <span>Tiếp tục, hoặc chụp lại.</span>
       </div>
-      <ion-button class="retake" fill="outline" color="light" size="small" (click)="retake()">
-        <ion-icon slot="start" name="refresh-outline" />
-        Retake
-      </ion-button>
     } @else {
       @if (currentStep(); as step) {
         <div class="prompt">
@@ -50,7 +51,7 @@
         </div>
       } @else {
         <div class="prompt done">
-          <strong>All {{ maxPhotos }} photos taken — tap Finish.</strong>
+          <strong>Đã chụp đủ {{ maxPhotos }} ảnh — nhấn Hoàn tất.</strong>
         </div>
       }
       @if (faceStatus(); as status) {
@@ -65,7 +66,7 @@
         <div class="thumb">
           <img [src]="photo.url" [alt]="photo.label" />
           <span class="tag">{{ photo.label }}</span>
-          <button class="remove" (click)="removePhoto(i)" aria-label="Remove photo">×</button>
+          <button class="remove" (click)="removePhoto(i)" aria-label="Xóa ảnh">×</button>
         </div>
       }
     </div>
@@ -75,6 +76,12 @@
 <ion-footer>
   <ion-toolbar>
     <div class="actions">
+      @if (review()) {
+        <ion-button fill="outline" color="medium" (click)="retake()">
+          <ion-icon slot="start" name="refresh-outline" />
+          Chụp lại
+        </ion-button>
+      }
       <ion-button
         expand="block"
         [color]="review() ? 'success' : 'primary'"

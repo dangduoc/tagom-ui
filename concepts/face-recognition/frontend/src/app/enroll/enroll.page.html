@@ -1,13 +1,13 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Enroll an employee</ion-title>
+    <ion-title>Đăng ký nhân viên</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
   <ion-note>
-    Take the {{ maxPhotos }} guided shots with the camera, or upload photos
-    matching the checklist — exactly one face per photo.
+    Chụp {{ maxPhotos }} ảnh theo hướng dẫn bằng camera, hoặc tải lên các ảnh
+    theo danh sách — mỗi ảnh chỉ một khuôn mặt.
   </ion-note>
 
   <ol class="guide">
@@ -22,11 +22,11 @@
   <div class="photo-actions">
     <ion-button (click)="openCaptureModal()">
       <ion-icon slot="start" name="camera-outline" />
-      {{ photos().length > 0 ? 'Retake photos' : 'Take photos' }}
+      {{ photos().length > 0 ? 'Chụp lại' : 'Chụp ảnh' }}
     </ion-button>
     <ion-button fill="outline" (click)="fileInput.click()">
       <ion-icon slot="start" name="cloud-upload-outline" />
-      Upload photos
+      Tải ảnh lên
     </ion-button>
     <input
       #fileInput
@@ -44,7 +44,7 @@
         <div class="thumb">
           <img [src]="photo.url" [alt]="photo.label" />
           <span class="tag">{{ photo.label }}</span>
-          <button class="remove" (click)="removePhoto(i)" aria-label="Remove photo">×</button>
+          <button class="remove" (click)="removePhoto(i)" aria-label="Xóa ảnh">×</button>
         </div>
       }
     </div>
@@ -54,37 +54,37 @@
     <ion-list [inset]="true" class="form-list">
       <ion-item>
         <ion-input
-          label="Employee code *"
+          label="Mã nhân viên *"
           labelPlacement="stacked"
           name="code"
           [(ngModel)]="employeeCode"
           required
-          placeholder="e.g. EMP001"
+          placeholder="vd: EMP001"
         />
       </ion-item>
       <ion-item>
         <ion-input
-          label="Full name *"
+          label="Họ và tên *"
           labelPlacement="stacked"
           name="name"
           [(ngModel)]="fullName"
           required
-          placeholder="e.g. Nguyen Van A"
+          placeholder="vd: Nguyễn Văn A"
         />
       </ion-item>
       <ion-item>
         <ion-input
-          label="Department"
+          label="Phòng ban"
           labelPlacement="stacked"
           name="department"
           [(ngModel)]="department"
-          placeholder="optional"
+          placeholder="không bắt buộc"
         />
       </ion-item>
     </ion-list>
 
     <ion-button type="submit" expand="block" class="submit" [disabled]="!canSubmit()">
-      {{ submitting() ? 'Enrolling…' : 'Enroll' }}
+      {{ submitting() ? 'Đang đăng ký…' : 'Đăng ký' }}
     </ion-button>
 
     @if (message()) {
@@ -95,7 +95,7 @@
     @if (fileResults().length > 0) {
       <ul class="file-results">
         @for (r of fileResults(); track r.file) {
-          <li [class.error]="!r.ok">{{ r.file }} — {{ r.ok ? 'ok' : r.error }}</li>
+          <li [class.error]="!r.ok">{{ r.file }} — {{ r.ok ? 'thành công' : r.error }}</li>
         }
       </ul>
     }
@@ -103,11 +103,11 @@
 
   <ion-list class="employees">
     <ion-list-header>
-      <ion-label>Enrolled employees</ion-label>
+      <ion-label>Nhân viên đã đăng ký</ion-label>
     </ion-list-header>
     @if (employees().length === 0) {
       <ion-item lines="none">
-        <ion-label color="medium">No one enrolled yet.</ion-label>
+        <ion-label color="medium">Chưa có ai được đăng ký.</ion-label>
       </ion-item>
     } @else {
       @for (emp of employees(); track emp.id) {
@@ -116,7 +116,7 @@
             <h3>{{ emp.full_name }}</h3>
             <p>
               {{ emp.employee_code }} · {{ emp.department || '—' }} ·
-              {{ emp.embedding_count }} photo(s)
+              {{ emp.embedding_count }} ảnh
             </p>
           </ion-label>
           <ion-button
@@ -124,7 +124,7 @@
             fill="clear"
             color="danger"
             (click)="deleteEmployee(emp.employee_code)"
-            aria-label="Delete employee"
+            aria-label="Xóa nhân viên"
           >
             <ion-icon slot="icon-only" name="trash-outline" />
           </ion-button>

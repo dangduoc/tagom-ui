@@ -10,6 +10,7 @@ import {
 import { addIcons } from 'ionicons';
 import {
   cameraOutline,
+  cameraReverseOutline,
   checkmarkCircle,
   closeCircle,
   closeOutline,
@@ -25,12 +26,13 @@ import {
   selector: 'app-root',
   imports: [IonApp, IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel],
   templateUrl: './app.html',
-  styleUrl: './app.css',
+  styleUrl: './app.scss',
 })
 export class App {
   constructor() {
     addIcons({
       cameraOutline,
+      cameraReverseOutline,
       checkmarkCircle,
       closeCircle,
       closeOutline,

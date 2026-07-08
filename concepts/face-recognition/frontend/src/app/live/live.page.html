@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Live recognition</ion-title>
+    <ion-title>Nhận diện trực tiếp</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -8,10 +8,10 @@
   <div class="toolbar">
     @if (!running()) {
       <ion-button (click)="start()" [disabled]="starting()">
-        {{ starting() ? 'Starting…' : 'Start camera' }}
+        {{ starting() ? 'Đang khởi động…' : 'Bật camera' }}
       </ion-button>
     } @else {
-      <ion-button fill="outline" (click)="stop()">Stop</ion-button>
+      <ion-button fill="outline" (click)="stop()">Dừng</ion-button>
     }
 
     @if (cameras().length > 1) {
@@ -38,7 +38,8 @@
   </div>
 
   <ion-note>
-    Green = recognized, red = unknown, yellow = checking. Names refresh every few
-    seconds per tracked face; detection itself runs entirely in the browser.
+    Xanh lá = đã nhận diện, đỏ = không rõ, vàng = đang kiểm tra. Tên được cập nhật
+    lại sau vài giây cho mỗi khuôn mặt; việc phát hiện khuôn mặt chạy hoàn toàn
+    trên trình duyệt.
   </ion-note>
 </ion-content>

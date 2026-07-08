@@ -43,10 +43,10 @@ const CROP_PADDING = 0.75;
     IonTitle,
     IonToolbar,
   ],
-  templateUrl: './live.html',
-  styleUrl: './live.css',
+  templateUrl: './live.page.html',
+  styleUrl: './live.page.scss',
 })
-export class Live implements OnDestroy {
+export class LivePage implements OnDestroy {
   private readonly api = inject(ApiService);
 
   private readonly videoRef = viewChild.required<ElementRef<HTMLVideoElement>>('video');
@@ -231,7 +231,7 @@ export class Live implements OnDestroy {
         track.state === 'known'
           ? `${track.label} ${(track.similarity! * 100).toFixed(0)}%`
           : track.state === 'unknown'
-            ? 'Unknown'
+            ? 'Không rõ'
             : '…';
 
       ctx.font = 'bold 16px system-ui, sans-serif';

@@ -2,13 +2,14 @@
   position: relative;
   max-width: 720px;
   margin: 0 auto;
+  height: 100%;
 }
 
 .video-wrap video {
   display: block;
   width: 100%;
-  border-radius: 8px;
   background: #000;
+  height: 100%;
 }
 
 .video-wrap .preview {
@@ -19,13 +20,6 @@
   object-fit: contain;
   background: #000;
   border-radius: 8px;
-}
-
-.retake {
-  position: absolute;
-  bottom: 12px;
-  left: 50%;
-  transform: translateX(-50%);
 }
 
 /* Sits on top of the video so the footer never covers it. */

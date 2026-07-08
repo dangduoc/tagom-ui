@@ -22,7 +22,7 @@ import {
 } from '@ionic/angular/standalone';
 import { FaceDetector } from '@mediapipe/tasks-vision';
 
-import { createFaceDetector } from '../face-detection';
+import { createFaceDetector } from '../../face-detection';
 
 /** Guided capture steps — small pose/expression variety near-frontal beats
  *  extreme angles: the recognizer sees people mostly head-on at the camera,
@@ -34,11 +34,11 @@ export interface CaptureStep {
 }
 
 export const CAPTURE_STEPS: CaptureStep[] = [
-  { short: 'Straight', title: 'Look straight at the camera', hint: 'neutral face, eyes on the lens' },
-  { short: 'Left', title: 'Turn your head slightly left', hint: 'about 20–30°, both eyes still visible' },
-  { short: 'Right', title: 'Turn your head slightly right', hint: 'about 20–30°, both eyes still visible' },
-  { short: 'Chin up', title: 'Tilt your chin slightly up', hint: 'a small tilt is enough' },
-  { short: 'Natural', title: 'One more, natural', hint: 'smile — or add/remove glasses if you sometimes wear them' },
+  { short: 'Nhìn thẳng', title: 'Nhìn thẳng vào camera', hint: 'mặt tự nhiên, mắt nhìn ống kính' },
+  { short: 'Quay trái', title: 'Quay đầu nhẹ sang trái', hint: 'khoảng 20–30°, vẫn thấy cả hai mắt' },
+  { short: 'Quay phải', title: 'Quay đầu nhẹ sang phải', hint: 'khoảng 20–30°, vẫn thấy cả hai mắt' },
+  { short: 'Ngẩng nhẹ', title: 'Ngẩng cằm lên một chút', hint: 'chỉ cần nghiêng nhẹ là đủ' },
+  { short: 'Tự nhiên', title: 'Thêm một ảnh, tự nhiên', hint: 'mỉm cười — hoặc đeo/bỏ kính nếu bạn thỉnh thoảng đeo' },
 ];
 
 export interface CapturedPhoto {
@@ -65,7 +65,7 @@ const FACE_CHECK_MS = 250;
     IonToolbar,
   ],
   templateUrl: './capture-modal.html',
-  styleUrl: './capture-modal.css',
+  styleUrl: './capture-modal.scss',
 })
 export class CaptureModal implements AfterViewInit, OnDestroy {
   private readonly modalCtrl = inject(ModalController);
@@ -78,6 +78,8 @@ export class CaptureModal implements AfterViewInit, OnDestroy {
   readonly cameraError = signal<string | null>(null);
   /** Faces currently in view; null = camera off or detector unavailable. */
   readonly faceCount = signal<number | null>(null);
+  /** Which camera to use — 'user' = front (selfie), 'environment' = rear. */
+  readonly facingMode = signal<'user' | 'environment'>('user');
 
   readonly steps = CAPTURE_STEPS;
   readonly maxPhotos = CAPTURE_STEPS.length;
@@ -95,7 +97,7 @@ export class CaptureModal implements AfterViewInit, OnDestroy {
 
   /** The single footer button cycles Capture → Confirm & continue → Finish. */
   readonly primaryLabel = computed(() =>
-    this.review() ? 'Confirm & continue' : this.allTaken() ? 'Finish' : 'Capture',
+    this.review() ? 'Tiếp tục' : this.allTaken() ? 'Hoàn tất' : 'Chụp',
   );
 
   readonly primaryDisabled = computed(
@@ -105,9 +107,9 @@ export class CaptureModal implements AfterViewInit, OnDestroy {
   readonly faceStatus = computed<{ ok: boolean; text: string } | null>(() => {
     const count = this.faceCount();
     if (count === null) return null;
-    if (count === 1) return { ok: true, text: 'Face detected' };
-    if (count === 0) return { ok: false, text: 'No face in view' };
-    return { ok: false, text: 'Multiple faces — only the employee should be in frame' };
+    if (count === 1) return { ok: true, text: 'Đã thấy khuôn mặt' };
+    if (count === 0) return { ok: false, text: 'Không thấy khuôn mặt' };
+    return { ok: false, text: 'Nhiều khuôn mặt — chỉ nên có nhân viên trong khung hình' };
   });
 
   private stream: MediaStream | null = null;
@@ -133,9 +135,16 @@ export class CaptureModal implements AfterViewInit, OnDestroy {
 
   async startCamera(): Promise<void> {
     this.cameraError.set(null);
+    // Release any current stream first — needed when switching cameras.
+    this.stream?.getTracks().forEach((t) => t.stop());
+    this.stream = null;
     try {
       this.stream = await navigator.mediaDevices.getUserMedia({
-        video: { width: { ideal: 1280 }, height: { ideal: 720 } },
+        video: {
+          facingMode: this.facingMode(),
+          width: { ideal: 1280 },
+          height: { ideal: 720 },
+        },
         audio: false,
       });
       const video = this.videoRef().nativeElement;
@@ -145,6 +154,12 @@ export class CaptureModal implements AfterViewInit, OnDestroy {
     } catch (err) {
       this.cameraError.set(err instanceof Error ? err.message : String(err));
     }
+  }
+
+  /** Flip between the front and rear camera and restart the stream. */
+  async switchCamera(): Promise<void> {
+    this.facingMode.update((m) => (m === 'user' ? 'environment' : 'user'));
+    await this.startCamera();
   }
 
   primaryAction(): void {
@@ -164,7 +179,7 @@ export class CaptureModal implements AfterViewInit, OnDestroy {
       canvas.toBlob(resolve, 'image/jpeg', 0.9),
     );
     if (!blob) return;
-    const label = this.currentStep()?.short ?? 'Extra';
+    const label = this.currentStep()?.short ?? 'Thêm';
     this.review.set({ blob, url: URL.createObjectURL(blob), label });
   }
 
