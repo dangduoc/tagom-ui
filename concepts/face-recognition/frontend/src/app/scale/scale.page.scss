@@ -1,0 +1,40 @@
+ion-button {
+  margin-top: 16px;
+}
+
+.status {
+  display: block;
+  margin-top: 24px;
+  text-align: center;
+}
+
+.weight {
+  margin-top: 48px;
+  text-align: center;
+  font-size: 72px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--ion-color-warning);
+
+  &.stable {
+    color: var(--ion-color-success);
+  }
+
+  .unit {
+    font-size: 32px;
+    font-weight: 400;
+    color: var(--ion-color-medium);
+  }
+}
+
+.stability {
+  margin-top: 8px;
+  text-align: center;
+  font-size: 18px;
+  letter-spacing: 1px;
+  color: var(--ion-color-warning);
+
+  &.stable {
+    color: var(--ion-color-success);
+  }
+}

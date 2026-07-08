@@ -18,6 +18,7 @@ import {
   helpCircleOutline,
   personAddOutline,
   refreshOutline,
+  scaleOutline,
   trashOutline,
   videocamOutline,
 } from 'ionicons/icons';
@@ -40,6 +41,7 @@ export class App {
       helpCircleOutline,
       personAddOutline,
       refreshOutline,
+      scaleOutline,
       trashOutline,
       videocamOutline,
     });

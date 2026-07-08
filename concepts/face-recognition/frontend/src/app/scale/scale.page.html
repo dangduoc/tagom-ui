@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Cân điện tử</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-item>
+    <ion-input
+      label="Địa chỉ cân"
+      labelPlacement="stacked"
+      placeholder="ws://192.168.x.x:81"
+      [value]="url()"
+      (ionInput)="url.set($event.detail.value ?? '')"
+      [disabled]="scale.status() !== 'disconnected'"
+    />
+  </ion-item>
+
+  <ion-button expand="block" (click)="toggle()">
+    {{ scale.status() === 'disconnected' ? 'Kết nối' : 'Ngắt kết nối' }}
+  </ion-button>
+
+  @switch (scale.status()) {
+    @case ('connecting') {
+      <ion-note class="status">Đang kết nối…</ion-note>
+    }
+    @case ('connected') {
+      @if (scale.reading(); as r) {
+        <div class="weight" [class.stable]="r.stable">
+          {{ r.weight.toFixed(1) }} <span class="unit">{{ r.unit }}</span>
+        </div>
+        <div class="stability" [class.stable]="r.stable">
+          {{ r.stable ? 'ỔN ĐỊNH' : 'Đang cân…' }}
+        </div>
+      } @else {
+        <ion-note class="status">Đã kết nối — chờ dữ liệu…</ion-note>
+      }
+    }
+  }
+
+  @if (scale.error(); as err) {
+    <ion-note color="danger" class="status">{{ err }}</ion-note>
+  }
+</ion-content>
