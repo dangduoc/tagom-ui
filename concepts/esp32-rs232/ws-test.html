@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ESP32 Scale — WebSocket Test</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 640px; margin: 3rem auto; padding: 0 1rem; }
+  input { width: 260px; padding: 6px 8px; font: inherit; }
+  button { padding: 6px 16px; font: inherit; cursor: pointer; }
+  #weight { font-size: 5rem; font-variant-numeric: tabular-nums; margin: 1.5rem 0 0.5rem; }
+  #stable { font-size: 1.2rem; margin-bottom: 1.5rem; }
+  .ok { color: #16a34a; } .bad { color: #dc2626; } .warn { color: #d97706; }
+  #log { font-family: monospace; font-size: 0.85rem; white-space: pre; background: #f3f4f6;
+         padding: 0.75rem; border-radius: 6px; max-height: 240px; overflow-y: auto; color: #111; }
+</style>
+</head>
+<body>
+  <h2>ESP32 Scale — WebSocket Test</h2>
+  <p>
+    <input id="url" value="ws://192.168.83.103:81/">
+    <button id="btn" onclick="toggle()">Connect</button>
+    <span id="status" class="bad">disconnected</span>
+  </p>
+  <div id="weight">—</div>
+  <div id="stable"></div>
+  <div id="log"></div>
+
+<script>
+let ws = null;
+const $ = id => document.getElementById(id);
+
+function log(msg) {
+  $("log").textContent += new Date().toLocaleTimeString() + "  " + msg + "\n";
+  $("log").scrollTop = $("log").scrollHeight;
+}
+
+function toggle() {
+  if (ws) { ws.close(); return; }
+  const url = $("url").value;
+  log("connecting to " + url + " …");
+  ws = new WebSocket(url);
+  ws.onopen = () => { $("status").textContent = "connected"; $("status").className = "ok"; $("btn").textContent = "Disconnect"; log("connected"); };
+  ws.onmessage = e => {
+    log(e.data);
+    try {
+      const r = JSON.parse(e.data);
+      $("weight").textContent = r.weight.toFixed(1) + " " + r.unit;
+      $("stable").textContent = r.stable ? "STABLE" : "settling…";
+      $("stable").className = r.stable ? "ok" : "warn";
+    } catch { /* non-JSON frame, already logged */ }
+  };
+  ws.onerror = () => log("socket error (see devtools console)");
+  ws.onclose = e => {
+    $("status").textContent = "disconnected"; $("status").className = "bad";
+    $("btn").textContent = "Connect"; $("weight").textContent = "—"; $("stable").textContent = "";
+    log("closed (code " + e.code + ")");
+    ws = null;
+  };
+}
+</script>
+</body>
+</html>

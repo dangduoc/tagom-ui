@@ -9,9 +9,8 @@
 #include <WiFi.h>
 #include <WebSocketsServer.h>
 
-// ---- Config: fill these in ----
-#define WIFI_SSID     "YOUR_WIFI_SSID"
-#define WIFI_PASSWORD "YOUR_WIFI_PASSWORD"
+// WiFi credentials live in secrets.h (git-ignored) — copy secrets.example.h
+#include "secrets.h"
 
 #define WEBSOCKET_PORT 81
 #define READING_INTERVAL_MS 1000

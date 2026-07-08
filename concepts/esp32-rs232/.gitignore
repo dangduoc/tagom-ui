@@ -1,2 +1,5 @@
 # Local arduino-cli install + config (see todo.md for setup)
 .tools/
+
+# WiFi credentials (copy secrets.example.h to secrets.h)
+esp32-rs232-bridge/secrets.h
