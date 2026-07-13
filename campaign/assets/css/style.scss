@@ -160,14 +160,18 @@ body {
         display: flex;
         align-items: center;
         gap: 24px;
+
         a {
             display: none;
+
             &.tagom {
                 margin-top: 4px;
+
                 img {
                     height: 20px;
                 }
             }
+
             img {
                 opacity: 0.6;
                 height: 24px;
@@ -185,11 +189,13 @@ body {
         height: 100vh;
         height: 100dvh;
         background: var(--color-green);
+
         .app-nav-inner {
             height: 100%;
             width: 100%;
             position: relative;
         }
+
         .app-nav-brands {
             a {
                 display: inline-block;
@@ -200,6 +206,7 @@ body {
             svg:last-child {
                 display: inline-block;
             }
+
             svg:first-child {
                 display: none;
             }
@@ -214,9 +221,11 @@ body {
             font-size: 24px;
             gap: 24px;
             color: #fff;
+
             a {
                 font-size: inherit;
                 color: inherit;
+
                 &::after {
                     color: inherit;
                 }
@@ -373,7 +382,7 @@ body {
         }
 
         &--ml {
-            left: calc(25% + 121px);
+            left: calc(12% + 121px);
             top: 1300px;
             width: 167px;
             transform: rotate(-50.54deg);
@@ -465,7 +474,7 @@ body {
 
     .pc1-desc {
         margin-top: 24px;
-        font-size: 14px;
+        //   font-size: 14px;
         line-height: 1.8;
         text-align: justify;
         color: #000;
@@ -476,12 +485,15 @@ body {
         margin-top: 28px;
         padding: 0 12px 0 20px;
         width: 100%;
+
         span {
             margin-left: 4px;
         }
+
         i {
             margin-left: auto;
         }
+
         // justify-content: space-between;
     }
 
@@ -596,7 +608,7 @@ body {
         }
 
         p {
-            font-size: 12px;
+            // font-size: 12px;
             margin: 0;
             text-align: justify;
         }
@@ -614,8 +626,7 @@ body {
 
 #section3 {
     & > .inner {
-        padding-top: 150px;
-        padding-bottom: 150px;
+        padding: 150px 0;
     }
 
     .grid {
@@ -723,6 +734,10 @@ body {
                 .number {
                     font-weight: 600;
                     font-size: 50px;
+
+                    &.single {
+                        transform: scale(1.5);
+                    }
                 }
 
                 .unit {
@@ -861,6 +876,10 @@ body {
                     margin-bottom: 40px;
                 }
             }
+
+            p {
+                text-align: justify;
+            }
         }
     }
 }
@@ -935,6 +954,7 @@ body {
         flex-wrap: wrap;
         margin-top: 14px;
         justify-content: center;
+
         .thumb-item {
             width: 62px;
             height: 62px;
@@ -946,6 +966,7 @@ body {
             justify-content: center;
             padding: 3px;
             transition: border-color 0.15s;
+
             img {
                 width: 100%;
                 height: 100%;
@@ -983,7 +1004,7 @@ body {
         }
 
         .price-label {
-            font-size: 14px;
+            //font-size: 14px;
             font-weight: 800;
             color: #333;
         }
@@ -1002,20 +1023,20 @@ body {
         }
 
         .spec-line {
-            font-size: 14px;
             margin-bottom: 6px;
             color: #333;
+
             strong {
                 font-weight: 700;
             }
         }
 
         .meaning-text {
-            font-size: 14px;
             color: #333;
             line-height: 1.65;
             margin-top: 4px;
             margin-bottom: 24px;
+
             strong {
                 font-weight: 700;
             }
@@ -1095,9 +1116,11 @@ body {
         z-index: 1;
         position: relative;
         background-color: #f9fcf4;
+
         & > span {
             display: none;
         }
+
         i {
             margin-left: 12px;
         }
@@ -1144,6 +1167,7 @@ body {
 
     #section1 {
         padding-top: 60px;
+
         & > .inner {
             padding: 50px 0;
         }
@@ -1282,10 +1306,6 @@ body {
                     .achievement-values {
                         .number {
                             font-size: 18px;
-
-                            &.single {
-                                font-size: 22px;
-                            }
                         }
 
                         .unit {
@@ -1317,9 +1337,11 @@ body {
     #section6 .grid {
         display: block;
         padding: 30px;
+
         .slick-dots {
             left: 0;
         }
+
         .item {
             .img {
                 margin-bottom: 24px;
@@ -1361,6 +1383,7 @@ body {
             .product-name {
                 font-size: 24px;
             }
+
             .actions {
                 text-align: center;
             }
@@ -1391,9 +1414,11 @@ body {
         -webkit-line-clamp: 5;
         -webkit-box-orient: vertical;
     }
+
     .line-clamp-3.expanded {
         -webkit-line-clamp: unset;
     }
+
     .line-clamp-md + .view-more-btn {
         display: inline-block;
     }
@@ -1404,6 +1429,7 @@ body {
         .app-nav-sm-header {
             display: none;
         }
+
         .nav-items {
             display: flex;
             flex-direction: row;
@@ -1418,11 +1444,13 @@ body {
             max-width: 650px;
             margin-left: 30px;
             margin-top: 50px;
-            p {
-                font-size: 14px;
-            }
+
+            // p {
+            //     font-size: 14px;
+            // }
         }
     }
+
     #section1 {
         .pc1-desc {
             line-height: 1.5;
@@ -1434,6 +1462,7 @@ body {
             .photos {
                 flex-direction: column;
             }
+
             .text p {
                 line-height: 1.8;
             }
@@ -1457,6 +1486,7 @@ body {
                     .number {
                         font-size: 32px;
                     }
+
                     .unit {
                         font-size: 15px;
                     }
@@ -1475,6 +1505,7 @@ body {
                 grid-column: span 2;
                 text-align: center;
                 margin-top: 30px;
+
                 .title,
                 p {
                     width: 50%;
@@ -1491,13 +1522,13 @@ body {
         .paragraph-box {
             margin-top: 10%;
 
-            h3 {
-                // font-size: 18px;
-            }
+            // h3 {
+            //     // font-size: 18px;
+            // }
 
-            p {
-                font-size: 16px;
-            }
+            // p {
+            //     font-size: 16px;
+            // }
         }
     }
 }
@@ -1516,9 +1547,9 @@ body {
                 margin-bottom: 16px;
             }
 
-            p {
-                font-size: 16px;
-            }
+            // p {
+            //     font-size: 16px;
+            // }
         }
     }
 
@@ -1527,11 +1558,14 @@ body {
             display: grid;
             grid-template-columns: repeat(6, 1fr);
             gap: 32px 80px;
+
             .item {
                 grid-column: span 2;
+
                 &:nth-child(4),
                 &:nth-child(5) {
                     grid-column: span 3;
+
                     p,
                     .title {
                         max-width: 66.66%;

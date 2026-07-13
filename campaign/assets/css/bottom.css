@@ -648,7 +648,7 @@
     font-size: 14px;
   }
   #pc1-faq .faq-cta-row .faq-question-text {
-    display: none;
+    font-size: 14px;
   }
   #pc1-faq .btn-yes,
   #pc1-faq .btn-no {
@@ -667,6 +667,13 @@
     border-radius: 20px;
     padding: 12px 16px;
     font-size: 12px;
+  }
+  .modal-overlay:not(.dialog3) .modal-box .modal-title {
+    font-size: 24px;
+    letter-spacing: 0;
+  }
+  .modal-overlay.dialog3 .modal-box {
+    padding: 24px 30px;
   }
 }
 @media screen and (min-width: 768px) and (orientation: portrait) {
