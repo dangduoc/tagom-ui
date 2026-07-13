@@ -680,6 +680,43 @@ $green-54: #54ab47;
     .star-deco {
         display: none;
     }
+
+    .modal-overlay:not(.dialog3) {
+        .modal-box {
+            padding: 50px 20px;
+            height: 100%;
+            width: 100%;
+            max-width: 100%;
+            border-radius: 0;
+            padding-top: 60px;
+            .modal-field {
+                height: 50px;
+            }
+            .modal-title {
+                font-size: 28px;
+                letter-spacing: 0;
+            }
+            .modal-close {
+                top: 5px;
+                right: 5px;
+                font-size: 50px;
+                width: 50px;
+                height: 50px;
+            }
+        }
+    }
+
+    .modal-overlay.dialog3 .modal-box {
+        padding: 24px 50px;
+    }
+
+    .modal-stars {
+        margin-top: -90px;
+        img {
+            width: 80px;
+            height: 80px;
+        }
+    }
 }
 
 @media (max-width: 600px) {
