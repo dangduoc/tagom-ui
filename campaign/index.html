@@ -353,8 +353,8 @@
                             <div class="achievement-inner">
                                 <img src="/assets/images/achievement.png">
                                 <div class="achievement-values">
-                                    <div class="number">4.692</div>
-                                    <div class="unit">(680 Lít)</div>
+                                    <div class="number">1.360</div>
+                                    <div class="unit">(Tấn)</div>
                                 </div>
                             </div>
                             <p>Lượng giấy được tái chế</p>
@@ -788,12 +788,7 @@
                 });
             });
 
-            $('#orderBtn').on('click', function () {
-                const $btn = $(this);
-                const orig = $btn.html();
-                $btn.html('✔ Đã đặt hàng! <span class="orb"></span>').css('background', '#2a9d2a');
-                setTimeout(() => { $btn.html(orig).css('background', ''); }, 2000);
-            });
+            
         });
     </script>
     <script>
@@ -825,6 +820,10 @@
             });
 
             $('#order-btn-top').on('click', function () {
+                openModal('#modal2');
+            });
+
+            $('#orderBtn').on('click', function () {
                 openModal('#modal2');
             });
 

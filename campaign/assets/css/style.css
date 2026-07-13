@@ -326,7 +326,7 @@ body {
   transform: rotate(-50.54deg);
 }
 #section1 .pc1__star--ml {
-  left: calc(25% + 121px);
+  left: calc(12% + 121px);
   top: 1300px;
   width: 167px;
   transform: rotate(-50.54deg);
@@ -622,6 +622,9 @@ body {
   font-weight: 600;
   font-size: 50px;
 }
+#section3 .achievement-box .achievement-inner .achievement-values .number.single {
+  transform: scale(1.5);
+}
 #section3 .achievement-box .achievement-inner .achievement-values .unit {
   font-weight: 600;
   font-size: 30px;
@@ -723,6 +726,9 @@ body {
 #section6 .grid .item .img img {
   height: 160px;
   margin-bottom: 40px;
+}
+#section6 .grid .item p {
+  text-align: justify;
 }
 
 #section7 {
@@ -1069,9 +1075,6 @@ body {
   }
   #section3 .achievements-grid .achievement-box .achievement-inner .achievement-values .number {
     font-size: 18px;
-  }
-  #section3 .achievements-grid .achievement-box .achievement-inner .achievement-values .number.single {
-    font-size: 22px;
   }
   #section3 .achievements-grid .achievement-box .achievement-inner .achievement-values .unit {
     font-size: 11px;
