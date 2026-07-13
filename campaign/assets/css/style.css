@@ -404,7 +404,6 @@ body {
 }
 #section1 .pc1-desc {
   margin-top: 24px;
-  font-size: 14px;
   line-height: 1.8;
   text-align: justify;
   color: #000;
@@ -519,7 +518,6 @@ body {
   margin-bottom: 16px;
 }
 #section2 .paragraph-box p {
-  font-size: 12px;
   margin: 0;
   text-align: justify;
 }
@@ -532,8 +530,7 @@ body {
 }
 
 #section3 > .inner {
-  padding-top: 150px;
-  padding-bottom: 150px;
+  padding: 150px 0;
 }
 #section3 .grid {
   display: flex;
@@ -837,7 +834,6 @@ body {
   margin-bottom: 14px;
 }
 #section7 .product-info-wrapper .price-label {
-  font-size: 14px;
   font-weight: 800;
   color: #333;
 }
@@ -853,7 +849,6 @@ body {
   color: #555;
 }
 #section7 .product-info-wrapper .spec-line {
-  font-size: 14px;
   margin-bottom: 6px;
   color: #333;
 }
@@ -861,7 +856,6 @@ body {
   font-weight: 700;
 }
 #section7 .product-info-wrapper .meaning-text {
-  font-size: 14px;
   color: #333;
   line-height: 1.65;
   margin-top: 4px;
@@ -1171,9 +1165,6 @@ body {
     margin-left: 30px;
     margin-top: 50px;
   }
-  #section2 .paragraph-box p {
-    font-size: 14px;
-  }
   #section1 .pc1-desc {
     line-height: 1.5;
   }
@@ -1219,9 +1210,6 @@ body {
   #section2 .paragraph-box {
     margin-top: 10%;
   }
-  #section2 .paragraph-box p {
-    font-size: 16px;
-  }
 }
 @media screen and (min-width: 992px) and (orientation: landscape) {
   #section2 .paragraph-box {
@@ -1234,9 +1222,6 @@ body {
   }
   #section2 .paragraph-box h3 {
     margin-bottom: 16px;
-  }
-  #section2 .paragraph-box p {
-    font-size: 16px;
   }
   #section6 .grid {
     display: grid;

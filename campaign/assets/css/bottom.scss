@@ -749,7 +749,7 @@ $green-54: #54ab47;
         }
 
         .faq-cta-row .faq-question-text {
-            display: none;
+            font-size: 14px;
         }
 
         .btn-yes,
@@ -774,6 +774,19 @@ $green-54: #54ab47;
                 font-size: 12px;
             }
         }
+    }
+
+    .modal-overlay:not(.dialog3) {
+        .modal-box {
+            .modal-title {
+                font-size: 24px;
+                letter-spacing: 0;
+            }
+        }
+    }
+
+    .modal-overlay.dialog3 .modal-box {
+        padding: 24px 30px;
     }
 }
 
