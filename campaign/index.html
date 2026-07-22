@@ -108,7 +108,7 @@
                         Dự án "Gom vỏ giấy - Sữa trao em"
                     </p>
                     <div class="actions">
-                        <a class="btn btn-cta" id="order-btn-top">Đặt hàng</a>
+                        <a class="btn btn-cta js-open-order" id="order-btn-top">Đặt hàng</a>
                     </div>
                 </div>
             </div>
@@ -496,7 +496,7 @@
                             </p>
 
                             <div class="actions">
-                                <button class="btn-cta no-icon" id="orderBtn">
+                                <button class="btn-cta no-icon js-open-order" id="orderBtn">
                                     ĐẶT HÀNG
                                 </button>
                             </div>
@@ -545,7 +545,7 @@
                 <div class="left" style="max-width: 600px;">
                     <h2 class="section-title">ĐỒNG HÀNH CÙNG CHÚNG TỚ</h2>
                     <p class="section-subtitle">Một lựa chọn nhỏ – Tạo nên thay đổi lớn</p>
-                    <a id="btnOrder" class="btn-cta no-icon">Đặt Hàng</a>
+                    <a id="btnOrder" class="btn-cta no-icon js-open-order">Đặt Hàng</a>
                 </div>
                 <div class="right">
                     <img class="bag-img" src="/assets/images/bags/img-2.webp" alt="Túi Xanh">
@@ -630,13 +630,13 @@
                     <div class="faq-cta-row" style="border-top: 1.5px solid #000;">
                         <p class="faq-question-text">Bạn có muốn đặt mua túi luôn không?</p>
                         <div class="faq-cta-buttons">
-                            <button class="btn-yes" id="dialog2Btn">CÓ</button>
-                            <button class="btn-no" id="dialog3Btn">KHÔNG</button>
+                            <button class="btn-yes js-open-order" id="faqOrderBtn">CÓ</button>
+                            <button class="btn-no" id="thanksBtn">KHÔNG</button>
                         </div>
                     </div>
 
                     <!-- Ask us -->
-                    <a href="#" class="btn-ask" id="dialog1Btn">
+                    <a href="#" class="btn-ask" id="questionBtn">
                         <i class="bi bi-plus-circle"></i>
                         ĐẶT CÂU HỎI CHO CHÚNG TÔI
                     </a>
@@ -694,8 +694,8 @@
                     <div class="footer-content">
                         <!-- Email subscribe -->
                         <div class="footer-email">
-                            <form onsubmit="return false;">
-                                <input type="email" placeholder="Nhập Email để theo dõi thông tin">
+                            <form id="subscribeForm">
+                                <input type="email" name="email" placeholder="Nhập Email để theo dõi thông tin">
                                 <button type="submit" class="btn-enter">Enter</button>
                             </form>
                         </div>
@@ -719,52 +719,71 @@
         </footer>
 
         <!-- ===== DIALOG 1: Đặt câu hỏi ===== -->
-        <div class="modal-overlay" id="modal1">
+        <div class="modal-overlay" id="modal-question">
             <div class="modal-box">
                 <button class="modal-close js-modal-close">&times;</button>
                 <h3 class="modal-title">Đặt câu hỏi cho chúng tôi</h3>
                 <p class="modal-section-label">Thông tin</p>
-                <input class="modal-field first-field" type="text" placeholder="Họ và tên">
-                <input class="modal-field" type="tel" placeholder="Số điện thoại">
-                <input class="modal-field" type="email" placeholder="Email">
-                <input class="modal-field" type="text" placeholder="Nội dung câu hỏi">
+                <input class="modal-field first-field" type="text" name="name" placeholder="Họ và tên">
+                <input class="modal-field" type="tel" name="phone" placeholder="Số điện thoại">
+                <input class="modal-field" type="email" name="email" placeholder="Email">
+                <input class="modal-field" type="text" name="message" placeholder="Nội dung câu hỏi">
                 <p class="modal-note">Cảm ơn bạn đã đặt câu hỏi cho chúng tôi, bộ phận chăm sóc khách hàng sẽ liên hệ
                     với
                     quý khách sau.</p>
-                <button class="modal-submit js-submit-to-dialog3">Gửi câu hỏi</button>
+                <p class="modal-error"></p>
+                <button class="modal-submit js-submit-to-thanks" data-form="question">Gửi câu hỏi</button>
             </div>
         </div>
 
         <!-- ===== DIALOG 2: Thông tin đặt hàng ===== -->
-        <div class="modal-overlay" id="modal2">
+        <div class="modal-overlay" id="modal-order">
             <div class="modal-box">
                 <button class="modal-close js-modal-close">&times;</button>
                 <h3 class="modal-title">Thông tin đặt hàng</h3>
                 <p class="modal-section-label">Thông tin doanh nghiệp</p>
-                <input class="modal-field first-field" type="text" placeholder="Tên doanh nghiệp">
-                <input class="modal-field" type="tel" placeholder="Số điện thoại">
-                <input class="modal-field" type="email" placeholder="Email">
-                <input class="modal-field" type="text" placeholder="Số lượng túi">
+                <input class="modal-field first-field" type="text" name="name" placeholder="Tên doanh nghiệp">
+                <input class="modal-field" type="tel" name="phone" placeholder="Số điện thoại">
+                <input class="modal-field" type="email" name="email" placeholder="Email">
+                <input class="modal-field" type="text" name="quantity" placeholder="Số lượng túi">
                 <div class="modal-checkbox-row">
-                    <input type="checkbox" id="terms-check">
+                    <input type="checkbox" id="terms-check" name="terms">
                     <label for="terms-check">Tôi đã đọc kỹ và đồng ý tuân thủ tất cả các quy định mua túi trực tuyến và
                         chịu
                         trách nhiệm về tính xác thực của các thông tin trên.</label>
                 </div>
-                <button class="modal-submit js-submit-to-dialog3">Đăng kí mua túi</button>
+                <p class="modal-error"></p>
+                <button class="modal-submit js-submit-to-thanks" data-form="order">Đăng kí mua túi</button>
             </div>
         </div>
 
-        <!-- ===== DIALOG 3: Cảm ơn ===== -->
-        <div class="modal-overlay dialog3" id="modal3">
-            <div class="modal-box">
-                <div class="modal-stars">
-                    <img src="/assets/images/star.png" alt="">
-                    <img src="/assets/images/star.png" alt="">
-                    <img src="/assets/images/star.png" alt="">
+        <!-- ===== THANK-YOU DIALOG: Cảm ơn ===== -->
+        <div class="modal-overlay dialog-thanks" id="modal-thanks">
+            <div class="thanks-box">
+                <img class="thanks-star" src="/assets/images/star-yellow.png" alt="">
+                <button class="modal-close js-modal-close">&times;</button>
+
+                <div class="thanks-content">
+                    <div class="thanks-text">
+                        <h3 class="thanks-title">Yêu cầu của quý khách đã được tiếp nhận thành công.</h3>
+                        <p class="thanks-lead">Chúng tôi sẽ liên hệ trong thời gian sớm nhất để xác nhận thông tin giao
+                            nhận.</p>
+
+                        <div class="thanks-divider">
+                            <span class="thanks-divider-line"></span>
+                            <img class="thanks-divider-star" src="/assets/images/thanks-star-sm.png" alt="">
+                            <span class="thanks-divider-line"></span>
+                        </div>
+
+                        <p class="thanks-note">Cảm ơn bạn đã tin tưởng và đồng hành cùng chúng tôi trong hành trình lan
+                            tỏa những điều tốt đẹp! ❤</p>
+                        <p class="thanks-emoji">⸜( ˶&gt;ᴗ&lt;˶)⸝♡</p>
+                    </div>
+
+                    <div class="thanks-art">
+                        <img src="/assets/images/thanks-illustration.jpg" alt="">
+                    </div>
                 </div>
-                <p class="modal-thankyou-text">Cảm ơn bạn đã quan tâm</p>
-                <button class="modal-close-x js-modal-close">&times;</button>
             </div>
         </div>
     </div>
@@ -810,34 +829,94 @@
             });
 
             // Open modals
-            $('#dialog1Btn').on('click', function (e) {
+            $('#questionBtn').on('click', function (e) {
                 e.preventDefault();
-                openModal('#modal1');
-            });
-            $('#dialog2Btn').on('click', function () {
-                openModal('#modal2');
+                openModal('#modal-question');
             });
 
-            $('#order-btn-top').on('click', function () {
-                openModal('#modal2');
+            // Every "đặt hàng" entry point across the page opens the same modal.
+            $(document).on('click', '.js-open-order', function (e) {
+                e.preventDefault();
+                openModal('#modal-order');
             });
 
-            $('#orderBtn').on('click', function () {
-                openModal('#modal2');
+            $('#thanksBtn').on('click', function () {
+                openModal('#modal-thanks');
             });
 
-            $('#btnOrder').on('click', function () {
-                openModal('#modal2');
-            });
-            $('#dialog3Btn').on('click', function () {
-                openModal('#modal3');
+            // Submit → save to backend, then the thank-you dialog
+            $(document).on('click', '.js-submit-to-thanks', function () {
+                var $btn = $(this);
+                var $box = $btn.closest('.modal-box');
+                var $error = $box.find('.modal-error');
+
+                var payload = { form: $btn.data('form') };
+                $box.find('.modal-field').each(function () {
+                    payload[this.name] = $.trim($(this).val());
+                });
+                payload.terms = $box.find('input[type="checkbox"]').prop('checked') || false;
+
+                if (!payload.phone && !payload.email) {
+                    $error.text('Vui lòng nhập số điện thoại hoặc email.');
+                    return;
+                }
+
+                $error.text('');
+                $btn.prop('disabled', true);
+
+                submit(payload)
+                    .done(function () {
+                        $box.find('.modal-field').val('');
+                        $box.find('input[type="checkbox"]').prop('checked', false);
+                        closeAllModals();
+                        openModal('#modal-thanks');
+                    })
+                    .fail(function (xhr) {
+                        // Leave the modal open so nothing typed is lost.
+                        $error.text(errorText(xhr));
+                    })
+                    .always(function () {
+                        $btn.prop('disabled', false);
+                    });
             });
 
-            // Submit → dialog3
-            $(document).on('click', '.js-submit-to-dialog3', function () {
-                closeAllModals();
-                openModal('#modal3');
+            // Footer email signup
+            $('#subscribeForm').on('submit', function (e) {
+                e.preventDefault();
+                var $form = $(this);
+                var $input = $form.find('input[name="email"]');
+                var $btn = $form.find('.btn-enter');
+                var email = $.trim($input.val());
+
+                if (!email) return;
+
+                $btn.prop('disabled', true);
+                submit({ form: 'subscribe', email: email })
+                    .done(function () {
+                        $input.val('');
+                        $btn.text('Đã đăng ký');
+                    })
+                    .fail(function (xhr) {
+                        alert(errorText(xhr));
+                    })
+                    .always(function () {
+                        $btn.prop('disabled', false);
+                    });
             });
+
+            function submit(payload) {
+                return $.ajax({
+                    url: '/api/submit',
+                    method: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(payload)
+                });
+            }
+
+            function errorText(xhr) {
+                var message = xhr && xhr.responseJSON && xhr.responseJSON.error;
+                return message || 'Không gửi được, vui lòng thử lại.';
+            }
 
             // Close on × button
             $(document).on('click', '.js-modal-close', function () {

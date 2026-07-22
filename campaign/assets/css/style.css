@@ -1099,10 +1099,12 @@ body {
     max-height: 160px;
     margin: auto;
   }
+  #section6 .grid .item .title {
+    text-align: left !important;
+  }
   #section6 .grid .item .title,
   #section6 .grid .item p {
     max-width: 100% !important;
-    text-align: left !important;
   }
   #section7 .section-title .background-text {
     font-size: 44px;

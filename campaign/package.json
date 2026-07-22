@@ -1,7 +1,11 @@
 {
+  "scripts": {
+    "start": "node app.js"
+  },
   "dependencies": {
     "bootstrap": "^5.3.8",
     "imagesloaded": "^5.0.0",
-    "jquery": "^3.7.1"
+    "jquery": "^3.7.1",
+    "pg": "^8.13.1"
   }
 }

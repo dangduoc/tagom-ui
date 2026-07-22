@@ -1354,11 +1354,15 @@ body {
                 }
             }
 
+            .title{
+                 text-align: left !important;
+            }
             .title,
             p {
                 max-width: 100% !important;
-                text-align: left !important;
+               
             }
+
         }
     }
 
