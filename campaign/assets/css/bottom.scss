@@ -80,10 +80,11 @@ $green-54: #54ab47;
 
 // ── FAQ ────────────────────────────────────────────────────────────────────
 #pc1-faq {
-    & > .inner {
+    &>.inner {
         padding-top: 150px;
         padding-bottom: 150px;
     }
+
     .faq-title-star {
         text-align: center;
         margin-bottom: 80px;
@@ -320,7 +321,7 @@ $green-54: #54ab47;
 
     padding: 100px 60px;
 
-    & > .container {
+    &>.container {
         align-items: flex-start;
         display: flex;
         gap: 80px;
@@ -445,12 +446,6 @@ $green-54: #54ab47;
 
     &.active {
         display: flex;
-    }
-
-    &.dialog3 .modal-box {
-        padding: 40px 60px;
-        text-align: center;
-        overflow: visible;
     }
 }
 
@@ -595,57 +590,111 @@ $green-54: #54ab47;
     }
 }
 
-.modal-stars {
+// ── Dialog 3: thank you ────────────────────────────────────────────────────
+.modal4-box {
+    background: #fff;
+    border-radius: 10px;
+    width: 851px;
+    max-width: 100%;
+    margin: auto;
+    position: relative;
+    animation: modalIn 0.25s ease;
+    font-family: "Montserrat", sans-serif;
+}
+
+.modal4-star {
+    position: absolute;
+    left: 4.82%;
+    bottom: 100%;
+    width: 19.3%;
+    transform: translateY(35.24%);
+    pointer-events: none;
+}
+
+// Percentages below are fractions of the 851px design width, so the whole
+// dialog keeps its proportions while it scales down with the viewport.
+// $m4-w is the rendered card width, used to scale type by the same fraction.
+$m4-w: min(851px, 100vw - 32px);
+
+// The star hangs above the card, so reserve room for it and let the overlay
+// scroll (margin:auto instead of align-items so the top never gets clipped).
+.modal-overlay.dialog3 {
+    align-items: flex-start;
+    overflow-y: auto;
+    padding: 120px 16px 40px;
+}
+
+.modal4-content {
+    padding: 12.57% 1.53% 9.75% 9.87%; // 107 / 13 / 83 / 84 of 851px
+}
+
+.modal4-text {
+    width: 48.28%; // 364px of the 754px content box
+    color: #000;
+    text-align: justify;
+}
+
+.modal4-title {
+    font-size: calc(#{$m4-w} * 0.02938); // 25px at 851px
+    font-weight: 700;
+    line-height: 1.8;
+    margin: 0 0 4.95%; // percentages here are fractions of the 364px column
+}
+
+.modal4-lead {
+    font-size: calc(#{$m4-w} * 0.02115); // 18px at 851px
+    line-height: 1.8;
+    margin: 0 0 4.67%;
+}
+
+.modal4-divider {
     display: flex;
-    justify-content: center;
-    gap: 24px;
-    margin-bottom: 50px;
-    margin-top: -120px;
+    align-items: center;
+    gap: 5.77%; // 21px of 364px
+    margin: 0 0 3.3%;
+}
+
+.modal4-divider-line {
+    flex: 1 1 auto;
+    height: 1px;
+    background-image: repeating-linear-gradient(to right, $green 0 2px, transparent 2px 4px);
+}
+
+.modal4-divider-star {
+    flex: 0 0 auto;
+    width: 2.75%; // 10px of 364px
+    height: auto;
+}
+
+.modal4-note {
+    font-size: calc(#{$m4-w} * 0.0188); // 16px at 851px
+    line-height: 1.8;
+    margin: 0 0 3.3%;
+}
+
+.modal4-emoji {
+    font-size: calc(#{$m4-w} * 0.02115); // 18px at 851px
+    font-weight: 700;
+    line-height: 1.8;
+    margin: 0;
+    text-align: left;
+}
+
+// Taken out of the flow so the artwork can hang past the copy without
+// stretching the card. translateY is a share of the image's own height, so it
+// tracks the width-driven scaling.
+.modal4-art {
+    position: absolute;
+    top: 0;
+    left: 57.11%; // 486px of 851px
+    width: 41.36%; // 352px of 851px
+    transform: translateY(21.65%); // 84px down, of the 388px artwork
+    pointer-events: none;
 
     img {
-        width: 140px;
-        height: 140px;
-        object-fit: contain;
-
-        &:nth-child(1) {
-            transform: rotate(-18deg) translateY(20px);
-        }
-
-        &:nth-child(3) {
-            transform: rotate(18deg) translateY(20px);
-        }
-    }
-}
-
-.modal-thankyou-text {
-    font-size: 22px;
-    font-weight: 800;
-    color: #000;
-    text-align: center;
-    line-height: 1.6;
-    margin-bottom: 36px;
-    text-transform: uppercase;
-}
-
-.modal-close-x {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    border: 2px solid #ccc;
-    background: none;
-    cursor: pointer;
-    font-size: 28px;
-    color: #555;
-    transition:
-        border-color 0.2s,
-        color 0.2s;
-
-    &:hover {
-        border-color: #999;
-        color: #222;
+        display: block;
+        width: 100%;
+        height: auto;
     }
 }
 
@@ -667,7 +716,8 @@ $green-54: #54ab47;
         flex-direction: column;
         align-items: flex-start;
         padding: 0;
-        & > .container {
+
+        &>.container {
             padding: 0;
             row-gap: 50px;
         }
@@ -689,13 +739,16 @@ $green-54: #54ab47;
             max-width: 100%;
             border-radius: 0;
             padding-top: 60px;
+
             .modal-field {
                 height: 50px;
             }
+
             .modal-title {
                 font-size: 28px;
                 letter-spacing: 0;
             }
+
             .modal-close {
                 top: 5px;
                 right: 5px;
@@ -706,26 +759,74 @@ $green-54: #54ab47;
         }
     }
 
-    .modal-overlay.dialog3 .modal-box {
-        padding: 24px 50px;
+
+    // Dialog 4 stacks: artwork on top, copy underneath.
+    .modal4-box {
+        width: 100%;
+        max-width: 520px;
     }
 
-    .modal-stars {
-        margin-top: -90px;
-        img {
-            width: 80px;
-            height: 80px;
-        }
+    .modal4-star {
+        width: 110px;
+    }
+
+    .modal4-content {
+        display: flex;
+        flex-direction: column-reverse;
+        padding: 60px 20px 20px 20px;
+    }
+
+    .modal4-text {
+        width: 100%;
+    }
+
+    .modal4-art {
+        order: -1;
+        position: static;
+        width: 62%;
+        max-width: 260px;
+        margin: 0 auto 12px;
+        transform: none;
+    }
+
+    .modal4-title {
+        font-size: 20px;
+        margin-bottom: 14px;
+    }
+
+    .modal4-lead {
+        font-size: 15px;
+        margin-bottom: 14px;
+    }
+
+    .modal4-divider {
+        gap: 16px;
+        margin-bottom: 12px;
+    }
+
+    .modal4-divider-star {
+        width: 10px;
+    }
+
+    .modal4-note {
+        font-size: 14px;
+        margin-bottom: 12px;
+    }
+
+    .modal4-emoji {
+        font-size: 15px;
     }
 }
 
 @media (max-width: 600px) {
     #pc1-partner {
         padding: 60px 30px 100px;
+
         .wave-bg {
             width: 100%;
             transform: scale(1.4);
         }
+
         .inner {
             gap: 10px;
             padding: 0;
@@ -734,12 +835,15 @@ $green-54: #54ab47;
 
     #pc1-faq {
         padding: 60px 16px;
+
         .faq-title-star {
             margin-bottom: 40px;
+
             img {
                 height: 90px;
             }
         }
+
         .faq-title {
             margin-bottom: 40px;
         }
@@ -764,10 +868,12 @@ $green-54: #54ab47;
 
     #pc1-footer {
         padding: 40px 24px;
+
         .footer-email {
             input[type="email"] {
                 font-size: 14px;
             }
+
             .btn-enter {
                 border-radius: 20px;
                 padding: 12px 16px;
@@ -785,9 +891,6 @@ $green-54: #54ab47;
         }
     }
 
-    .modal-overlay.dialog3 .modal-box {
-        padding: 24px 30px;
-    }
 }
 
 @media screen and (min-width: 768px) and (orientation: portrait) {
@@ -800,6 +903,7 @@ $green-54: #54ab47;
     .footer-nav-group {
         margin-bottom: 32px;
     }
+
     .footer-email {
         max-width: unset;
     }
