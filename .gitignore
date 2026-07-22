@@ -6,3 +6,7 @@ gomvosua/node_modules/
 
 # Local toolchains (standalone node22 etc.)
 .tools/
+
+# Form submissions database (contains customer personal data)
+campaign-data/
+campaign/data/

@@ -547,6 +547,18 @@ $green-54: #54ab47;
     margin-bottom: 28px;
 }
 
+.modal-error {
+    color: #c0392b;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 12px;
+    text-align: center;
+
+    &:empty {
+        display: none;
+    }
+}
+
 .modal-submit {
     display: block;
     margin: 0 auto;
@@ -590,8 +602,8 @@ $green-54: #54ab47;
     }
 }
 
-// ── Dialog 3: thank you ────────────────────────────────────────────────────
-.modal4-box {
+// ── Thank-you dialog ───────────────────────────────────────────────────────
+.thanks-box {
     background: #fff;
     border-radius: 10px;
     width: 851px;
@@ -602,7 +614,7 @@ $green-54: #54ab47;
     font-family: "Montserrat", sans-serif;
 }
 
-.modal4-star {
+.thanks-star {
     position: absolute;
     left: 4.82%;
     bottom: 100%;
@@ -613,67 +625,67 @@ $green-54: #54ab47;
 
 // Percentages below are fractions of the 851px design width, so the whole
 // dialog keeps its proportions while it scales down with the viewport.
-// $m4-w is the rendered card width, used to scale type by the same fraction.
-$m4-w: min(851px, 100vw - 32px);
+// $thanks-w is the rendered card width, used to scale type by the same fraction.
+$thanks-w: min(851px, 100vw - 32px);
 
 // The star hangs above the card, so reserve room for it and let the overlay
 // scroll (margin:auto instead of align-items so the top never gets clipped).
-.modal-overlay.dialog3 {
+.modal-overlay.dialog-thanks {
     align-items: flex-start;
     overflow-y: auto;
     padding: 120px 16px 40px;
 }
 
-.modal4-content {
+.thanks-content {
     padding: 12.57% 1.53% 9.75% 9.87%; // 107 / 13 / 83 / 84 of 851px
 }
 
-.modal4-text {
+.thanks-text {
     width: 48.28%; // 364px of the 754px content box
     color: #000;
     text-align: justify;
 }
 
-.modal4-title {
-    font-size: calc(#{$m4-w} * 0.02938); // 25px at 851px
+.thanks-title {
+    font-size: calc(#{$thanks-w} * 0.02938); // 25px at 851px
     font-weight: 700;
     line-height: 1.8;
     margin: 0 0 4.95%; // percentages here are fractions of the 364px column
 }
 
-.modal4-lead {
-    font-size: calc(#{$m4-w} * 0.02115); // 18px at 851px
+.thanks-lead {
+    font-size: calc(#{$thanks-w} * 0.02115); // 18px at 851px
     line-height: 1.8;
     margin: 0 0 4.67%;
 }
 
-.modal4-divider {
+.thanks-divider {
     display: flex;
     align-items: center;
     gap: 5.77%; // 21px of 364px
     margin: 0 0 3.3%;
 }
 
-.modal4-divider-line {
+.thanks-divider-line {
     flex: 1 1 auto;
     height: 1px;
     background-image: repeating-linear-gradient(to right, $green 0 2px, transparent 2px 4px);
 }
 
-.modal4-divider-star {
+.thanks-divider-star {
     flex: 0 0 auto;
     width: 2.75%; // 10px of 364px
     height: auto;
 }
 
-.modal4-note {
-    font-size: calc(#{$m4-w} * 0.0188); // 16px at 851px
+.thanks-note {
+    font-size: calc(#{$thanks-w} * 0.0188); // 16px at 851px
     line-height: 1.8;
     margin: 0 0 3.3%;
 }
 
-.modal4-emoji {
-    font-size: calc(#{$m4-w} * 0.02115); // 18px at 851px
+.thanks-emoji {
+    font-size: calc(#{$thanks-w} * 0.02115); // 18px at 851px
     font-weight: 700;
     line-height: 1.8;
     margin: 0;
@@ -683,7 +695,7 @@ $m4-w: min(851px, 100vw - 32px);
 // Taken out of the flow so the artwork can hang past the copy without
 // stretching the card. translateY is a share of the image's own height, so it
 // tracks the width-driven scaling.
-.modal4-art {
+.thanks-art {
     position: absolute;
     top: 0;
     left: 57.11%; // 486px of 851px
@@ -731,7 +743,7 @@ $m4-w: min(851px, 100vw - 32px);
         display: none;
     }
 
-    .modal-overlay:not(.dialog3) {
+    .modal-overlay:not(.dialog-thanks) {
         .modal-box {
             padding: 50px 20px;
             height: 100%;
@@ -761,26 +773,26 @@ $m4-w: min(851px, 100vw - 32px);
 
 
     // Dialog 4 stacks: artwork on top, copy underneath.
-    .modal4-box {
+    .thanks-box {
         width: 100%;
         max-width: 520px;
     }
 
-    .modal4-star {
+    .thanks-star {
         width: 110px;
     }
 
-    .modal4-content {
+    .thanks-content {
         display: flex;
         flex-direction: column-reverse;
         padding: 60px 20px 20px 20px;
     }
 
-    .modal4-text {
+    .thanks-text {
         width: 100%;
     }
 
-    .modal4-art {
+    .thanks-art {
         order: -1;
         position: static;
         width: 62%;
@@ -789,31 +801,31 @@ $m4-w: min(851px, 100vw - 32px);
         transform: none;
     }
 
-    .modal4-title {
+    .thanks-title {
         font-size: 20px;
         margin-bottom: 14px;
     }
 
-    .modal4-lead {
+    .thanks-lead {
         font-size: 15px;
         margin-bottom: 14px;
     }
 
-    .modal4-divider {
+    .thanks-divider {
         gap: 16px;
         margin-bottom: 12px;
     }
 
-    .modal4-divider-star {
+    .thanks-divider-star {
         width: 10px;
     }
 
-    .modal4-note {
+    .thanks-note {
         font-size: 14px;
         margin-bottom: 12px;
     }
 
-    .modal4-emoji {
+    .thanks-emoji {
         font-size: 15px;
     }
 }
@@ -882,7 +894,7 @@ $m4-w: min(851px, 100vw - 32px);
         }
     }
 
-    .modal-overlay:not(.dialog3) {
+    .modal-overlay:not(.dialog-thanks) {
         .modal-box {
             .modal-title {
                 font-size: 24px;
