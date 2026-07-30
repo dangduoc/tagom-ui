@@ -1,10 +1,10 @@
 // ESP32 RS232 Scale Bridge
-// Reads weight from an RS232 weighing indicator (via MAX3232 on UART2) and
-// pushes it to WebSocket clients as JSON: {"weight": 12.5, "stable": true, "unit": "kg"}
+// Reads weight from a DIGI/Teraoka DS-166SS weighing indicator (via MAX3232 on
+// UART2) and pushes it to WebSocket clients as JSON:
+//   {"weight": 12.5, "stable": true, "unit": "kg"}
 //
-// Current mode: SIMULATED readings (hardware not yet connected).
-// To switch to the real scale, set USE_SIMULATED_SCALE to 0 once the
-// MAX3232 module and scale are wired to GPIO16 (RX2) / GPIO17 (TX2).
+// Current mode: REAL scale via UART2 (USE_SIMULATED_SCALE 0).
+// Flip USE_SIMULATED_SCALE to 1 to fall back to fake data (no hardware needed).
 
 #include <WiFi.h>
 #include <WebSocketsServer.h>
@@ -15,12 +15,13 @@
 #define WEBSOCKET_PORT 81
 #define READING_INTERVAL_MS 1000
 
-#define USE_SIMULATED_SCALE 1
+#define USE_SIMULATED_SCALE 0
 
-// Scale serial config (per USERMANUAL-MK231OIML180416: default 9600, 8-N-1)
+// Scale serial config — DS-166SS: 9600, 8-N-1, continuous ASCII stream
 #define SCALE_BAUD 9600
-#define SCALE_RX_PIN 16  // ESP32 RX2 <- module TXD
-#define SCALE_TX_PIN 17  // ESP32 TX2 -> module RXD
+// NOTE: this MAX3232 module is labeled host-side, so wiring is STRAIGHT (not crossed):
+#define SCALE_RX_PIN 16  // ESP32 RX2 -> module RXD
+#define SCALE_TX_PIN 17  // ESP32 TX2 -> module TXD
 
 WebSocketsServer webSocket(WEBSOCKET_PORT);
 
@@ -64,22 +65,54 @@ ScaleReading getSimulatedReading() {
   return r;
 }
 
-// ---- Real scale via UART2 (stub — implement when hardware arrives) ----
-// Scale sends continuous ASCII lines, one per reading, terminated \r\n:
-//   S1,S2,S3Data S4\r\n     e.g. "ST,GS,+0012.5 kg\r\n"
-//   S1: ST=stable US=unstable OL=overload
-//   S2: GS=gross NT=net
-//   S3: + or -
-//   Data: weight incl. decimal point
-//   S4: kg or lb
-// Implementation plan: read from Serial2 until '\n', then parse:
-//   - stable  = line starts with "ST"
-//   - weight  = atof() of the signed value after the second comma
-//   - unit    = trailing "kg"/"lb"
-//   - r.valid = false on OL or malformed line
+// ---- Real scale via UART2 (DS-166SS) ----
+// Continuous ASCII lines, one per reading, terminated \r\n. VERIFIED format
+// (captured from real hardware — see CONTEXT.md):
+//   S1,S2,S3<data><unit>     e.g. "ST,GS,+  13.88kg\r\n"
+//   S1:   ST=stable  US=unstable  OL=overload
+//   S2:   GS=gross   (only mode seen)
+//   S3:   sign, '+' or '-'
+//   data: weight, space-padded/right-aligned, 2 decimals (e.g. "  13.88")
+//   unit: "kg" — concatenated straight onto the number, NO space/comma
+//
+// Non-blocking line buffer: drain everything available each call and return the
+// newest complete line. The scale sends several lines/sec; we push at most 1/sec.
+// NOTE: atof(line+6) does NOT work here — after the sign come spaces, which atof
+// can't parse. Parse the number from just past the sign, where it's space+digits.
 ScaleReading getScaleReading() {
+  static char line[48];
+  static size_t len = 0;
+
   ScaleReading r = { 0.0, false, false, "kg" };
-  // TODO: parse Serial2 lines here (9600 8N1 on RX2=GPIO16 / TX2=GPIO17)
+
+  while (Serial2.available()) {
+    char c = (char)Serial2.read();
+    if (c == '\n') {
+      line[len] = '\0';
+      size_t lineLen = len;
+      len = 0;
+      if (lineLen && line[lineLen - 1] == '\r') line[--lineLen] = '\0';
+
+      // "ST,GS,+  13.88kg" — need status + two commas at fixed positions
+      if (lineLen < 8 || line[2] != ',' || line[5] != ',') continue;
+      if (line[0] == 'O' && line[1] == 'L') continue;       // overload → skip
+
+      const char* rest = line + 6;                          // "+  13.88kg"
+      char sign = rest[0];
+      float weight = atof(rest + 1);                        // atof skips the spaces
+      if (sign == '-') weight = -weight;
+
+      r.stable = (line[0] == 'S' && line[1] == 'T');
+      r.weight = weight;
+      r.unit   = (strstr(rest, "lb") != nullptr) ? "lb" : "kg";
+      r.valid  = true;
+      // keep draining; the LAST complete line wins
+    } else if (len < sizeof(line) - 1) {
+      line[len++] = c;
+    } else {
+      len = 0;                                              // overflow → resync
+    }
+  }
   return r;
 }
 
