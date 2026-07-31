@@ -1,0 +1,37 @@
+<div class="cam">
+  <video #video class="feed" playsinline muted autoplay></video>
+  <div class="vignette"></div>
+  <div class="scanline"></div>
+
+  <div class="brackets">
+    <span class="tl"></span><span class="tr"></span><span class="bl"></span><span class="br"></span>
+  </div>
+
+  <p class="status">
+    <span class="pulse"></span>
+    {{ identify.checking() ? station.L().searching : station.L().scanning }}
+  </p>
+</div>
+
+<div class="copy">
+  <h1 class="tg-display">{{ station.L().identifyTitle }}</h1>
+  <p class="sub">{{ station.L().identifySub }}</p>
+
+  <div class="fallbacks">
+    <button type="button" class="option" (click)="station.openKeypad()">
+      <tg-icon name="id-card" [size]="26" [strokeWidth]="1.9" />
+      {{ station.L().cantScan }}
+    </button>
+
+    <button type="button" class="skip" (click)="station.skip()">
+      {{ station.L().skip }}
+      <tg-icon name="arrow-right" [size]="24" [strokeWidth]="2.2" />
+    </button>
+
+    <p class="note">{{ station.L().skipNote }}</p>
+
+    <button type="button" class="noface" (click)="station.openNoFace()">
+      {{ station.L().noFaceLink }}
+    </button>
+  </div>
+</div>

@@ -1,0 +1,214 @@
+:host {
+  display: flex;
+  position: absolute;
+  inset: 0;
+  gap: 56px;
+  align-items: center;
+  justify-content: center;
+  padding: 44px 56px;
+  overflow-y: auto;
+}
+
+.cam {
+  position: relative;
+  flex-shrink: 0;
+  border-radius: var(--radius-xl);
+  background: #04302a;
+  box-shadow: 0 20px 50px rgb(0 0 0 / 0.35);
+  width: 520px;
+  height: 520px;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.feed {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Selfie view — people expect to see themselves mirrored. */
+  transform: scaleX(-1);
+}
+
+.vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 100% at 50% 0%, rgb(10 81 71 / 0.35) 0%, rgb(4 48 42 / 0.75) 70%);
+  pointer-events: none;
+}
+
+.scanline {
+  position: absolute;
+  top: 0;
+  right: 8%;
+  left: 8%;
+  box-shadow: 0 0 18px var(--tagom-lime);
+  background: linear-gradient(90deg, transparent, var(--tagom-lime), transparent);
+  height: 3px;
+  animation: tg-scan 2.4s var(--ease-in-out) infinite;
+}
+
+.brackets {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 280px;
+  height: 280px;
+  max-width: 62%;
+  max-height: 62%;
+}
+
+.brackets span {
+  position: absolute;
+  width: 56px;
+  height: 56px;
+}
+
+.brackets .tl {
+  top: 0;
+  left: 0;
+  border-top: 5px solid var(--tagom-lime);
+  border-left: 5px solid var(--tagom-lime);
+  border-radius: 10px 0 0 0;
+}
+
+.brackets .tr {
+  top: 0;
+  right: 0;
+  border-top: 5px solid var(--tagom-lime);
+  border-right: 5px solid var(--tagom-lime);
+  border-radius: 0 10px 0 0;
+}
+
+.brackets .bl {
+  bottom: 0;
+  left: 0;
+  border-bottom: 5px solid var(--tagom-lime);
+  border-left: 5px solid var(--tagom-lime);
+  border-radius: 0 0 0 10px;
+}
+
+.brackets .br {
+  right: 0;
+  bottom: 0;
+  border-right: 5px solid var(--tagom-lime);
+  border-bottom: 5px solid var(--tagom-lime);
+  border-radius: 0 0 10px 0;
+}
+
+.status {
+  display: inline-flex;
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  gap: 12px;
+  align-items: center;
+  margin: 0;
+  border-radius: var(--radius-pill);
+  background: rgb(0 0 0 / 0.4);
+  padding: 12px 22px;
+  color: var(--tagom-lime);
+  white-space: nowrap;
+  font-weight: var(--fw-semibold);
+  font-size: 18px;
+}
+
+.pulse {
+  border-radius: var(--radius-circle);
+  background: var(--tagom-lime);
+  width: 12px;
+  height: 12px;
+  animation: tg-blink 1s infinite;
+}
+
+.copy {
+  width: 440px;
+  max-width: 100%;
+}
+
+h1 {
+  margin: 0 0 18px;
+  text-wrap: pretty;
+  line-height: 1.06;
+  font-size: clamp(30px, 3.8vw, 44px);
+}
+
+.sub {
+  margin: 0 0 32px;
+  text-wrap: pretty;
+  line-height: 1.4;
+  font-size: 22px;
+}
+
+.fallbacks {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 380px;
+}
+
+.option {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+  padding: 18px 22px;
+  font-weight: var(--fw-semibold);
+  font-size: var(--text-lg);
+}
+
+.skip {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  justify-content: space-between;
+  border: 1.5px dashed var(--border-strong);
+  border-radius: var(--radius-lg);
+  padding: 18px 22px;
+  color: var(--tagom-green);
+  font-weight: var(--fw-bold);
+  font-size: var(--text-lg);
+}
+
+.note {
+  margin: 2px 0 0;
+  opacity: 0.6;
+  line-height: 1.4;
+  font-size: 15px;
+}
+
+.noface {
+  margin-top: 6px;
+  color: var(--tagom-green);
+  text-align: left;
+  font-weight: var(--fw-bold);
+  font-size: var(--text-body-size);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+  :host {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 16px;
+    padding: 18px;
+  }
+
+  .cam {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 340px;
+    height: auto;
+    aspect-ratio: 1;
+  }
+
+  .fallbacks {
+    max-width: none;
+  }
+}

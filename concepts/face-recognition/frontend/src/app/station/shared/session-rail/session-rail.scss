@@ -1,0 +1,194 @@
+:host {
+  position: absolute;
+  top: var(--tg-header-h);
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  width: var(--tg-rail-w);
+  border-left: 1px solid var(--border-subtle);
+  background: var(--surface-card);
+}
+
+.identity {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 22px 26px;
+  width: 100%;
+}
+
+.identity.as-text {
+  cursor: default;
+}
+
+.avatar {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-circle);
+  background: var(--surface-sunken);
+  width: 44px;
+  height: 44px;
+  color: var(--tagom-green);
+}
+
+.who {
+  flex: 1;
+  min-width: 0;
+}
+
+.name {
+  display: block;
+  font-size: var(--text-lg);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.phone {
+  display: block;
+  opacity: 0.55;
+  font-size: var(--text-sm);
+}
+
+.chev {
+  opacity: 0.5;
+}
+
+.listhead {
+  padding: 18px 26px 8px;
+  opacity: 0.55;
+  letter-spacing: 0.05em;
+  font-weight: var(--fw-bold);
+  font-size: 15px;
+  text-transform: uppercase;
+}
+
+.list {
+  flex: 1;
+  padding: 0 20px;
+  overflow: auto;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 14px 8px;
+}
+
+.dot {
+  flex-shrink: 0;
+  border-radius: 5px;
+  width: 16px;
+  height: 16px;
+}
+
+.row-name {
+  flex: 1;
+  font-weight: var(--fw-semibold);
+  font-size: var(--text-lg);
+}
+
+.row-weight {
+  font-weight: var(--fw-bold);
+  font-size: 22px;
+}
+
+.remove {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid var(--border-subtle);
+  border-radius: 10px;
+  width: 38px;
+  height: 38px;
+  color: var(--status-danger);
+}
+
+.empty {
+  margin: 0;
+  padding: 36px 8px;
+  opacity: 0.4;
+  text-align: center;
+  white-space: pre-line;
+  line-height: var(--lh-normal);
+  font-size: 18px;
+}
+
+.total {
+  border-top: 2px solid var(--tagom-green);
+  background: var(--surface-sunken);
+  padding: 22px 26px;
+}
+
+.total-line {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.total-label {
+  letter-spacing: var(--tracking-wide);
+  font-weight: var(--fw-bold);
+  font-size: var(--text-lg);
+  text-transform: uppercase;
+}
+
+.total-value {
+  line-height: 1;
+  font-size: 46px;
+}
+
+.unit {
+  opacity: 0.6;
+  font-size: var(--text-h3);
+}
+
+.finish {
+  margin-top: 16px;
+  border-radius: var(--radius-pill);
+  background: var(--tagom-green);
+  padding: 18px;
+  width: 100%;
+  color: var(--tagom-lime);
+  text-align: center;
+  letter-spacing: 0.03em;
+  font-weight: var(--fw-bold);
+  font-size: 22px;
+  text-transform: uppercase;
+}
+
+/* Mobile: the rail docks to the bottom — identity and list collapse away,
+   total + Finish stay (handoff §5.9). */
+@media (max-width: 600px) {
+  /* Docked bottom bar — a normal flex item of the shell, so it can't overlap
+     the screen content above it. */
+  :host {
+    position: static;
+    flex-shrink: 0;
+    border-top: 1px solid var(--border-subtle);
+    border-left: none;
+    width: auto;
+  }
+
+  .identity,
+  .listhead,
+  .list {
+    display: none;
+  }
+
+  .total {
+    padding: 14px 20px;
+  }
+
+  .finish {
+    margin-top: 10px;
+    padding: 14px;
+  }
+}

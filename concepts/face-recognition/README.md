@@ -1,17 +1,33 @@
-# Department Face Recognition
+# Tagom Community Recycling Station
 
-Live face recognition for a known set of department members: the browser detects
-faces on every video frame (MediaPipe, in-browser), tracks them across frames,
-and asks the backend to identify each tracked face at most once every few
-seconds (insightface embedding + vector search). See
-`face-recognition-app-handover.md` for the original design notes.
+A self-service kiosk for a community recycling collection point. Someone brings
+recyclables, identifies themselves (QR / face / anonymous), weighs several
+material categories one after another, and finishes on a gratitude summary.
+Built to the design handoff in `design_handoff_recycling_station/`
+(`context.md` is the implementation spec; the HTML prototype there is the
+visual source of truth).
+
+Two experiments feed it, both now wired into the real flow: in-browser face
+detection + server-side recognition (identify / register), and a DS-166SS
+digital scale bridged over WebSocket (weigh). The original design notes for the
+recognition half are in `face-recognition-app-handover.md`.
+
+## Screens
+
+Single state machine, not URL-routed: **idle → identify → confirmed / unknown →
+register → category → weigh → summary**, plus a profile screen, help / keypad /
+no-face overlays, and scale / network / camera error cards. Two session modes —
+*sorted* (pick a material each time) and *quick* (one unsorted bag). Vietnamese
+first, English toggle. Tablet landscape (1280×800) with a real mobile layout at
+≤600px.
 
 ## Stack
 
-- **Frontend**: Angular 22 + Ionic 8 (mobile-friendly UI, bottom tabs) +
-  `@mediapipe/tasks-vision` (BlazeFace short-range, WASM/GPU, runs fully
-  client-side). Live overlay page + enrollment page with a guided photo-capture
-  modal.
+- **Frontend**: Angular 22 (zoneless, signals) styled with the Tagom design
+  tokens in `frontend/src/styles/tokens/` — never hardcode brand hexes.
+  `@mediapipe/tasks-vision` (BlazeFace short-range, WASM/GPU) detects faces
+  client-side; `BarcodeDetector` reads QR where the browser supports it.
+  Ionic remains only for the `/debug` hardware pages.
 - **Backend**: FastAPI + insightface (`buffalo_s`, ONNX, CPU) on Python 3.11.
 - **Storage**: two interchangeable backends behind one interface
   (`backend/app/stores/`):
@@ -62,12 +78,20 @@ npm install                   # once
 npm start                     # ng serve on http://localhost:4200 (proxies /api to :8000)
 ```
 
-Open http://localhost:4200 → **Enroll** tab → **Take photos** opens a guided
-capture modal (5 shots: straight, slightly left, slightly right, chin up,
-natural — capture is enabled only while exactly one face is in view; each shot
-is reviewed with Confirm/Retake, and Finish unlocks once all 5 are taken),
-enter code/name, enroll. Then the **Live** tab overlays names on the camera feed:
-green = recognized, red = unknown, yellow = checking.
+Open http://localhost:4200 for the station itself. To enrol the first person,
+start a session and pick **Đăng ký tại đây** on the unknown screen — name and
+phone are required, and the five face photos become the embedding the identify
+screen matches against.
+
+### `/debug` — hardware setup pages
+
+The original experiment pages are still there at http://localhost:4200/debug:
+
+- **Cân** — set the scale bridge's WebSocket URL (stored in `localStorage` under
+  `scale-ws-url`; the station reads the same value). Set this before weighing on
+  a new device.
+- **Trực tiếp** — raw recognition overlay, for checking the camera and threshold.
+- **Đăng ký** — the original code/name enrollment form.
 
 Or start everything (database + backend + frontend) in one go:
 
@@ -108,6 +132,16 @@ To move existing SQLite enrollments over: `.venv\Scripts\python -m scripts.migra
 
 ## Known limitations / next steps
 
+- **Depositor records and weigh history have no backend yet.** The backend
+  stores only what recognition needs (`employee_code`, `full_name`, embeddings).
+  Phone/age/citizen ID/address, per-session history and the station's community
+  total currently live in `localStorage`, behind
+  `frontend/src/app/station/core/station-data.ts` — one file to swap for API
+  calls once a `people` + `weigh_sessions` schema exists. Registration does hit
+  the real `/api/enroll`, using the phone digits as `employee_code`.
+- **QR codes are placeholders.** `tg-qr` draws a deterministic QR-looking grid,
+  not a scannable code (as flagged in the handoff). Add a real encoder when the
+  app-download link and account payload are settled.
 - **Camera needs HTTPS off-localhost**: `getUserMedia` only works in a secure
   context. To open the app from a phone, serve the frontend over HTTPS (dev:
   `ng serve --ssl`; VPS: Caddy/nginx + Let's Encrypt).

@@ -1,0 +1,11 @@
+/* Tagom — Radius tokens
+   The brand's signal shape is the full pill (50px) used on buttons/CTAs.
+   Cards and inputs use a generous, soft rounding in keeping with the friendly tone. */
+:root {
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-pill: 999px;   /* CTAs, tags, toggles */
+  --radius-circle: 50%;
+}

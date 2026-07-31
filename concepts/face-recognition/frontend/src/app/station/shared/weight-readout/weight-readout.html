@@ -1,0 +1,34 @@
+@if (isLocked()) {
+  <div class="panel locked">
+    <span class="badge"><tg-icon name="check" [size]="52" [strokeWidth]="3" /></span>
+    <p class="figure">
+      <span class="number tg-nums">{{ weightText() }}</span>
+      <span class="unit">kg</span>
+    </p>
+    <p class="recorded">{{ station.L().added }} · {{ categoryName() }}</p>
+  </div>
+} @else {
+  <div class="panel live">
+    <p class="figure">
+      <span class="number tg-nums">{{ weightText() }}</span>
+      <span class="unit">kg</span>
+    </p>
+
+    @if (isStable()) {
+      <div class="hold">
+        <p class="hold-label">
+          <tg-icon name="check" [size]="26" [strokeWidth]="2.4" />{{ station.L().holdStill }}
+        </p>
+        <div class="hold-track"><div class="hold-fill" [style.width.%]="holdPct()"></div></div>
+      </div>
+    } @else {
+      <p class="chip">
+        <span class="dots"><span></span><span></span><span></span></span>
+        {{ connected() ? station.L().settling : station.L().scaleWaiting }}
+      </p>
+      @if (connected() && value() < 0.05) {
+        <p class="hint">{{ station.L().putOnScale }}</p>
+      }
+    }
+  </div>
+}

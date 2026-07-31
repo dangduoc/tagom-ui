@@ -1,0 +1,73 @@
+@if (station.inFlow()) {
+  <header class="chrome">
+    <div class="left">
+      <span class="wordmark tg-display">tagom</span>
+      @if (station.canBack()) {
+        <button type="button" class="back" (click)="station.back()">
+          <tg-icon name="arrow-left" [size]="18" [strokeWidth]="2.2" />
+          <span class="label">{{ station.L().back }}</span>
+        </button>
+      }
+    </div>
+    <div class="right">
+      <tg-lang-toggle />
+      <button type="button" class="help" (click)="station.openHelp()">
+        <img src="/tagom/star.svg" width="20" height="20" alt="" />
+        <span class="label">{{ station.L().help }}</span>
+      </button>
+    </div>
+  </header>
+}
+
+<div class="stage" [class.with-header]="station.inFlow()" [class.with-rail]="station.showRail()">
+  @switch (station.screen()) {
+    @case ('idle') {
+      <tg-idle-screen />
+    }
+    @case ('identify') {
+      <tg-identify-screen />
+    }
+    @case ('confirmed') {
+      <tg-confirmed-screen />
+    }
+    @case ('unknown') {
+      <tg-unknown-screen />
+    }
+    @case ('register') {
+      <tg-register-screen />
+    }
+    @case ('profile') {
+      <tg-profile-screen />
+    }
+    @case ('category') {
+      <tg-category-screen />
+    }
+    @case ('weigh') {
+      <tg-weigh-screen />
+    }
+    @case ('summary') {
+      <tg-summary-screen />
+    }
+  }
+</div>
+
+<!-- One rail instance for both category and weigh, so the two can never diverge. -->
+@if (station.showRail()) {
+  <tg-session-rail />
+}
+
+@switch (station.overlay()) {
+  @case ('help') {
+    <tg-help-overlay />
+  }
+  @case ('keypad') {
+    <tg-keypad-overlay />
+  }
+  @case ('noface') {
+    <tg-noface-dialog />
+  }
+}
+
+@if (station.error()) {
+  <tg-error-banner />
+}

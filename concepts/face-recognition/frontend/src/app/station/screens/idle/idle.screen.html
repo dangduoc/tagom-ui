@@ -1,0 +1,49 @@
+<div class="top">
+  <span class="wordmark tg-display">tagom</span>
+  <tg-lang-toggle />
+</div>
+
+<div class="middle">
+  <div class="copy">
+    <p class="brandtag">{{ station.L().brandTag }}</p>
+    <h1 class="tg-display">{{ station.L().idleTitle }}</h1>
+    <p class="sub">{{ station.L().idleSub }}</p>
+
+    <div class="ctas">
+      <button type="button" class="cta primary" (click)="station.startSorted()">
+        <tg-icon name="grid" [size]="34" />
+        <span class="cta-text">
+          <span class="cta-title tg-display">{{ station.L().startSorted }}</span>
+          <span class="cta-sub">{{ station.L().startSortedSub }}</span>
+        </span>
+        <tg-icon name="arrow-right" [size]="30" [strokeWidth]="2.4" />
+      </button>
+
+      <button type="button" class="cta secondary" (click)="station.startQuick()">
+        <tg-icon name="zap" [size]="34" />
+        <span class="cta-text">
+          <span class="cta-title tg-display">{{ station.L().startQuick }}</span>
+          <span class="cta-sub">{{ station.L().startQuickSub }}</span>
+        </span>
+        <tg-icon name="arrow-right" [size]="30" [strokeWidth]="2.4" />
+      </button>
+    </div>
+
+    <p class="camnote">
+      <tg-icon name="camera" [size]="22" [strokeWidth]="1.8" />
+      {{ station.L().idleCam }}
+    </p>
+  </div>
+
+  <div class="art">
+    <img src="/tagom/object.png" alt="" />
+  </div>
+</div>
+
+<div class="bottom">
+  <button type="button" class="help" (click)="station.openHelp()">
+    <!-- Green-inked variant: the lime star is invisible on the lime page. -->
+    <img src="/tagom/star-green.svg" width="24" height="24" alt="" />
+    {{ station.L().help }}
+  </button>
+</div>

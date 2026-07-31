@@ -1,0 +1,54 @@
+@if (station.account(); as account) {
+  <button type="button" class="identity" (click)="station.openProfile()">
+    <span class="avatar"><tg-icon name="user" [size]="24" [strokeWidth]="1.9" /></span>
+    <span class="who">
+      <span class="name tg-display">{{ station.idName() }}</span>
+      <span class="phone">{{ station.idPhone() }}</span>
+    </span>
+    <tg-icon name="chevron-right" [size]="20" [strokeWidth]="2.2" class="chev" />
+  </button>
+} @else {
+  <div class="identity as-text">
+    <span class="avatar"><tg-icon name="user" [size]="24" [strokeWidth]="1.9" /></span>
+    <span class="who">
+      <span class="name tg-display">{{ station.idName() }}</span>
+      <span class="phone">{{ station.idPhone() }}</span>
+    </span>
+  </div>
+}
+
+<div class="listhead">{{ station.L().sessionList }}</div>
+
+<div class="list">
+  @for (row of rows(); track row.id) {
+    <div class="row">
+      <span class="dot" [style.background]="row.color"></span>
+      <span class="row-name">{{ row.name }}</span>
+      <span class="row-weight tg-nums">{{ row.weightText }}</span>
+      <button
+        type="button"
+        class="remove"
+        (click)="station.removeItem(row.id)"
+        [attr.aria-label]="station.L().dismiss + ' ' + row.name"
+      >
+        <tg-icon name="trash" [size]="20" />
+      </button>
+    </div>
+  } @empty {
+    <p class="empty">{{ station.L().empty }}</p>
+  }
+</div>
+
+<div class="total">
+  <div class="total-line">
+    <span class="total-label">{{ station.L().total }}</span>
+    <span class="total-value tg-display tg-nums"
+      >{{ totalText() }}<span class="unit"> kg</span></span
+    >
+  </div>
+  @if (rows().length) {
+    <button type="button" class="finish" (click)="station.gotoSummary()">
+      {{ station.L().finish }}
+    </button>
+  }
+</div>

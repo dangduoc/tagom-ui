@@ -1,10 +1,195 @@
-/* Ionic core + recommended utilities */
+/* Ionic core — only the debug pages under /debug still use Ionic components.
+   The station UI is plain Angular styled with the Tagom tokens below. */
 @import "@ionic/angular/css/core.css";
 @import "@ionic/angular/css/normalize.css";
 @import "@ionic/angular/css/structure.css";
 @import "@ionic/angular/css/typography.css";
-@import "@ionic/angular/css/padding.css";
-@import "@ionic/angular/css/flex-utils.css";
 
-/* The app is always dark (camera-centric UI) */
-@import "@ionic/angular/css/palettes/dark.always.css";
+/* Tagom design tokens (verbatim from design_handoff_recycling_station/design-tokens).
+   Imported after Ionic so the brand values win. Never hardcode these hexes. */
+@import "./styles/tokens/fonts.css";
+@import "./styles/tokens/colors.css";
+@import "./styles/tokens/typography.css";
+@import "./styles/tokens/spacing.css";
+@import "./styles/tokens/radii.css";
+@import "./styles/tokens/shadows.css";
+@import "./styles/tokens/motion.css";
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--surface-page);
+  color: var(--tagom-green);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  /* Kiosk: no rubber-banding, no long-press selection with dirty/gloved hands */
+  overscroll-behavior: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* The signature Tagom stretch — display headings only. */
+.tg-display {
+  font-weight: var(--fw-bold);
+  font-variation-settings: var(--wdth-display);
+  letter-spacing: var(--tracking-tight);
+}
+
+/* Weights and totals always align digit-for-digit. */
+.tg-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Shared field styling for the register and profile forms — identical by design,
+   so it lives here rather than being duplicated in both components. Override
+   --tg-field-h / --tg-field-size for a denser variant. */
+.tg-form {
+  --tg-field-h: 60px;
+  --tg-field-size: 21px;
+}
+
+.tg-form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: var(--fw-bold);
+  font-size: var(--text-body-size);
+}
+
+.tg-form input {
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  background: var(--surface-sunken);
+  padding: 0 20px;
+  width: 100%;
+  height: var(--tg-field-h);
+  color: var(--tagom-green);
+  font: inherit;
+  font-weight: var(--fw-semibold);
+  font-size: var(--tg-field-size);
+}
+
+.tg-form input::placeholder {
+  opacity: 0.45;
+  color: var(--tagom-green);
+}
+
+.tg-form .row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.tg-form .row:last-child {
+  margin-bottom: 0;
+}
+
+.tg-form .grow {
+  flex: 1.6;
+}
+
+@media (max-width: 600px) {
+  .tg-form .row {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+/* Every touch target in the station is a button; strip the UA chrome once. */
+button {
+  margin: 0;
+  border: none;
+  background: none;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+  cursor: pointer;
+}
+
+button:focus-visible,
+input:focus-visible {
+  outline: var(--ring-width) solid var(--focus-ring);
+  outline-offset: var(--ring-offset);
+}
+
+@keyframes tg-blink {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes tg-scan {
+  0% {
+    top: 8%;
+  }
+  100% {
+    top: 92%;
+  }
+}
+
+@keyframes tg-pop {
+  0% {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes tg-rise {
+  0% {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes tg-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes tg-count {
+  0% {
+    transform: translateY(-6px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

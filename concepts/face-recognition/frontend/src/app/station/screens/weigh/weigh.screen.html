@@ -1,0 +1,37 @@
+<div class="strip">
+  <span class="chip" [style.background]="categoryColor()"></span>
+  <span class="doing">{{ station.L().weighing }}</span>
+  <span class="cat tg-display">{{ categoryName() }}</span>
+</div>
+
+<tg-weight-readout
+  [phase]="weigh.phase()"
+  [value]="weigh.live()"
+  [holdPct]="weigh.holdPct()"
+  [categoryName]="categoryName()"
+  [connected]="connected()"
+/>
+
+<div class="actions">
+  @if (isLocked()) {
+    <button type="button" class="ghost" (click)="station.reweigh()">
+      <tg-icon name="refresh" [size]="22" [strokeWidth]="2.2" />{{ station.L().reweigh }}
+    </button>
+    <span class="spacer"></span>
+    <button type="button" class="another" (click)="station.pickAgain()">
+      {{ station.L().weighAnother }}
+    </button>
+    <button type="button" class="finish" (click)="station.gotoSummary()">
+      {{ station.L().finish }}
+    </button>
+  } @else {
+    <p class="link-state">
+      <span class="dot" [class.off]="!connected()"></span>
+      {{ connected() ? station.L().scaleLinked : station.L().scaleWaiting }}
+    </p>
+    <span class="spacer"></span>
+    <button type="button" class="ghost" (click)="station.reweigh()">
+      {{ station.L().reweigh }}
+    </button>
+  }
+</div>

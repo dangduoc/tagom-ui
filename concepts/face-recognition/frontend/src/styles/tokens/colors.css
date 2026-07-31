@@ -1,0 +1,91 @@
+/* Tagom — Color tokens
+   Two brand-native themes: "light" (lime field, green ink) and "dark" (green field, lime ink).
+   Derived neutrals use oklch harmonised toward the deep-green primary. */
+:root {
+  /* ── Brand core ── */
+  --tagom-lime: #dee84e;      /* chartreuse / signal lime */
+  --tagom-green: #004d43;     /* deep forest green */
+  --tagom-black: #000000;
+  --tagom-white: #ffffff;
+
+  /* ── Lime ramp (from primary #dee84e) ── */
+  --lime-50:  #fbfce4;
+  --lime-100: #f4f7bd;
+  --lime-300: #e7ee7f;
+  --lime-500: #dee84e;        /* = --tagom-lime */
+  --lime-700: #b3bd2f;
+  --lime-900: #7c8416;
+
+  /* ── Green ramp (from primary #004d43) ── */
+  --green-50:  #e4efec;
+  --green-100: #b9d6cf;
+  --green-300: #4f8a7d;
+  --green-500: #00695b;
+  --green-700: #004d43;       /* = --tagom-green */
+  --green-900: #00332c;
+
+  /* ── Neutrals (green-tinted, oklch-harmonised) ── */
+  --neutral-0:   #ffffff;
+  --neutral-50:  oklch(0.985 0.006 165);
+  --neutral-100: oklch(0.955 0.008 165);
+  --neutral-200: oklch(0.905 0.010 165);
+  --neutral-300: oklch(0.835 0.012 165);
+  --neutral-500: oklch(0.62 0.014 165);
+  --neutral-700: oklch(0.42 0.016 165);
+  --neutral-900: oklch(0.24 0.018 165);
+  --neutral-950: #0b1614;
+
+  /* ── Semantic status ── */
+  --status-success: #00695b;
+  --status-info:    #2c7a7b;
+  --status-warning: #c98a12;
+  --status-danger:  #b23a2e;
+
+  /* ── Semantic aliases — LIGHT theme (default) ── */
+  --surface-page:   var(--tagom-lime);
+  --surface-card:   var(--tagom-white);
+  --surface-sunken: var(--lime-100);
+  --surface-inverse: var(--tagom-green);
+
+  --text-heading:   var(--tagom-green);
+  --text-body:      var(--tagom-black);
+  --text-muted:     var(--green-500);
+  --text-on-accent: var(--tagom-lime);
+  --text-inverse:   var(--tagom-white);
+
+  --accent:         var(--tagom-green);
+  --on-accent:      var(--tagom-lime);
+  --accent-hover:   var(--green-900);
+
+  --border-subtle:  color-mix(in srgb, var(--tagom-green) 18%, transparent);
+  --border-strong:  var(--tagom-green);
+  --focus-ring:     var(--tagom-green);
+
+  --link:           var(--tagom-green);
+  --link-hover:     var(--green-900);
+}
+
+/* ── DARK theme — the brand's night mode: green field, lime ink ── */
+.dark, [data-theme="dark"] {
+  --surface-page:   var(--tagom-green);
+  --surface-card:   var(--green-900);
+  --surface-sunken: #003b34;
+  --surface-inverse: var(--tagom-lime);
+
+  --text-heading:   var(--tagom-lime);
+  --text-body:      var(--tagom-lime);
+  --text-muted:     color-mix(in srgb, var(--tagom-lime) 65%, var(--tagom-green));
+  --text-on-accent: var(--tagom-green);
+  --text-inverse:   var(--tagom-green);
+
+  --accent:         var(--tagom-lime);
+  --on-accent:      var(--tagom-green);
+  --accent-hover:   var(--lime-300);
+
+  --border-subtle:  color-mix(in srgb, var(--tagom-lime) 22%, transparent);
+  --border-strong:  var(--tagom-lime);
+  --focus-ring:     var(--tagom-lime);
+
+  --link:           var(--tagom-lime);
+  --link-hover:     var(--lime-300);
+}

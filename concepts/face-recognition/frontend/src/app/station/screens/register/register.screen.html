@@ -1,0 +1,153 @@
+<div class="cards">
+  <section class="card main">
+    <header class="card-head">
+      <span class="badge"><tg-icon name="user" [size]="22" /></span>
+      <h2 class="tg-display">{{ station.L().secMain }}</h2>
+    </header>
+
+    <div class="fields tg-form">
+      <div>
+        <label for="reg-name">
+          {{ station.L().fFullName }} <span class="req">*</span>
+        </label>
+        <input
+          id="reg-name"
+          [value]="station.form().fullName"
+          (input)="station.updateForm({ fullName: field($event) })"
+          [placeholder]="station.L().phFullName"
+        />
+      </div>
+
+      <div class="row">
+        <div class="grow">
+          <label for="reg-phone">{{ station.L().fPhone }} <span class="req">*</span></label>
+          <input
+            id="reg-phone"
+            inputmode="tel"
+            [value]="station.form().phone"
+            (input)="station.updateForm({ phone: field($event) })"
+            placeholder="09xx xxx xxx"
+          />
+        </div>
+        <div>
+          <label for="reg-age">
+            {{ station.L().fAge }} <span class="opt">{{ station.L().optional }}</span>
+          </label>
+          <input
+            id="reg-age"
+            inputmode="numeric"
+            [value]="station.form().age"
+            (input)="station.updateForm({ age: field($event) })"
+            placeholder="—"
+          />
+        </div>
+      </div>
+
+      <div>
+        <label for="reg-id">
+          {{ station.L().fCitizenId }} <span class="opt">{{ station.L().optional }}</span>
+        </label>
+        <input
+          id="reg-id"
+          inputmode="numeric"
+          [value]="station.form().citizenId"
+          (input)="station.updateForm({ citizenId: field($event) })"
+          placeholder="0xx xxx xxx xxx"
+        />
+      </div>
+
+      <div>
+        <label for="reg-city">
+          {{ station.L().fAddress }} <span class="opt">{{ station.L().optional }}</span>
+        </label>
+        <div class="row">
+          <input
+            id="reg-city"
+            class="grow"
+            [value]="station.form().city"
+            (input)="station.updateForm({ city: field($event) })"
+            [placeholder]="station.L().fCity"
+          />
+          <input
+            class="grow"
+            [value]="station.form().ward"
+            (input)="station.updateForm({ ward: field($event) })"
+            [placeholder]="station.L().fWard"
+            [attr.aria-label]="station.L().fWard"
+          />
+        </div>
+        <input
+          [value]="station.form().address"
+          (input)="station.updateForm({ address: field($event) })"
+          [placeholder]="station.L().fStreet"
+          [attr.aria-label]="station.L().fStreet"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="card face">
+    <header class="card-head align-start">
+      <span class="badge"><tg-icon name="face-scan" [size]="22" /></span>
+      <div>
+        <h2 class="tg-display">{{ station.L().secFace }}</h2>
+        <p class="optional">{{ station.L().faceOptional }}</p>
+      </div>
+    </header>
+    <p class="why">{{ station.L().faceWhy }}</p>
+
+    <div class="viewport">
+      <video #video class="feed" playsinline muted autoplay></video>
+      <div class="oval"></div>
+      @if (cameraError()) {
+        <p class="camerr">{{ station.L().errCameraSub }}</p>
+      } @else {
+        <p class="guide">{{ station.L().faceGuide }}</p>
+      }
+    </div>
+
+    <div class="slots">
+      @for (i of slots; track i) {
+        <div class="slot" [class.filled]="i < photoCount()">
+          @if (i < photoCount()) {
+            <tg-icon name="check" [size]="22" [strokeWidth]="2.6" />
+          } @else {
+            <span>{{ i + 1 }}</span>
+          }
+        </div>
+      }
+    </div>
+
+    @if (faceComplete()) {
+      <div class="done-row">
+        <p class="done"><tg-icon name="check" [size]="22" [strokeWidth]="2.4" />{{ station.L().faceDone }}</p>
+        <button type="button" class="retake" (click)="station.retakeFaces()">
+          {{ station.L().retake }}
+        </button>
+      </div>
+    } @else {
+      <button type="button" class="capture" [disabled]="captureBlocked()" (click)="capture()">
+        <tg-icon name="camera" [size]="24" [strokeWidth]="1.9" />
+        {{ station.L().capturePhoto }} · {{ photoCount() }}/5
+      </button>
+    }
+  </section>
+</div>
+
+<footer class="bar">
+  <p class="required"><span class="req">*</span> {{ station.L().requiredNote }}</p>
+  @if (station.registerError()) {
+    <p class="failed">{{ station.L().registerFailed }}</p>
+  }
+  <div class="bar-actions">
+    <button type="button" class="cancel" (click)="station.back()">{{ station.L().cancel }}</button>
+    <button
+      type="button"
+      class="submit"
+      [disabled]="!station.canSubmitRegister() || station.registering()"
+      (click)="station.submitRegister()"
+    >
+      {{ station.registering() ? station.L().registering : station.L().registerCta }}
+    </button>
+  </div>
+</footer>

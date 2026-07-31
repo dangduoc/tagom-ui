@@ -1,0 +1,112 @@
+:host {
+  --tg-header-h: 76px;
+  --tg-rail-w: 380px;
+
+  display: block;
+  position: fixed;
+  inset: 0;
+  background: var(--surface-page);
+  color: var(--tagom-green);
+  overflow: hidden;
+}
+
+.chrome {
+  display: flex;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 5;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--surface-page);
+  padding: 0 40px;
+  height: var(--tg-header-h);
+}
+
+.left,
+.right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.right {
+  gap: 14px;
+}
+
+.wordmark {
+  font-size: 26px;
+}
+
+.back {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  padding: 9px 18px;
+  font-weight: var(--fw-semibold);
+  font-size: var(--text-body-size);
+}
+
+.help {
+  display: inline-flex;
+  gap: 9px;
+  align-items: center;
+  border-radius: var(--radius-pill);
+  background: var(--tagom-green);
+  padding: 11px 20px;
+  color: var(--tagom-lime);
+  font-weight: var(--fw-bold);
+  font-size: var(--text-body-size);
+}
+
+.stage {
+  position: absolute;
+  inset: 0;
+}
+
+.stage.with-header {
+  top: var(--tg-header-h);
+}
+
+.stage.with-rail {
+  right: var(--tg-rail-w);
+}
+
+@media (max-width: 600px) {
+  /* Stack header / stage / docked rail so the rail's own height is what the
+     stage gives up — no magic number to keep in sync with the rail's contents. */
+  :host {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .chrome {
+    position: static;
+    flex-shrink: 0;
+    padding: 0 18px;
+  }
+
+  .stage,
+  .stage.with-header,
+  .stage.with-rail {
+    position: relative;
+    flex: 1;
+    inset: auto;
+    min-height: 0;
+  }
+
+  /* Header buttons collapse to icons to keep the bar one line (handoff §5). */
+  .back .label,
+  .help .label {
+    display: none;
+  }
+
+  .back,
+  .help {
+    padding: 11px;
+  }
+}

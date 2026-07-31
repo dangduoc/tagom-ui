@@ -1,0 +1,52 @@
+<div class="left">
+  <header>
+    <span class="tick"><tg-icon name="check" [size]="36" [strokeWidth]="3" /></span>
+    <div>
+      <h1 class="tg-display">{{ station.L().summaryThanks }}</h1>
+      <p class="saveline">{{ saveLine() }}</p>
+    </div>
+  </header>
+
+  <div class="list">
+    @for (row of rows(); track row.id) {
+      <div class="row">
+        <span class="dot" [style.background]="row.color"></span>
+        <span class="row-name">{{ row.name }}</span>
+        <span class="row-weight tg-nums">{{ row.weightText }} kg</span>
+      </div>
+    }
+  </div>
+
+  <div class="session-total">
+    <span class="label">{{ station.L().sessionTotal }}</span>
+    <span class="value tg-display tg-nums"
+      >{{ sessionTotalText() }}<span class="unit"> kg</span></span
+    >
+  </div>
+</div>
+
+<aside class="panel">
+  <p class="cap">{{ station.L().personalTotal }}</p>
+  <p class="big tg-display tg-nums">
+    {{ personalTotalText() }}<span class="unit"> kg</span>
+  </p>
+  <p class="delta">+{{ sessionTotalText() }} kg {{ station.L().thisVisit }}</p>
+
+  <hr />
+
+  <p class="cap">{{ station.L().communityTotal }}</p>
+  <p class="big community tg-display tg-nums">
+    {{ communityTotalText() }}<span class="unit"> kg</span>
+  </p>
+  <div class="bar"><div class="fill" [style.width.%]="communityPct()"></div></div>
+  <p class="joinnote">{{ station.L().joinNote }}</p>
+
+  <span class="grow"></span>
+
+  <div class="app">
+    <div class="app-qr"><tg-qr payload="https://tagom.vn/app" [size]="7" [pad]="7" [gap]="2" color="var(--tagom-green)" /></div>
+    <p>{{ station.L().appPointer }}</p>
+  </div>
+
+  <button type="button" class="done" (click)="station.reset()">{{ station.L().done }}</button>
+</aside>

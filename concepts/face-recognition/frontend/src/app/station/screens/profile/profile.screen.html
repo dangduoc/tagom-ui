@@ -1,0 +1,135 @@
+<section class="info">
+  <header>
+    <span class="avatar"><tg-icon name="user" [size]="38" [strokeWidth]="1.9" /></span>
+    <div class="who">
+      <p class="name tg-display">{{ station.idName() }}</p>
+      <p class="phone">{{ station.idPhone() }}</p>
+    </div>
+  </header>
+
+  @if (station.profileEdit()) {
+    <div class="form tg-form">
+      <div>
+        <label for="p-name">{{ station.L().fFullName }}</label>
+        <input
+          id="p-name"
+          [value]="station.pform().fullName"
+          (input)="station.updatePForm({ fullName: field($event) })"
+        />
+      </div>
+      <div class="row">
+        <div class="grow">
+          <label for="p-phone">{{ station.L().fPhone }}</label>
+          <input
+            id="p-phone"
+            inputmode="tel"
+            [value]="station.pform().phone"
+            (input)="station.updatePForm({ phone: field($event) })"
+          />
+        </div>
+        <div>
+          <label for="p-age">{{ station.L().fAge }}</label>
+          <input
+            id="p-age"
+            inputmode="numeric"
+            [value]="station.pform().age ?? ''"
+            (input)="station.updatePForm({ age: field($event) })"
+          />
+        </div>
+      </div>
+      <div>
+        <label for="p-id">{{ station.L().fCitizenId }}</label>
+        <input
+          id="p-id"
+          inputmode="numeric"
+          [value]="station.pform().citizenId ?? ''"
+          (input)="station.updatePForm({ citizenId: field($event) })"
+        />
+      </div>
+      <div>
+        <label for="p-city">{{ station.L().fAddress }}</label>
+        <div class="row">
+          <input
+            id="p-city"
+            class="grow"
+            [value]="station.pform().city ?? ''"
+            (input)="station.updatePForm({ city: field($event) })"
+            [placeholder]="station.L().fCity"
+          />
+          <input
+            class="grow"
+            [value]="station.pform().ward ?? ''"
+            (input)="station.updatePForm({ ward: field($event) })"
+            [placeholder]="station.L().fWard"
+            [attr.aria-label]="station.L().fWard"
+          />
+        </div>
+        <input
+          [value]="station.pform().address ?? ''"
+          (input)="station.updatePForm({ address: field($event) })"
+          [placeholder]="station.L().fStreet"
+          [attr.aria-label]="station.L().fStreet"
+        />
+      </div>
+      <div class="edit-actions">
+        <button type="button" class="ghost" (click)="station.cancelEdit()">
+          {{ station.L().cancel }}
+        </button>
+        <button type="button" class="save" (click)="station.saveProfile()">
+          {{ station.L().save }}
+        </button>
+      </div>
+    </div>
+  } @else {
+    <div class="rows">
+      @for (row of rows(); track row.label) {
+        <div class="prow">
+          <p class="prow-label">{{ row.label }}</p>
+          <p class="prow-value">{{ row.value }}</p>
+        </div>
+      }
+      <button type="button" class="edit" (click)="station.editProfile()">
+        <tg-icon name="edit" [size]="22" />{{ station.L().edit }}
+      </button>
+    </div>
+  }
+</section>
+
+<section class="history">
+  <div class="stats">
+    <div class="stat total">
+      <p class="cap">{{ station.L().totalContrib }}</p>
+      <p class="value tg-display tg-nums">
+        {{ lifetimeText() }}<span class="unit"> kg</span>
+      </p>
+    </div>
+    <div class="stat count">
+      <p class="count-value tg-display">{{ history().length }}</p>
+      <p class="count-label">{{ station.L().sessionsWord }}</p>
+      <p class="since">{{ station.L().memberSince }} {{ station.memberSince() }}</p>
+    </div>
+  </div>
+
+  <p class="hist-title">{{ station.L().histTitle }}</p>
+  <div class="hist-list">
+    @for (session of history(); track session.id) {
+      <article class="session">
+        <div class="session-head">
+          <span class="date">{{ session.date }}</span>
+          <span class="session-total tg-nums">{{ session.totalText }} kg</span>
+        </div>
+        <div class="chips">
+          @for (chip of session.chips; track chip.id) {
+            <span class="chip">
+              <span class="dot" [style.background]="chip.color"></span>
+              <span class="chip-name">{{ chip.name }}</span>
+              <span class="chip-weight tg-nums">{{ chip.weightText }}</span>
+            </span>
+          }
+        </div>
+      </article>
+    } @empty {
+      <p class="hist-empty">{{ station.L().histEmpty }}</p>
+    }
+  </div>
+</section>

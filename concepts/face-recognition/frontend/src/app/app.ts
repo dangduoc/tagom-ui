@@ -1,49 +1,10 @@
-import { Component } from '@angular/core';
-import {
-  IonApp,
-  IonIcon,
-  IonLabel,
-  IonTabBar,
-  IonTabButton,
-  IonTabs,
-} from '@ionic/angular/standalone';
-import { addIcons } from 'ionicons';
-import {
-  cameraOutline,
-  cameraReverseOutline,
-  checkmarkCircle,
-  closeCircle,
-  closeOutline,
-  cloudUploadOutline,
-  helpCircleOutline,
-  personAddOutline,
-  refreshOutline,
-  scaleOutline,
-  trashOutline,
-  videocamOutline,
-} from 'ionicons/icons';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [IonApp, IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel],
-  templateUrl: './app.html',
-  styleUrl: './app.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [RouterOutlet],
+  template: '<router-outlet />',
 })
-export class App {
-  constructor() {
-    addIcons({
-      cameraOutline,
-      cameraReverseOutline,
-      checkmarkCircle,
-      closeCircle,
-      closeOutline,
-      cloudUploadOutline,
-      helpCircleOutline,
-      personAddOutline,
-      refreshOutline,
-      scaleOutline,
-      trashOutline,
-      videocamOutline,
-    });
-  }
-}
+export class App {}

@@ -1,0 +1,28 @@
+/* Tagom — Spacing tokens
+   Base 8px rhythm. Page padding is fractional (3%) — the coming-soon layout pins
+   corner elements to a percentage inset rather than a fixed gutter. */
+:root {
+  --space-0: 0;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+
+  /* Page gutters — percentage inset (brand convention) */
+  --page-pad-x: 3%;             /* @kind spacing */
+  --page-pad-y: 3%;             /* @kind spacing */
+  --page-pad-x-mobile: 20px;
+  --page-pad-y-mobile: 30px;
+
+  /* Container widths */
+  --container-sm: 640px;
+  --container-md: 960px;
+  --container-lg: 1200px;
+}

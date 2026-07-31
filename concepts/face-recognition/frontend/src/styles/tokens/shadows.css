@@ -1,0 +1,13 @@
+/* Tagom — Shadow & elevation tokens
+   The source UI is flat (full-bleed color fields, no drop shadows). Shadows here are
+   restrained and green-tinted, reserved for lifted cards, menus and popovers. */
+:root {
+  --shadow-none: none;
+  --shadow-sm: 0 1px 2px color-mix(in srgb, var(--tagom-green) 12%, transparent);
+  --shadow-md: 0 4px 14px color-mix(in srgb, var(--tagom-green) 16%, transparent);
+  --shadow-lg: 0 12px 32px color-mix(in srgb, var(--tagom-green) 20%, transparent);
+
+  /* Focus ring */
+  --ring-width: 3px;  /* @kind spacing */
+  --ring-offset: 2px; /* @kind spacing */
+}
