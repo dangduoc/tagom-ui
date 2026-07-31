@@ -17,7 +17,7 @@ import {
   ModalController,
 } from '@ionic/angular/standalone';
 
-import { ApiService, EmployeeInfo, EnrollFileResult } from '../api.service';
+import { ApiService, EnrollFileResult, PersonInfo } from '../api.service';
 import { CAPTURE_STEPS, CapturedPhoto, CaptureModal } from './capture-modal/capture-modal';
 
 @Component({
@@ -45,7 +45,7 @@ export class EnrollPage implements OnInit, OnDestroy {
   private readonly api = inject(ApiService);
   private readonly modalCtrl = inject(ModalController);
 
-  employeeCode = '';
+  code = '';
   fullName = '';
   department = '';
 
@@ -54,13 +54,13 @@ export class EnrollPage implements OnInit, OnDestroy {
   readonly message = signal<string | null>(null);
   readonly messageIsError = signal(false);
   readonly fileResults = signal<EnrollFileResult[]>([]);
-  readonly employees = signal<EmployeeInfo[]>([]);
+  readonly people = signal<PersonInfo[]>([]);
 
   readonly steps = CAPTURE_STEPS;
   readonly maxPhotos = CAPTURE_STEPS.length;
 
   async ngOnInit(): Promise<void> {
-    await this.refreshEmployees();
+    await this.refreshPeople();
   }
 
   ngOnDestroy(): void {
@@ -99,7 +99,7 @@ export class EnrollPage implements OnInit, OnDestroy {
   canSubmit(): boolean {
     return (
       !this.submitting() &&
-      this.employeeCode.trim().length > 0 &&
+      this.code.trim().length > 0 &&
       this.fullName.trim().length > 0 &&
       this.photos().length > 0
     );
@@ -112,7 +112,7 @@ export class EnrollPage implements OnInit, OnDestroy {
     this.fileResults.set([]);
     try {
       const res = await this.api.enroll(
-        this.employeeCode.trim(),
+        this.code.trim(),
         this.fullName.trim(),
         this.department.trim(),
         this.photos().map((p) => p.blob),
@@ -125,7 +125,7 @@ export class EnrollPage implements OnInit, OnDestroy {
       this.photos().forEach((p) => URL.revokeObjectURL(p.url));
       this.photos.set([]);
       form.resetForm({ code: '', name: '', department: '' });
-      await this.refreshEmployees();
+      await this.refreshPeople();
     } catch (err) {
       this.showMessage(err instanceof Error ? err.message : String(err), true);
     } finally {
@@ -133,21 +133,21 @@ export class EnrollPage implements OnInit, OnDestroy {
     }
   }
 
-  async deleteEmployee(code: string): Promise<void> {
+  async deletePerson(code: string): Promise<void> {
     if (!confirm(`Xóa ${code} và toàn bộ dữ liệu khuôn mặt?`)) return;
     try {
-      await this.api.deleteEmployee(code);
-      await this.refreshEmployees();
+      await this.api.deletePerson(code);
+      await this.refreshPeople();
     } catch (err) {
       this.showMessage(err instanceof Error ? err.message : String(err), true);
     }
   }
 
-  private async refreshEmployees(): Promise<void> {
+  private async refreshPeople(): Promise<void> {
     try {
-      this.employees.set(await this.api.listEmployees());
+      this.people.set(await this.api.listPeople());
     } catch {
-      this.showMessage('Không tải được danh sách nhân viên — máy chủ đã chạy chưa?', true);
+      this.showMessage('Không tải được danh sách — máy chủ đã chạy chưa?', true);
     }
   }
 

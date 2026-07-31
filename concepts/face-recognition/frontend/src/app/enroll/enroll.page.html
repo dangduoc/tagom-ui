@@ -54,12 +54,12 @@
     <ion-list [inset]="true" class="form-list">
       <ion-item>
         <ion-input
-          label="Mã nhân viên *"
+          label="Mã (số điện thoại) *"
           labelPlacement="stacked"
           name="code"
-          [(ngModel)]="employeeCode"
+          [(ngModel)]="code"
           required
-          placeholder="vd: EMP001"
+          placeholder="vd: 0901234567"
         />
       </ion-item>
       <ion-item>
@@ -101,30 +101,30 @@
     }
   </form>
 
-  <ion-list class="employees">
+  <ion-list class="people">
     <ion-list-header>
-      <ion-label>Nhân viên đã đăng ký</ion-label>
+      <ion-label>Đã đăng ký</ion-label>
     </ion-list-header>
-    @if (employees().length === 0) {
+    @if (people().length === 0) {
       <ion-item lines="none">
         <ion-label color="medium">Chưa có ai được đăng ký.</ion-label>
       </ion-item>
     } @else {
-      @for (emp of employees(); track emp.id) {
+      @for (person of people(); track person.id) {
         <ion-item>
           <ion-label>
-            <h3>{{ emp.full_name }}</h3>
+            <h3>{{ person.full_name }}</h3>
             <p>
-              {{ emp.employee_code }} · {{ emp.department || '—' }} ·
-              {{ emp.embedding_count }} ảnh
+              {{ person.code }} · {{ person.department || '—' }} ·
+              {{ person.embedding_count }} ảnh
             </p>
           </ion-label>
           <ion-button
             slot="end"
             fill="clear"
             color="danger"
-            (click)="deleteEmployee(emp.employee_code)"
-            aria-label="Xóa nhân viên"
+            (click)="deletePerson(person.code)"
+            aria-label="Xóa"
           >
             <ion-icon slot="icon-only" name="trash-outline" />
           </ion-button>

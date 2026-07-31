@@ -9,17 +9,33 @@ import asyncpg
 import numpy as np
 from pgvector.asyncpg import register_vector
 
-from .base import (
-    Employee,
-    Match,
-    Person,
-    Profile,
-    SessionItem,
-    Store,
-    WeighSession,
-)
+from .base import Match, Person, Profile, SessionItem, Store, WeighSession
 
 _SCHEMA_PATH = Path(__file__).resolve().parent.parent.parent / "db" / "schema.sql"
+
+_PERSON_COLUMNS = """
+    p.id, p.code, p.full_name, p.department, p.created_at,
+    p.phone, p.age, p.city, p.ward, p.address, p.citizen_id
+"""
+
+
+def _to_person(row, embedding_count: int = 0) -> Person:
+    return Person(
+        id=row["id"],
+        code=row["code"],
+        full_name=row["full_name"],
+        department=row["department"],
+        created_at=str(row["created_at"]),
+        embedding_count=embedding_count,
+        profile=Profile(
+            phone=row["phone"],
+            age=row["age"],
+            city=row["city"],
+            ward=row["ward"],
+            address=row["address"],
+            citizen_id=row["citizen_id"],
+        ),
+    )
 
 
 class PgVectorStore(Store):
@@ -47,9 +63,9 @@ class PgVectorStore(Store):
         if self.pool:
             await self.pool.close()
 
-    async def upsert_employee(
+    async def upsert_person(
         self,
-        employee_code: str,
+        code: str,
         full_name: str,
         department: str | None,
         profile: Profile | None = None,
@@ -57,21 +73,21 @@ class PgVectorStore(Store):
         p = profile or Profile()
         return await self.pool.fetchval(
             """
-            INSERT INTO employees (employee_code, full_name, department,
-                                   phone, age, city, ward, address, citizen_id)
+            INSERT INTO people (code, full_name, department,
+                                phone, age, city, ward, address, citizen_id)
             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-            ON CONFLICT (employee_code) DO UPDATE
+            ON CONFLICT (code) DO UPDATE
                 SET full_name  = EXCLUDED.full_name,
-                    department = COALESCE(EXCLUDED.department, employees.department),
-                    phone      = COALESCE(EXCLUDED.phone, employees.phone),
-                    age        = COALESCE(EXCLUDED.age, employees.age),
-                    city       = COALESCE(EXCLUDED.city, employees.city),
-                    ward       = COALESCE(EXCLUDED.ward, employees.ward),
-                    address    = COALESCE(EXCLUDED.address, employees.address),
-                    citizen_id = COALESCE(EXCLUDED.citizen_id, employees.citizen_id)
+                    department = COALESCE(EXCLUDED.department, people.department),
+                    phone      = COALESCE(EXCLUDED.phone, people.phone),
+                    age        = COALESCE(EXCLUDED.age, people.age),
+                    city       = COALESCE(EXCLUDED.city, people.city),
+                    ward       = COALESCE(EXCLUDED.ward, people.ward),
+                    address    = COALESCE(EXCLUDED.address, people.address),
+                    citizen_id = COALESCE(EXCLUDED.citizen_id, people.citizen_id)
             RETURNING id
             """,
-            employee_code,
+            code,
             full_name,
             department,
             p.phone,
@@ -82,52 +98,46 @@ class PgVectorStore(Store):
             p.citizen_id,
         )
 
-    async def get_person(self, employee_code: str) -> Person | None:
+    async def get_person(self, code: str) -> Person | None:
         row = await self.pool.fetchrow(
-            """
-            SELECT e.id, e.employee_code, e.full_name, e.department, e.created_at,
-                   e.phone, e.age, e.city, e.ward, e.address, e.citizen_id,
-                   COUNT(f.id) AS embedding_count
-            FROM employees e
-            LEFT JOIN face_embeddings f ON f.employee_id = e.id
-            WHERE e.employee_code = $1
-            GROUP BY e.id
+            f"""
+            SELECT {_PERSON_COLUMNS}, COUNT(f.id) AS embedding_count
+            FROM people p
+            LEFT JOIN face_embeddings f ON f.person_id = p.id
+            WHERE p.code = $1
+            GROUP BY p.id
             """,
-            employee_code,
+            code,
         )
-        if row is None:
-            return None
-        return Person(
-            id=row["id"],
-            employee_code=row["employee_code"],
-            full_name=row["full_name"],
-            department=row["department"],
-            profile=Profile(
-                phone=row["phone"],
-                age=row["age"],
-                city=row["city"],
-                ward=row["ward"],
-                address=row["address"],
-                citizen_id=row["citizen_id"],
-            ),
-            embedding_count=row["embedding_count"],
-            created_at=str(row["created_at"]),
-        )
+        return _to_person(row, row["embedding_count"]) if row else None
 
-    async def add_session(
-        self, employee_code: str | None, items: list[SessionItem]
-    ) -> int:
+    async def list_people(self) -> list[Person]:
+        rows = await self.pool.fetch(
+            f"""
+            SELECT {_PERSON_COLUMNS}, COUNT(f.id) AS embedding_count
+            FROM people p
+            LEFT JOIN face_embeddings f ON f.person_id = p.id
+            GROUP BY p.id
+            ORDER BY p.full_name
+            """
+        )
+        return [_to_person(r, r["embedding_count"]) for r in rows]
+
+    async def delete_person(self, code: str) -> bool:
+        result = await self.pool.execute("DELETE FROM people WHERE code = $1", code)
+        return result != "DELETE 0"
+
+    async def add_session(self, code: str | None, items: list[SessionItem]) -> int:
         async with self.pool.acquire() as conn:
             async with conn.transaction():
-                employee_id = None
-                if employee_code:
-                    employee_id = await conn.fetchval(
-                        "SELECT id FROM employees WHERE employee_code = $1",
-                        employee_code,
+                person_id = None
+                if code:
+                    person_id = await conn.fetchval(
+                        "SELECT id FROM people WHERE code = $1", code
                     )
                 session_id = await conn.fetchval(
-                    "INSERT INTO weigh_sessions (employee_id) VALUES ($1) RETURNING id",
-                    employee_id,
+                    "INSERT INTO weigh_sessions (person_id) VALUES ($1) RETURNING id",
+                    person_id,
                 )
                 await conn.executemany(
                     """
@@ -138,17 +148,17 @@ class PgVectorStore(Store):
                 )
                 return session_id
 
-    async def sessions_for(self, employee_code: str) -> list[WeighSession]:
+    async def sessions_for(self, code: str) -> list[WeighSession]:
         rows = await self.pool.fetch(
             """
             SELECT s.id, s.created_at, i.category, i.weight_kg
             FROM weigh_sessions s
-            JOIN employees e ON e.id = s.employee_id
+            JOIN people p ON p.id = s.person_id
             LEFT JOIN weigh_items i ON i.session_id = s.id
-            WHERE e.employee_code = $1
+            WHERE p.code = $1
             ORDER BY s.created_at DESC, s.id DESC, i.id
             """,
-            employee_code,
+            code,
         )
         sessions: dict[int, WeighSession] = {}
         for r in rows:
@@ -170,20 +180,20 @@ class PgVectorStore(Store):
         )
         return float(total)
 
-    async def add_embedding(self, employee_id: int, embedding: np.ndarray) -> None:
+    async def add_embedding(self, person_id: int, embedding: np.ndarray) -> None:
         await self.pool.execute(
-            "INSERT INTO face_embeddings (employee_id, embedding) VALUES ($1, $2)",
-            employee_id,
+            "INSERT INTO face_embeddings (person_id, embedding) VALUES ($1, $2)",
+            person_id,
             embedding.astype(np.float32),
         )
 
     async def best_match(self, embedding: np.ndarray) -> Match | None:
         row = await self.pool.fetchrow(
             """
-            SELECT e.employee_code, e.full_name, e.department,
+            SELECT p.code, p.full_name, p.department,
                    1 - (f.embedding <=> $1) AS similarity
             FROM face_embeddings f
-            JOIN employees e ON e.id = f.employee_id
+            JOIN people p ON p.id = f.person_id
             ORDER BY f.embedding <=> $1
             LIMIT 1
             """,
@@ -192,37 +202,8 @@ class PgVectorStore(Store):
         if row is None:
             return None
         return Match(
-            employee_code=row["employee_code"],
+            code=row["code"],
             full_name=row["full_name"],
             department=row["department"],
             similarity=float(row["similarity"]),
         )
-
-    async def list_employees(self) -> list[Employee]:
-        rows = await self.pool.fetch(
-            """
-            SELECT e.id, e.employee_code, e.full_name, e.department,
-                   COUNT(f.id) AS embedding_count, e.created_at
-            FROM employees e
-            LEFT JOIN face_embeddings f ON f.employee_id = e.id
-            GROUP BY e.id
-            ORDER BY e.full_name
-            """
-        )
-        return [
-            Employee(
-                id=r["id"],
-                employee_code=r["employee_code"],
-                full_name=r["full_name"],
-                department=r["department"],
-                embedding_count=r["embedding_count"],
-                created_at=str(r["created_at"]),
-            )
-            for r in rows
-        ]
-
-    async def delete_employee(self, employee_code: str) -> bool:
-        result = await self.pool.execute(
-            "DELETE FROM employees WHERE employee_code = $1", employee_code
-        )
-        return result != "DELETE 0"

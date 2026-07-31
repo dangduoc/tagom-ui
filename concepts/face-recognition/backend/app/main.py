@@ -23,7 +23,7 @@ async def lifespan(app: FastAPI):
     await store.close()
 
 
-app = FastAPI(title="Department Face Recognition", lifespan=lifespan)
+app = FastAPI(title="Tagom Recycling Station", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
@@ -65,7 +65,7 @@ async def recognize(file: UploadFile = File(...)):
     return {
         "match": (
             {
-                "employee_code": match.employee_code,
+                "code": match.code,
                 "full_name": match.full_name,
                 "department": match.department,
                 "similarity": round(match.similarity, 4),
@@ -78,7 +78,7 @@ async def recognize(file: UploadFile = File(...)):
             None
             if matched
             else {
-                "employee_code": match.employee_code,
+                "code": match.code,
                 "similarity": round(match.similarity, 4),
             }
         ),
@@ -89,7 +89,7 @@ async def recognize(file: UploadFile = File(...)):
 
 @app.post("/api/enroll")
 async def enroll(
-    employee_code: str = Form(...),
+    code: str = Form(...),
     full_name: str = Form(...),
     department: str | None = Form(None),
     # Depositor details from the station's register screen. All optional, and
@@ -132,8 +132,8 @@ async def enroll(
             detail={"message": "no usable face photo", "files": results},
         )
 
-    employee_id = await store.upsert_employee(
-        employee_code,
+    person_id = await store.upsert_person(
+        code,
         full_name,
         department,
         Profile(
@@ -146,41 +146,17 @@ async def enroll(
         ),
     )
     for emb in embeddings:
-        await store.add_embedding(employee_id, emb)
+        await store.add_embedding(person_id, emb)
 
     return {
-        "employee_id": employee_id,
-        "employee_code": employee_code,
+        "person_id": person_id,
+        "code": code,
         "enrolled_photos": len(embeddings),
         "files": results,
     }
 
 
-@app.get("/api/employees")
-async def list_employees():
-    employees = await store.list_employees()
-    return [
-        {
-            "id": e.id,
-            "employee_code": e.employee_code,
-            "full_name": e.full_name,
-            "department": e.department,
-            "embedding_count": e.embedding_count,
-            "created_at": e.created_at,
-        }
-        for e in employees
-    ]
-
-
-@app.delete("/api/employees/{employee_code}")
-async def delete_employee(employee_code: str):
-    deleted = await store.delete_employee(employee_code)
-    if not deleted:
-        raise HTTPException(status_code=404, detail="employee not found")
-    return {"deleted": employee_code}
-
-
-# ── Recycling station: depositor profiles, weigh sessions, station totals ──
+# ── People: depositor profiles, weigh sessions, station totals ──
 
 
 class ProfileIn(BaseModel):
@@ -229,7 +205,7 @@ class SessionIn(BaseModel):
 
 def _person_json(person: Person) -> dict:
     return {
-        "code": person.employee_code,
+        "code": person.code,
         "full_name": person.full_name,
         "phone": person.profile.phone,
         "age": person.profile.age,
@@ -251,6 +227,27 @@ def _session_json(session: WeighSession) -> dict:
     }
 
 
+@app.get("/api/people")
+async def list_people():
+    """Roster for the /debug enrollment page."""
+    return [
+        {
+            **_person_json(p),
+            "id": p.id,
+            "department": p.department,
+            "embedding_count": p.embedding_count,
+        }
+        for p in await store.list_people()
+    ]
+
+
+@app.delete("/api/people/{code}")
+async def delete_person(code: str):
+    if not await store.delete_person(code):
+        raise HTTPException(status_code=404, detail="person not found")
+    return {"deleted": code}
+
+
 @app.get("/api/people/{code}")
 async def get_person(code: str):
     person = await store.get_person(code)
@@ -268,7 +265,7 @@ async def get_person(code: str):
 @app.post("/api/people")
 async def create_person(body: PersonIn):
     """Register without face photos. With photos, /api/enroll does both."""
-    await store.upsert_employee(
+    await store.upsert_person(
         body.code,
         body.full_name,
         None,
@@ -290,7 +287,7 @@ async def update_person(code: str, body: ProfileIn):
     existing = await store.get_person(code)
     if existing is None:
         raise HTTPException(status_code=404, detail="person not found")
-    await store.upsert_employee(
+    await store.upsert_person(
         code,
         body.full_name or existing.full_name,
         None,

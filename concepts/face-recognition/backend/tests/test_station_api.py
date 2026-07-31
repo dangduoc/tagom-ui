@@ -34,6 +34,21 @@ def test_unknown_person_is_404(client):
     assert client.get("/api/people/nobody").status_code == 404
 
 
+def test_roster_lists_people_and_delete_removes_them(client):
+    register(client, code="0901234567", name="Chị Lan Nguyễn")
+    register(client, code="0907654321", name="Anh Minh Trần")
+
+    roster = client.get("/api/people").json()
+    assert {p["code"] for p in roster} == {"0901234567", "0907654321"}
+    assert all(p["embedding_count"] == 0 for p in roster)
+
+    assert client.delete("/api/people/0901234567").status_code == 200
+    assert client.get("/api/people/0901234567").status_code == 404
+    assert [p["code"] for p in client.get("/api/people").json()] == ["0907654321"]
+
+    assert client.delete("/api/people/0901234567").status_code == 404
+
+
 def test_partial_update_leaves_other_fields_alone(client):
     register(client, phone="090 ••• 67", city="TP. Hồ Chí Minh", age="58")
 

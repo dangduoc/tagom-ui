@@ -233,12 +233,12 @@ export class StationService {
     // Show the greeting straight away off the match, then fill in the stored
     // profile and history — the person shouldn't wait on a round trip.
     this.identity.set({
-      code: match.employee_code,
+      code: match.code,
       fullName: match.full_name,
-      phone: maskPhone(match.employee_code),
+      phone: maskPhone(match.code),
     });
     this.screen.set('confirmed');
-    void this.hydrate(match.employee_code);
+    void this.hydrate(match.code);
   }
 
   /** Replaces the placeholder identity with the stored record, if there is one. */

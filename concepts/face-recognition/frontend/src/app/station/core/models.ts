@@ -60,7 +60,7 @@ export interface Person {
   ward?: string;
   address?: string;
   citizenId?: string;
-  /** Backend employee_code the face embeddings are enrolled against, when known. */
+  /** Backend code the face embeddings are enrolled against, when known. */
   code?: string;
 }
 

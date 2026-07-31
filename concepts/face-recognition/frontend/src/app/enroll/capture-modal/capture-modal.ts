@@ -49,7 +49,7 @@ export interface CapturedPhoto {
 
 const FACE_CHECK_MS = 250;
 
-/** Fullscreen modal that walks the employee through the 5 guided shots.
+/** Fullscreen modal that walks a person through the 5 guided shots.
  *  Dismisses with role 'finish' and the photos as data, or role 'cancel'. */
 @Component({
   selector: 'app-capture-modal',
@@ -109,7 +109,7 @@ export class CaptureModal implements AfterViewInit, OnDestroy {
     if (count === null) return null;
     if (count === 1) return { ok: true, text: 'Đã thấy khuôn mặt' };
     if (count === 0) return { ok: false, text: 'Không thấy khuôn mặt' };
-    return { ok: false, text: 'Nhiều khuôn mặt — chỉ nên có nhân viên trong khung hình' };
+    return { ok: false, text: 'Nhiều khuôn mặt — chỉ nên có người trong khung hình' };
   });
 
   private stream: MediaStream | null = null;

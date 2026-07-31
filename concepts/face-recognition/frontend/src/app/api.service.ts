@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 export interface RecognizedMatch {
-  employee_code: string;
+  code: string;
   full_name: string;
   department: string | null;
   similarity: number;
@@ -9,7 +9,7 @@ export interface RecognizedMatch {
 
 export interface RecognizeResponse {
   match: RecognizedMatch | null;
-  closest?: { employee_code: string; similarity: number } | null;
+  closest?: { code: string; similarity: number } | null;
   reason: string | null;
   det_score?: number;
 }
@@ -22,19 +22,10 @@ export interface EnrollFileResult {
 }
 
 export interface EnrollResponse {
-  employee_id: number;
-  employee_code: string;
+  person_id: number;
+  code: string;
   enrolled_photos: number;
   files: EnrollFileResult[];
-}
-
-export interface EmployeeInfo {
-  id: number;
-  employee_code: string;
-  full_name: string;
-  department: string | null;
-  embedding_count: number;
-  created_at: string;
 }
 
 /** Depositor record as the station API returns it. */
@@ -49,6 +40,13 @@ export interface PersonDto {
   citizen_id: string | null;
   member_since: string;
   has_face_data: boolean;
+}
+
+/** A row of the /debug roster: the record above plus enrollment bookkeeping. */
+export interface PersonInfo extends PersonDto {
+  id: number;
+  department: string | null;
+  embedding_count: number;
 }
 
 export interface SessionDto {
@@ -96,14 +94,14 @@ export class ApiService {
   }
 
   async enroll(
-    employeeCode: string,
+    code: string,
     fullName: string,
     department: string,
     photos: Blob[],
     profile: ProfilePatch = {},
   ): Promise<EnrollResponse> {
     const form = new FormData();
-    form.append('employee_code', employeeCode);
+    form.append('code', code);
     form.append('full_name', fullName);
     if (department) form.append('department', department);
     for (const [key, value] of Object.entries(profile)) {
@@ -120,14 +118,14 @@ export class ApiService {
     return res.json();
   }
 
-  async listEmployees(): Promise<EmployeeInfo[]> {
-    const res = await fetch(`${this.base}/employees`);
-    if (!res.ok) throw new Error(`list employees failed: HTTP ${res.status}`);
+  async listPeople(): Promise<PersonInfo[]> {
+    const res = await fetch(`${this.base}/people`);
+    if (!res.ok) throw new Error(`list people failed: HTTP ${res.status}`);
     return res.json();
   }
 
-  async deleteEmployee(employeeCode: string): Promise<void> {
-    const res = await fetch(`${this.base}/employees/${encodeURIComponent(employeeCode)}`, {
+  async deletePerson(code: string): Promise<void> {
+    const res = await fetch(`${this.base}/people/${encodeURIComponent(code)}`, {
       method: 'DELETE',
     });
     if (!res.ok) throw new Error(`delete failed: HTTP ${res.status}`);

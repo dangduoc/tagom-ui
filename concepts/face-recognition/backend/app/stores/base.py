@@ -1,22 +1,12 @@
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 import numpy as np
 
 
 @dataclass
-class Employee:
-    id: int
-    employee_code: str
-    full_name: str
-    department: str | None
-    embedding_count: int
-    created_at: str
-
-
-@dataclass
 class Match:
-    employee_code: str
+    code: str
     full_name: str
     department: str | None
     similarity: float
@@ -42,12 +32,12 @@ class Profile:
 @dataclass
 class Person:
     id: int
-    employee_code: str
+    code: str
     full_name: str
     department: str | None
-    profile: Profile
-    embedding_count: int
     created_at: str
+    embedding_count: int = 0
+    profile: Profile = field(default_factory=Profile)
 
 
 @dataclass
@@ -75,31 +65,35 @@ class Store(ABC):
     async def close(self) -> None: ...
 
     @abstractmethod
-    async def upsert_employee(
+    async def upsert_person(
         self,
-        employee_code: str,
+        code: str,
         full_name: str,
         department: str | None,
         profile: "Profile | None" = None,
     ) -> int:
-        """Insert or update an employee, returning its id.
+        """Insert or update a person, returning their id.
 
         Only non-None profile fields are written, so enrolling photos never
         clears details captured earlier (and vice versa).
         """
 
     @abstractmethod
-    async def get_person(self, employee_code: str) -> "Person | None": ...
+    async def get_person(self, code: str) -> "Person | None": ...
 
     @abstractmethod
-    async def add_session(
-        self, employee_code: str | None, items: list["SessionItem"]
-    ) -> int:
+    async def list_people(self) -> list["Person"]: ...
+
+    @abstractmethod
+    async def delete_person(self, code: str) -> bool: ...
+
+    @abstractmethod
+    async def add_session(self, code: str | None, items: list["SessionItem"]) -> int:
         """Record a finished weigh session. `None` code = anonymous — the weights
         still count towards the station total, they're just not attributed."""
 
     @abstractmethod
-    async def sessions_for(self, employee_code: str) -> list["WeighSession"]:
+    async def sessions_for(self, code: str) -> list["WeighSession"]:
         """This person's sessions, newest first."""
 
     @abstractmethod
@@ -107,14 +101,8 @@ class Store(ABC):
         """Every kilogram recorded at this station, including anonymous ones."""
 
     @abstractmethod
-    async def add_embedding(self, employee_id: int, embedding: np.ndarray) -> None: ...
+    async def add_embedding(self, person_id: int, embedding: np.ndarray) -> None: ...
 
     @abstractmethod
     async def best_match(self, embedding: np.ndarray) -> Match | None:
         """Nearest neighbor by cosine similarity, or None if no embeddings exist."""
-
-    @abstractmethod
-    async def list_employees(self) -> list[Employee]: ...
-
-    @abstractmethod
-    async def delete_employee(self, employee_code: str) -> bool: ...

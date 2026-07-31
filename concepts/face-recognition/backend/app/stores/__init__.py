@@ -1,5 +1,5 @@
 from .. import config
-from .base import Employee, Match, Person, Profile, SessionItem, Store, WeighSession
+from .base import Match, Person, Profile, SessionItem, Store, WeighSession
 
 
 def create_store() -> Store:
@@ -15,7 +15,6 @@ def create_store() -> Store:
 
 
 __all__ = [
-    "Employee",
     "Match",
     "Person",
     "Profile",

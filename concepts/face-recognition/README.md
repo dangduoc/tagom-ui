@@ -111,7 +111,17 @@ With `DB_BACKEND=postgres` in that file, just make sure the database is up:
 docker compose up -d db
 ```
 
-To move existing SQLite enrollments over: `.venv\Scripts\python -m scripts.migrate_sqlite_to_pg`
+To move existing SQLite data (people, embeddings and weigh sessions) over:
+`.venv\Scripts\python -m scripts.migrate_sqlite_to_pg`
+
+### Upgrading an older database
+
+The depositor table was originally `employees` (this began as a department
+face-recognition experiment) and is now `people`, with `employee_code` → `code`
+and `employee_id` → `person_id`. Both stores rename in place on startup, so an
+existing `local_store.db` or pgvector database keeps its people, their face
+embeddings and their history — nobody has to re-enrol. The migration is
+idempotent and a no-op on a fresh database.
 
 ## Configuration (backend/.env or env vars — env vars win)
 
@@ -131,16 +141,18 @@ To move existing SQLite enrollments over: `.venv\Scripts\python -m scripts.migra
 
 Face recognition:
 
-- `POST /api/enroll` — multipart form: `employee_code`, `full_name`,
-  `department?`, the optional depositor fields (`phone`, `age`, `city`, `ward`,
-  `address`, `citizen_id`), and `files` (1–5 photos, exactly one face each;
-  photos with zero or multiple faces are rejected per-file).
+- `POST /api/enroll` — multipart form: `code`, `full_name`, `department?`, the
+  optional depositor fields (`phone`, `age`, `city`, `ward`, `address`,
+  `citizen_id`), and `files` (1–5 photos, exactly one face each; photos with
+  zero or multiple faces are rejected per-file).
 - `POST /api/recognize` — multipart `file` (padded face crop or any photo);
   picks the largest face; returns `match` (or `closest` + `below_threshold`).
-- `GET /api/employees`, `DELETE /api/employees/{code}`, `GET /api/health`.
+- `GET /api/health`.
 
-Station:
+People (a person is identified by `code` — the station uses their phone digits):
 
+- `GET /api/people` — roster, for the `/debug` enrollment page.
+  `DELETE /api/people/{code}` removes a person and their face data.
 - `GET /api/people/{code}` — profile + weigh history (newest first) +
   `personal_total` / `session_count`. 404 when the code is unknown.
 - `POST /api/people` — register without face photos (`enroll` covers the
@@ -167,11 +179,6 @@ exercised by running the real backend.
 
 ## Known limitations / next steps
 
-- **`employees` is the depositor table.** The recycling columns and weigh
-  sessions hang off the table the face experiment created, so the name is a
-  leftover — one code identifies one person either way. Renaming it to `people`
-  would touch the recognition endpoints and the frontend's `ApiService`; it
-  hasn't been done.
 - **QR codes are placeholders.** `tg-qr` draws a deterministic QR-looking grid,
   not a scannable code (as flagged in the handoff). Add a real encoder when the
   app-download link and account payload are settled.
