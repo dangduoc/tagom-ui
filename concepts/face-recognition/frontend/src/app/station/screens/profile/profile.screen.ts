@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 
-import { CATEGORIES, catName, fmtTotal, fmtWeight } from '../../core/models';
-import { sessionSum } from '../../core/station-data';
+import { CATEGORIES, catName, fmtTotal, fmtWeight, sessionTotal } from '../../core/models';
 import { StationService } from '../../core/station.service';
 import { TgIcon } from '../../shared/tg-icon';
 
@@ -40,7 +39,7 @@ export class ProfileScreen {
     this.station.sessions().map((s, index) => ({
       id: `${s.date}-${index}`,
       date: s.date,
-      totalText: fmtWeight(sessionSum(s)),
+      totalText: fmtWeight(sessionTotal(s)),
       chips: s.items.map((item, i) => ({
         id: i,
         name: catName(item.key, this.station.lang()),
@@ -50,10 +49,10 @@ export class ProfileScreen {
     })),
   );
 
-  readonly lifetimeText = computed(() => {
-    const total = this.station.sessions().reduce((sum, s) => sum + sessionSum(s), 0);
-    return fmtTotal(total, this.station.lang());
-  });
+  /** Lifetime total is the server's, not a sum of the history shown here. */
+  readonly lifetimeText = computed(() =>
+    fmtTotal(this.station.personalTotal(), this.station.lang()),
+  );
 
   field(event: Event): string {
     return (event.target as HTMLInputElement).value;

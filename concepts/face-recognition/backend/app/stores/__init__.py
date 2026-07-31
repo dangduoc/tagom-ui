@@ -1,5 +1,5 @@
 from .. import config
-from .base import Employee, Match, Store
+from .base import Employee, Match, Person, Profile, SessionItem, Store, WeighSession
 
 
 def create_store() -> Store:
@@ -14,4 +14,13 @@ def create_store() -> Store:
     raise ValueError(f"unknown DB_BACKEND: {config.DB_BACKEND!r}")
 
 
-__all__ = ["Employee", "Match", "Store", "create_store"]
+__all__ = [
+    "Employee",
+    "Match",
+    "Person",
+    "Profile",
+    "SessionItem",
+    "Store",
+    "WeighSession",
+    "create_store",
+]

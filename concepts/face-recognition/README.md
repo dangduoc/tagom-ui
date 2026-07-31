@@ -29,6 +29,9 @@ first, English toggle. Tablet landscape (1280×800) with a real mobile layout at
   client-side; `BarcodeDetector` reads QR where the browser supports it.
   Ionic remains only for the `/debug` hardware pages.
 - **Backend**: FastAPI + insightface (`buffalo_s`, ONNX, CPU) on Python 3.11.
+  Holds depositor records, weigh sessions and the station total as well as the
+  face embeddings. If a session can't be uploaded the frontend queues it in
+  `localStorage` and retries on reconnect, so a weigh is never lost.
 - **Storage**: two interchangeable backends behind one interface
   (`backend/app/stores/`):
   - `sqlite` (default) — zero-config local demo; SQLite + in-process
@@ -120,25 +123,55 @@ To move existing SQLite enrollments over: `.venv\Scripts\python -m scripts.migra
 | `FACE_MODEL` | `buffalo_s` | insightface model pack (`buffalo_l` = more accurate, slower) |
 | `SIMILARITY_THRESHOLD` | `0.40` | cosine similarity cutoff for a match — tune with real photos; `/api/recognize` returns the below-threshold `closest` candidate to help |
 | `ALLOWED_ORIGINS` | `*` | CORS origins, comma-separated |
+| `COMMUNITY_BASE_KG` | `12480.5` | kg the station had gathered before it started recording sessions here; added to the summary's community total |
+| `COMMUNITY_GOAL_KG` | `15000` | what the summary's community bar fills against |
+| `MAX_ITEM_WEIGHT_KG` | `500` | rejects implausible scale readings on `POST /api/sessions` |
 
 ## API
 
+Face recognition:
+
 - `POST /api/enroll` — multipart form: `employee_code`, `full_name`,
-  `department?`, `files` (1–5 photos, exactly one face each; photos with
-  zero or multiple faces are rejected per-file).
+  `department?`, the optional depositor fields (`phone`, `age`, `city`, `ward`,
+  `address`, `citizen_id`), and `files` (1–5 photos, exactly one face each;
+  photos with zero or multiple faces are rejected per-file).
 - `POST /api/recognize` — multipart `file` (padded face crop or any photo);
   picks the largest face; returns `match` (or `closest` + `below_threshold`).
 - `GET /api/employees`, `DELETE /api/employees/{code}`, `GET /api/health`.
 
+Station:
+
+- `GET /api/people/{code}` — profile + weigh history (newest first) +
+  `personal_total` / `session_count`. 404 when the code is unknown.
+- `POST /api/people` — register without face photos (`enroll` covers the
+  with-photos case). `PUT /api/people/{code}` updates a profile.
+  On both, an omitted field is left alone and `""` clears it, so enrolling
+  photos never wipes details captured earlier and vice versa.
+- `POST /api/sessions` — `{code, items: [{category, weight}]}`. `code: null`
+  is an anonymous visit: counted for the station, attributed to nobody.
+  Unknown categories and out-of-range weights are rejected.
+- `GET /api/stats` — `community_total` (base + everything recorded here),
+  `community_base`, `community_goal`.
+
+## Backend tests
+
+```powershell
+cd backend
+.venv\Scripts\pip install -r requirements-dev.txt
+.venv\Scripts\python -m pytest tests
+```
+
+The station API tests stub `cv2`/`insightface` (see `tests/conftest.py`), so
+they run without the multi-hundred-MB vision stack. Recognition itself is only
+exercised by running the real backend.
+
 ## Known limitations / next steps
 
-- **Depositor records and weigh history have no backend yet.** The backend
-  stores only what recognition needs (`employee_code`, `full_name`, embeddings).
-  Phone/age/citizen ID/address, per-session history and the station's community
-  total currently live in `localStorage`, behind
-  `frontend/src/app/station/core/station-data.ts` — one file to swap for API
-  calls once a `people` + `weigh_sessions` schema exists. Registration does hit
-  the real `/api/enroll`, using the phone digits as `employee_code`.
+- **`employees` is the depositor table.** The recycling columns and weigh
+  sessions hang off the table the face experiment created, so the name is a
+  leftover — one code identifies one person either way. Renaming it to `people`
+  would touch the recognition endpoints and the frontend's `ApiService`; it
+  hasn't been done.
 - **QR codes are placeholders.** `tg-qr` draws a deterministic QR-looking grid,
   not a scannable code (as flagged in the handoff). Add a real encoder when the
   app-download link and account payload are settled.

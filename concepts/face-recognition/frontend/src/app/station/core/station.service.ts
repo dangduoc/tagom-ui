@@ -1,4 +1,12 @@
-import { Injectable, computed, effect, inject, signal, untracked } from '@angular/core';
+import {
+  Injectable,
+  Signal,
+  computed,
+  effect,
+  inject,
+  signal,
+  untracked,
+} from '@angular/core';
 
 import { ApiService, RecognizedMatch } from '../../api.service';
 import { ScaleService } from '../../scale/scale.service';
@@ -18,7 +26,7 @@ import {
   isAccount,
   maskPhone,
 } from './models';
-import { StationDataStore } from './station-data';
+import { StationDataStore, toPerson } from './station-data';
 import { WeighService } from './weigh.service';
 
 export interface RegisterForm {
@@ -93,8 +101,6 @@ export class StationService {
   readonly pform = signal<Person>({ fullName: '', phone: '' });
   private prevScreen: Screen = 'confirmed';
 
-  /** Bumped whenever a session is recorded, so totals recompute from storage. */
-  private readonly dataVersion = signal(0);
   /** Set when the person dismisses the scale-offline card, so it doesn't
    *  immediately reappear while the scale is still down. */
   private readonly scaleAlertMuted = signal(false);
@@ -126,30 +132,12 @@ export class StationService {
     this.items().reduce((sum, i) => sum + i.weight, 0),
   );
 
-  readonly personalTotal = computed(() => {
-    this.dataVersion();
-    const acc = this.account();
-    if (!acc?.code) return this.sessionTotal();
-    // Storage already includes this session once it's been recorded on Finish.
-    return this.data.personalTotal(acc.code) || this.sessionTotal();
-  });
-
-  readonly communityTotal = computed(() => {
-    this.dataVersion();
-    return this.data.communityTotal();
-  });
-
-  readonly sessions = computed<WeighSession[]>(() => {
-    this.dataVersion();
-    const acc = this.account();
-    return acc?.code ? this.data.sessions(acc.code) : [];
-  });
-
-  readonly memberSince = computed(() => {
-    this.dataVersion();
-    const acc = this.account();
-    return acc?.code ? this.data.memberSince(acc.code) : '';
-  });
+  /** Lifetime totals and history come from the backend (see StationDataStore). */
+  readonly personalTotal = this.data.personalTotal.asReadonly();
+  readonly communityTotal = this.data.communityTotal.asReadonly();
+  readonly communityGoal = this.data.communityGoal.asReadonly();
+  readonly sessions: Signal<WeighSession[]> = this.data.sessions.asReadonly();
+  readonly memberSince = this.data.memberSince.asReadonly();
 
   readonly canSubmitRegister = computed(() => {
     const f = this.form();
@@ -163,6 +151,10 @@ export class StationService {
   constructor() {
     // The scale is wired over WebSocket to the ESP32 bridge; connect once at boot.
     this.scale.connect(this.scale.getUrl());
+
+    // Station total for the summary, plus any sessions stranded by an outage.
+    void this.data.loadStats();
+    void this.data.flushOutbox();
 
     // Surface a scale outage only where it actually blocks the person. `error` is
     // read untracked so raising it can't re-trigger this effect, and a dismissal
@@ -206,6 +198,7 @@ export class StationService {
     this.weigh.reset();
     this.mode.set(mode);
     this.identity.set(null);
+    this.data.clearPerson();
     this.items.set([]);
     this.currentCat.set(null);
     this.overlay.set(null);
@@ -237,8 +230,21 @@ export class StationService {
 
   /** A face or QR match came back from IdentifyService. */
   identifiedAs(match: RecognizedMatch): void {
-    this.identity.set(this.personFromCode(match.employee_code, match.full_name));
+    // Show the greeting straight away off the match, then fill in the stored
+    // profile and history — the person shouldn't wait on a round trip.
+    this.identity.set({
+      code: match.employee_code,
+      fullName: match.full_name,
+      phone: maskPhone(match.employee_code),
+    });
     this.screen.set('confirmed');
+    void this.hydrate(match.employee_code);
+  }
+
+  /** Replaces the placeholder identity with the stored record, if there is one. */
+  private async hydrate(code: string): Promise<void> {
+    const person = await this.data.loadPerson(code);
+    if (person && this.account()?.code === code) this.identity.set(person);
   }
 
   /** Detection is confident this person isn't enrolled. */
@@ -255,34 +261,13 @@ export class StationService {
       this.identifiedAsUnknown();
       return;
     }
-    const local = this.data.getPerson(code);
-    if (local) {
-      this.identity.set(local);
+    const person = await this.data.loadPerson(code);
+    if (person) {
+      this.identity.set(person);
       this.screen.set('confirmed');
       return;
     }
-    try {
-      const employees = await this.api.listEmployees();
-      const hit = employees.find((e) => e.employee_code === code);
-      if (hit) {
-        this.identity.set(this.personFromCode(hit.employee_code, hit.full_name));
-        this.screen.set('confirmed');
-        return;
-      }
-    } catch {
-      // Fall through to onboarding rather than stranding the person on a spinner.
-    }
     this.identifiedAsUnknown();
-  }
-
-  private personFromCode(code: string, fullName: string): Person {
-    const stored = this.data.getPerson(code);
-    return {
-      ...(stored ?? {}),
-      code,
-      fullName: stored?.fullName || fullName,
-      phone: stored?.phone || maskPhone(code),
-    };
   }
 
   // ── register ──
@@ -310,24 +295,28 @@ export class StationService {
     this.registering.set(true);
     this.registerError.set(false);
 
+    const profile = {
+      phone: maskPhone(f.phone),
+      age: f.age.trim(),
+      city: f.city.trim(),
+      ward: f.ward.trim(),
+      address: f.address.trim(),
+      citizen_id: f.citizenId.trim(),
+    };
+
     try {
       const photos = this.facePhotos();
+      let saved: Person | null;
       if (photos.length) {
-        // Face photos become the embedding vector the identify screen matches against.
-        await this.api.enroll(code, f.fullName.trim(), '', photos);
+        // Face photos become the embedding the identify screen matches against;
+        // enroll writes the profile in the same call.
+        await this.api.enroll(code, f.fullName.trim(), '', photos, profile);
+        saved = await this.data.loadPerson(code);
+      } else {
+        saved = toPerson(await this.api.createPerson(code, f.fullName.trim(), profile));
       }
-      const person = this.data.savePerson({
-        code,
-        fullName: f.fullName.trim(),
-        phone: maskPhone(f.phone),
-        age: f.age.trim() || undefined,
-        city: f.city.trim() || undefined,
-        ward: f.ward.trim() || undefined,
-        address: f.address.trim() || undefined,
-        citizenId: f.citizenId.trim() || undefined,
-      });
-      this.dataVersion.update((v) => v + 1);
-      this.identity.set(person);
+
+      this.identity.set(saved ?? { code, fullName: f.fullName.trim(), phone: profile.phone });
       this.form.set({ ...EMPTY_FORM });
       this.facePhotos.set([]);
       this.enter();
@@ -371,13 +360,13 @@ export class StationService {
   gotoSummary(): void {
     if (!this.items().length) return;
     this.weigh.reset();
-    const acc = this.account();
-    this.data.addSession(
-      acc?.code ?? '',
+    this.screen.set('summary');
+    // Totals move optimistically inside recordSession, so the summary reads
+    // correctly immediately; a failed upload is queued, not lost.
+    void this.data.recordSession(
+      this.account()?.code ?? null,
       this.items().map((i) => ({ key: i.key, weight: i.weight })),
     );
-    this.dataVersion.update((v) => v + 1);
-    this.screen.set('summary');
   }
 
   reset(): void {
@@ -387,6 +376,8 @@ export class StationService {
     this.error.set(null);
     this.items.set([]);
     this.identity.set(null);
+    // The next person must not see the last one's history.
+    this.data.clearPerson();
     this.currentCat.set(null);
     this.keypad.set('');
     this.keypadNotFound.set(false);
@@ -468,17 +459,9 @@ export class StationService {
     this.keypadBusy.set(true);
     this.keypadNotFound.set(false);
     try {
-      const local = this.data.getPerson(code);
-      if (local) {
-        this.identity.set(local);
-        this.screen.set('confirmed');
-        this.overlay.set(null);
-        return;
-      }
-      const employees = await this.api.listEmployees();
-      const hit = employees.find((e) => e.employee_code === code);
-      if (hit) {
-        this.identity.set(this.personFromCode(hit.employee_code, hit.full_name));
+      const person = await this.data.loadPerson(code);
+      if (person) {
+        this.identity.set(person);
         this.screen.set('confirmed');
         this.overlay.set(null);
       } else {
@@ -549,13 +532,28 @@ export class StationService {
     this.pform.update((p) => ({ ...p, ...patch }));
   }
 
-  saveProfile(): void {
+  async saveProfile(): Promise<void> {
     const acc = this.account();
     const edited = this.pform();
     if (!acc?.code) return;
-    const saved = this.data.savePerson({ ...edited, code: acc.code });
-    this.identity.set(saved);
-    this.dataVersion.update((v) => v + 1);
+
+    // Show the edit as applied straight away; the server is the record of truth
+    // and its response replaces this if it differs.
+    this.identity.set({ ...edited, code: acc.code });
     this.profileEdit.set(false);
+    try {
+      const saved = await this.api.updatePerson(acc.code, {
+        full_name: edited.fullName,
+        phone: edited.phone,
+        age: edited.age ?? '',
+        city: edited.city ?? '',
+        ward: edited.ward ?? '',
+        address: edited.address ?? '',
+        citizen_id: edited.citizenId ?? '',
+      });
+      this.identity.set(toPerson(saved));
+    } catch {
+      this.error.set('network');
+    }
   }
 }

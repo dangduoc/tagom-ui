@@ -1,116 +1,173 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 
+import { ApiService, PersonDto } from '../../api.service';
 import { CategoryKey, Person, WeighSession } from './models';
 
 /**
- * Depositor records and weigh history.
+ * Depositor records, weigh history and the station total, served by the
+ * backend (`/api/people`, `/api/sessions`, `/api/stats`).
  *
- * The backend currently only stores what face recognition needs (employee_code,
- * full_name, department + embeddings — see backend/app/stores). It has no table
- * for a depositor's phone/age/address, no weigh sessions and no station total,
- * so those live in localStorage for now.
- *
- * This is the single seam to replace when that schema lands: swap the bodies for
- * API calls and nothing else in the station has to change.
+ * The only thing still kept locally is an outbox of sessions that failed to
+ * upload, so a weigh is never lost when the network drops — which is what the
+ * offline error card promises ("data saves when back online", handoff §6).
  */
 
-/** kg the station had gathered before this device started counting. */
-export const COMMUNITY_BASE = 12480.5;
-/** Community bar on the summary fills against this target. */
-export const COMMUNITY_GOAL = 15000;
+const KEY_OUTBOX = 'tagom.station.outbox';
 
-const KEY_PEOPLE = 'tagom.station.people';
-const KEY_SESSIONS = 'tagom.station.sessions';
-
-interface StoredPerson extends Person {
-  code: string;
-  memberSince: string; // MM/yyyy
+interface PendingSession {
+  code: string | null;
+  items: { category: CategoryKey; weight: number }[];
 }
 
-interface StoredSession extends WeighSession {
-  code: string; // owning person, or '' for anonymous
-}
-
-function readJson<T>(key: string, fallback: T): T {
-  try {
-    const raw = localStorage.getItem(key);
-    return raw ? (JSON.parse(raw) as T) : fallback;
-  } catch {
-    return fallback;
-  }
-}
-
-function writeJson(key: string, value: unknown): void {
-  try {
-    localStorage.setItem(key, JSON.stringify(value));
-  } catch {
-    // Private mode / quota — the session still works, it just won't persist.
-  }
-}
-
-export function formatDate(d: Date): string {
+/** ISO / SQL timestamp from the API → the dd/MM/yyyy the history list shows. */
+export function formatDate(value: string): string {
+  const parsed = new Date(value.includes('T') ? value : value.replace(' ', 'T'));
+  if (Number.isNaN(parsed.getTime())) return value;
   const pad = (n: number) => String(n).padStart(2, '0');
-  return `${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()}`;
+  return `${pad(parsed.getDate())}/${pad(parsed.getMonth() + 1)}/${parsed.getFullYear()}`;
 }
 
-export function formatMonth(d: Date): string {
-  return `${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
+/** Member-since is shown as MM/yyyy. */
+export function formatMonth(value: string): string {
+  const parsed = new Date(value.includes('T') ? value : value.replace(' ', 'T'));
+  if (Number.isNaN(parsed.getTime())) return value;
+  return `${String(parsed.getMonth() + 1).padStart(2, '0')}/${parsed.getFullYear()}`;
+}
+
+export function toPerson(dto: PersonDto): Person {
+  return {
+    code: dto.code,
+    fullName: dto.full_name,
+    phone: dto.phone ?? '',
+    age: dto.age ?? undefined,
+    city: dto.city ?? undefined,
+    ward: dto.ward ?? undefined,
+    address: dto.address ?? undefined,
+    citizenId: dto.citizen_id ?? undefined,
+  };
 }
 
 @Injectable({ providedIn: 'root' })
 export class StationDataStore {
-  getPerson(code: string): StoredPerson | null {
-    return readJson<StoredPerson[]>(KEY_PEOPLE, []).find((p) => p.code === code) ?? null;
+  private readonly api = inject(ApiService);
+
+  /** Everything this station has gathered, including its pre-existing baseline. */
+  readonly communityTotal = signal(0);
+  readonly communityGoal = signal(15000);
+  /** Signed-in person's lifetime total and history; reset when they leave. */
+  readonly personalTotal = signal(0);
+  readonly sessions = signal<WeighSession[]>([]);
+  readonly memberSince = signal('');
+  /** True while a recorded session is sitting in the outbox awaiting upload. */
+  readonly pendingUpload = signal(false);
+
+  constructor() {
+    this.pendingUpload.set(this.outbox().length > 0);
+    addEventListener('online', () => void this.flushOutbox());
   }
 
-  /** Insert or update by `code` (the depositor's phone digits). */
-  savePerson(person: Person & { code: string }): StoredPerson {
-    const people = readJson<StoredPerson[]>(KEY_PEOPLE, []);
-    const existing = people.find((p) => p.code === person.code);
-    const stored: StoredPerson = {
-      ...existing,
-      ...person,
-      memberSince: existing?.memberSince ?? formatMonth(new Date()),
+  async loadStats(): Promise<void> {
+    try {
+      const stats = await this.api.getStats();
+      this.communityTotal.set(stats.community_total);
+      this.communityGoal.set(stats.community_goal);
+    } catch {
+      // Offline: keep whatever total we last saw rather than showing zero.
+    }
+  }
+
+  /** Loads profile + history for a code. Returns null if nobody holds it. */
+  async loadPerson(code: string): Promise<Person | null> {
+    try {
+      const bundle = await this.api.getPerson(code);
+      if (!bundle) return null;
+      this.personalTotal.set(bundle.personal_total);
+      this.memberSince.set(formatMonth(bundle.person.member_since));
+      this.sessions.set(
+        bundle.sessions.map((s) => ({
+          date: formatDate(s.date),
+          items: s.items.map((i) => ({ key: i.category as CategoryKey, weight: i.weight })),
+        })),
+      );
+      return toPerson(bundle.person);
+    } catch {
+      return null;
+    }
+  }
+
+  clearPerson(): void {
+    this.personalTotal.set(0);
+    this.sessions.set([]);
+    this.memberSince.set('');
+  }
+
+  /**
+   * Records a finished visit. Totals move immediately so the summary is right
+   * the moment it opens; the server's numbers replace them when they land, and
+   * a failed upload is queued rather than dropped.
+   */
+  async recordSession(
+    code: string | null,
+    items: { key: CategoryKey; weight: number }[],
+  ): Promise<void> {
+    const total = items.reduce((sum, i) => sum + i.weight, 0);
+    this.communityTotal.update((v) => round2(v + total));
+    if (code) this.personalTotal.update((v) => round2(v + total));
+
+    const payload: PendingSession = {
+      code,
+      items: items.map((i) => ({ category: i.key, weight: i.weight })),
     };
-    const next = people.filter((p) => p.code !== person.code).concat(stored);
-    writeJson(KEY_PEOPLE, next);
-    return stored;
+
+    try {
+      const res = await this.api.recordSession(payload.code, payload.items);
+      this.communityTotal.set(res.community_total);
+      if (code) await this.loadPerson(code);
+    } catch {
+      this.queue(payload);
+    }
   }
 
-  memberSince(code: string): string {
-    return this.getPerson(code)?.memberSince ?? formatMonth(new Date());
+  /** Retries queued sessions. Safe to call repeatedly. */
+  async flushOutbox(): Promise<void> {
+    const queued = this.outbox();
+    if (!queued.length) return;
+
+    const stillPending: PendingSession[] = [];
+    for (const session of queued) {
+      try {
+        await this.api.recordSession(session.code, session.items);
+      } catch {
+        stillPending.push(session);
+      }
+    }
+    this.writeOutbox(stillPending);
+    if (stillPending.length < queued.length) await this.loadStats();
   }
 
-  /** Newest first. */
-  sessions(code: string): WeighSession[] {
-    if (!code) return [];
-    return readJson<StoredSession[]>(KEY_SESSIONS, [])
-      .filter((s) => s.code === code)
-      .reverse();
+  private queue(session: PendingSession): void {
+    this.writeOutbox([...this.outbox(), session]);
   }
 
-  /** Records a finished session. Anonymous sessions still count towards the
-   *  station total — they're just not attributed to anyone. */
-  addSession(code: string, items: { key: CategoryKey; weight: number }[]): void {
-    if (!items.length) return;
-    const sessions = readJson<StoredSession[]>(KEY_SESSIONS, []);
-    sessions.push({ code, date: formatDate(new Date()), items });
-    writeJson(KEY_SESSIONS, sessions);
+  private outbox(): PendingSession[] {
+    try {
+      return JSON.parse(localStorage.getItem(KEY_OUTBOX) ?? '[]') as PendingSession[];
+    } catch {
+      return [];
+    }
   }
 
-  personalTotal(code: string): number {
-    return this.sessions(code).reduce((sum, s) => sum + sessionSum(s), 0);
-  }
-
-  communityTotal(): number {
-    const recorded = readJson<StoredSession[]>(KEY_SESSIONS, []).reduce(
-      (sum, s) => sum + sessionSum(s),
-      0,
-    );
-    return COMMUNITY_BASE + recorded;
+  private writeOutbox(sessions: PendingSession[]): void {
+    try {
+      if (sessions.length) localStorage.setItem(KEY_OUTBOX, JSON.stringify(sessions));
+      else localStorage.removeItem(KEY_OUTBOX);
+    } catch {
+      // Private mode / quota — nothing more we can do than keep going.
+    }
+    this.pendingUpload.set(sessions.length > 0);
   }
 }
 
-export function sessionSum(session: WeighSession): number {
-  return session.items.reduce((sum, i) => sum + i.weight, 0);
+function round2(n: number): number {
+  return Math.round(n * 100) / 100;
 }

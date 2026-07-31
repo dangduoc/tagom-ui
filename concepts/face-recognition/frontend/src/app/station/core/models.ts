@@ -72,6 +72,10 @@ export interface WeighSession {
   items: { key: CategoryKey; weight: number }[];
 }
 
+export function sessionTotal(session: WeighSession): number {
+  return session.items.reduce((sum, i) => sum + i.weight, 0);
+}
+
 export function isAccount(identity: Identity): identity is Person {
   return identity !== null && identity !== 'anon';
 }

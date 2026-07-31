@@ -30,3 +30,20 @@ SIMILARITY_THRESHOLD = float(os.environ.get("SIMILARITY_THRESHOLD", "0.40"))
 ALLOWED_ORIGINS = os.environ.get("ALLOWED_ORIGINS", "*")
 
 EMBEDDING_DIM = 512
+
+# Kilograms this station had already gathered before it started recording
+# sessions here. Added to the recorded total on the summary screen so the
+# community number reflects the station's real history.
+COMMUNITY_BASE_KG = float(os.environ.get("COMMUNITY_BASE_KG", "12480.5"))
+
+# What the community bar on the summary screen fills against.
+COMMUNITY_GOAL_KG = float(os.environ.get("COMMUNITY_GOAL_KG", "15000"))
+
+# Material categories the station can weigh. Kept in sync with
+# frontend/src/app/station/core/models.ts.
+CATEGORY_KEYS = frozenset(
+    {"nhua", "giay", "kimloai", "thuytinh", "vai", "chuaphanloai"}
+)
+
+# Sanity bound for a single weighing — rejects obviously bad scale frames.
+MAX_ITEM_WEIGHT_KG = float(os.environ.get("MAX_ITEM_WEIGHT_KG", "500"))

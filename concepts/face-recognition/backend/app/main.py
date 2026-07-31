@@ -2,11 +2,12 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel, Field, field_validator
 from starlette.concurrency import run_in_threadpool
 
 from . import config
 from .face import BadImageError, FaceService, MultipleFacesError, NoFaceError
-from .stores import create_store
+from .stores import Person, Profile, SessionItem, WeighSession, create_store
 
 face_service: FaceService | None = None
 store = create_store()
@@ -91,6 +92,14 @@ async def enroll(
     employee_code: str = Form(...),
     full_name: str = Form(...),
     department: str | None = Form(None),
+    # Depositor details from the station's register screen. All optional, and
+    # omitted fields never overwrite what's already stored.
+    phone: str | None = Form(None),
+    age: str | None = Form(None),
+    city: str | None = Form(None),
+    ward: str | None = Form(None),
+    address: str | None = Form(None),
+    citizen_id: str | None = Form(None),
     files: list[UploadFile] = File(...),
 ):
     embeddings = []
@@ -123,7 +132,19 @@ async def enroll(
             detail={"message": "no usable face photo", "files": results},
         )
 
-    employee_id = await store.upsert_employee(employee_code, full_name, department)
+    employee_id = await store.upsert_employee(
+        employee_code,
+        full_name,
+        department,
+        Profile(
+            phone=phone,
+            age=age,
+            city=city,
+            ward=ward,
+            address=address,
+            citizen_id=citizen_id,
+        ),
+    )
     for emb in embeddings:
         await store.add_embedding(employee_id, emb)
 
@@ -157,3 +178,159 @@ async def delete_employee(employee_code: str):
     if not deleted:
         raise HTTPException(status_code=404, detail="employee not found")
     return {"deleted": employee_code}
+
+
+# ── Recycling station: depositor profiles, weigh sessions, station totals ──
+
+
+class ProfileIn(BaseModel):
+    """Only the fields present in the request are written — omit a field to
+    leave it alone, send "" to clear it."""
+
+    full_name: str | None = None
+    phone: str | None = None
+    age: str | None = None
+    city: str | None = None
+    ward: str | None = None
+    address: str | None = None
+    citizen_id: str | None = None
+
+
+class PersonIn(ProfileIn):
+    code: str = Field(min_length=1, max_length=32)
+    full_name: str = Field(min_length=1, max_length=200)
+
+
+class SessionItemIn(BaseModel):
+    category: str
+    weight: float
+
+    @field_validator("category")
+    @classmethod
+    def known_category(cls, v: str) -> str:
+        if v not in config.CATEGORY_KEYS:
+            raise ValueError(f"unknown category: {v!r}")
+        return v
+
+    @field_validator("weight")
+    @classmethod
+    def sane_weight(cls, v: float) -> float:
+        if not 0 <= v <= config.MAX_ITEM_WEIGHT_KG:
+            raise ValueError(f"weight out of range: {v}")
+        return round(v, 2)
+
+
+class SessionIn(BaseModel):
+    """`code` is None for an anonymous visit — still counted, just not attributed."""
+
+    code: str | None = None
+    items: list[SessionItemIn] = Field(min_length=1)
+
+
+def _person_json(person: Person) -> dict:
+    return {
+        "code": person.employee_code,
+        "full_name": person.full_name,
+        "phone": person.profile.phone,
+        "age": person.profile.age,
+        "city": person.profile.city,
+        "ward": person.profile.ward,
+        "address": person.profile.address,
+        "citizen_id": person.profile.citizen_id,
+        "member_since": person.created_at,
+        "has_face_data": person.embedding_count > 0,
+    }
+
+
+def _session_json(session: WeighSession) -> dict:
+    return {
+        "id": session.id,
+        "date": session.created_at,
+        "total": session.total,
+        "items": [{"category": i.category, "weight": i.weight} for i in session.items],
+    }
+
+
+@app.get("/api/people/{code}")
+async def get_person(code: str):
+    person = await store.get_person(code)
+    if person is None:
+        raise HTTPException(status_code=404, detail="person not found")
+    sessions = await store.sessions_for(code)
+    return {
+        "person": _person_json(person),
+        "sessions": [_session_json(s) for s in sessions],
+        "personal_total": round(sum(s.total for s in sessions), 2),
+        "session_count": len(sessions),
+    }
+
+
+@app.post("/api/people")
+async def create_person(body: PersonIn):
+    """Register without face photos. With photos, /api/enroll does both."""
+    await store.upsert_employee(
+        body.code,
+        body.full_name,
+        None,
+        Profile(
+            phone=body.phone,
+            age=body.age,
+            city=body.city,
+            ward=body.ward,
+            address=body.address,
+            citizen_id=body.citizen_id,
+        ),
+    )
+    person = await store.get_person(body.code)
+    return {"person": _person_json(person)}
+
+
+@app.put("/api/people/{code}")
+async def update_person(code: str, body: ProfileIn):
+    existing = await store.get_person(code)
+    if existing is None:
+        raise HTTPException(status_code=404, detail="person not found")
+    await store.upsert_employee(
+        code,
+        body.full_name or existing.full_name,
+        None,
+        Profile(
+            phone=body.phone,
+            age=body.age,
+            city=body.city,
+            ward=body.ward,
+            address=body.address,
+            citizen_id=body.citizen_id,
+        ),
+    )
+    return {"person": _person_json(await store.get_person(code))}
+
+
+@app.post("/api/sessions")
+async def record_session(body: SessionIn):
+    if body.code and await store.get_person(body.code) is None:
+        raise HTTPException(status_code=404, detail="person not found")
+    session_id = await store.add_session(
+        body.code,
+        [SessionItem(category=i.category, weight=i.weight) for i in body.items],
+    )
+    total = round(sum(i.weight for i in body.items), 2)
+    return {
+        "session_id": session_id,
+        "total": total,
+        "community_total": await _community_total(),
+    }
+
+
+@app.get("/api/stats")
+async def stats():
+    return {
+        "community_total": await _community_total(),
+        "community_base": config.COMMUNITY_BASE_KG,
+        "community_goal": config.COMMUNITY_GOAL_KG,
+    }
+
+
+async def _community_total() -> float:
+    """Everything recorded here, on top of what the station gathered before."""
+    return round(config.COMMUNITY_BASE_KG + await store.community_total(), 2)

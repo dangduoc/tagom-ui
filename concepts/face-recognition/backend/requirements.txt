@@ -1,6 +1,9 @@
 fastapi>=0.115
 uvicorn[standard]>=0.30
 python-multipart>=0.0.9
+# app/config.py reads backend/.env directly — don't rely on uvicorn[standard]
+# happening to pull this in.
+python-dotenv>=1.0
 numpy<2
 opencv-python-headless>=4.9
 onnxruntime>=1.18

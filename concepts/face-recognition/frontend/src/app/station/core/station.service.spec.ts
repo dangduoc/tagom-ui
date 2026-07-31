@@ -1,14 +1,34 @@
 import { TestBed } from '@angular/core/testing';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
+import { ApiService } from '../../api.service';
 import { StationService } from './station.service';
 
 /** Covers the behaviours the handoff flags as easy to get wrong (§8). */
 describe('StationService', () => {
   let station: StationService;
+  let api: {
+    getStats: ReturnType<typeof vi.fn>;
+    getPerson: ReturnType<typeof vi.fn>;
+    recordSession: ReturnType<typeof vi.fn>;
+  };
 
   beforeEach(() => {
     localStorage.clear();
-    TestBed.configureTestingModule({});
+    api = {
+      getStats: vi.fn().mockResolvedValue({
+        community_total: 12480.5,
+        community_base: 12480.5,
+        community_goal: 15000,
+      }),
+      getPerson: vi.fn().mockResolvedValue(null),
+      recordSession: vi
+        .fn()
+        .mockResolvedValue({ session_id: 1, total: 0, community_total: 12483 }),
+    };
+    TestBed.configureTestingModule({
+      providers: [{ provide: ApiService, useValue: api }],
+    });
     station = TestBed.inject(StationService);
   });
 
@@ -91,15 +111,46 @@ describe('StationService', () => {
     expect(station.screen()).not.toBe('summary');
   });
 
-  it('records the session and returns to idle on reset', () => {
+  it('posts an anonymous session and still counts it for the station', async () => {
     station.startSorted();
     station.skip();
     station['addItem']('nhua', 2.5);
     station.gotoSummary();
 
     expect(station.screen()).toBe('summary');
-    // Anonymous weights still join the station's community total.
-    expect(station.communityTotal()).toBeCloseTo(12483.0, 5);
+    // Anonymous: recorded with no code, so nobody is credited.
+    expect(api.recordSession).toHaveBeenCalledWith(null, [
+      { category: 'nhua', weight: 2.5 },
+    ]);
+
+    await Promise.resolve();
+    await Promise.resolve();
+    expect(station.communityTotal()).toBeCloseTo(12483, 5);
+  });
+
+  it('queues a session for later when the upload fails, rather than losing it', async () => {
+    api.recordSession.mockRejectedValue(new Error('offline'));
+    await vi.waitFor(() => expect(station.communityTotal()).toBeGreaterThan(0));
+    const before = station.communityTotal();
+
+    station.startSorted();
+    station.skip();
+    station['addItem']('nhua', 2.5);
+    station.gotoSummary();
+
+    // The summary still shows the visit counted, optimistically.
+    expect(station.communityTotal()).toBeCloseTo(before + 2.5, 5);
+
+    await vi.waitFor(() => expect(localStorage.getItem('tagom.station.outbox')).toBeTruthy());
+    const queued = JSON.parse(localStorage.getItem('tagom.station.outbox')!);
+    expect(queued).toEqual([{ code: null, items: [{ category: 'nhua', weight: 2.5 }] }]);
+  });
+
+  it('returns to idle on reset', () => {
+    station.startSorted();
+    station.skip();
+    station['addItem']('nhua', 2.5);
+    station.gotoSummary();
 
     station.reset();
     expect(station.screen()).toBe('idle');

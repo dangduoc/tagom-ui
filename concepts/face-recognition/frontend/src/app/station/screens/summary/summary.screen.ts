@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 
 import { CATEGORIES, catName, fmtTotal, fmtWeight } from '../../core/models';
-import { COMMUNITY_GOAL } from '../../core/station-data';
 import { StationService } from '../../core/station.service';
 import { QrCode } from '../../shared/qr-code';
 import { TgIcon } from '../../shared/tg-icon';
@@ -41,7 +40,8 @@ export class SummaryScreen {
     fmtTotal(this.station.communityTotal(), this.station.lang()),
   );
 
-  readonly communityPct = computed(() =>
-    Math.min(100, (this.station.communityTotal() / COMMUNITY_GOAL) * 100),
-  );
+  readonly communityPct = computed(() => {
+    const goal = this.station.communityGoal();
+    return goal > 0 ? Math.min(100, (this.station.communityTotal() / goal) * 100) : 0;
+  });
 }
