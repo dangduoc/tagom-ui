@@ -1,13 +1,16 @@
 # Test-only dependencies. The station API tests stub out cv2/insightface
 # (see tests/conftest.py), so the heavy vision stack in requirements.txt is
-# not needed to run them:
+# not needed to run them — but they do need a real PostgreSQL, since that is
+# now the only storage backend:
+#   docker compose up -d db
 #   .venv\Scripts\pip install -r requirements-dev.txt
 #   .venv\Scripts\python -m pytest tests
 fastapi>=0.115
 pydantic>=2
 python-dotenv>=1.0
 python-multipart>=0.0.9
-aiosqlite>=0.20
+asyncpg>=0.29
+pgvector>=0.3
 numpy<2
 httpx>=0.27
 pytest>=8.0

@@ -7,15 +7,10 @@ from dotenv import load_dotenv
 # variables take precedence over the file.
 load_dotenv(Path(__file__).resolve().parent.parent / ".env")
 
-# "sqlite" (zero-config local demo) or "postgres" (pgvector, production-like)
-DB_BACKEND = os.environ.get("DB_BACKEND", "sqlite").lower()
-
+# PostgreSQL + pgvector, the only storage backend. Default DSN matches the
+# database in docker-compose.yml (port 5433 to dodge a local Postgres).
 DATABASE_URL = os.environ.get(
     "DATABASE_URL", "postgresql://face:face@localhost:5433/facedb"
-)
-
-SQLITE_PATH = os.environ.get(
-    "SQLITE_PATH", str(Path(__file__).resolve().parent.parent / "local_store.db")
 )
 
 # insightface model pack; buffalo_s is small and CPU-friendly, buffalo_l is more accurate

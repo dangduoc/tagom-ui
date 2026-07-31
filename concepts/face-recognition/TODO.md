@@ -12,5 +12,4 @@
 - [ ] **VPS deployment** — Linux + `docker compose` for pgvector Postgres + Caddy
       (or nginx) with Let's Encrypt for real HTTPS, so phones get no certificate
       warning. Set a real database password in `docker-compose.yml` / `backend/.env`,
-      and move enrolled data over with `backend/scripts/migrate_sqlite_to_pg.py`
-      (or pg_dump from the local container).
+      and move existing data over with `pg_dump` from the local container.

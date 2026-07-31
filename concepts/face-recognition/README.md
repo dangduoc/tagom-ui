@@ -32,13 +32,11 @@ first, English toggle. Tablet landscape (1280×800) with a real mobile layout at
   Holds depositor records, weigh sessions and the station total as well as the
   face embeddings. If a session can't be uploaded the frontend queues it in
   `localStorage` and retries on reconnect, so a weigh is never lost.
-- **Storage**: two interchangeable backends behind one interface
-  (`backend/app/stores/`):
-  - `sqlite` (default) — zero-config local demo; SQLite + in-process
-    brute-force cosine search (sub-millisecond at department scale).
-  - `postgres` — PostgreSQL + pgvector (HNSW, cosine), the production target.
-    `docker-compose.yml` provides it; `backend/db/schema.sql` is applied
-    automatically on backend startup.
+- **Storage**: PostgreSQL + pgvector (HNSW, cosine) — people, their face
+  embeddings and every weigh session in one database. `docker-compose.yml`
+  provides it and `backend/db/schema.sql` is applied automatically on backend
+  startup, migrations included. `backend/app/stores/` keeps a `Store`
+  interface so the API layer never reaches for pgvector-specific behaviour.
 
 ## Run everything with Docker Compose
 
@@ -64,9 +62,10 @@ local-dev instructions below.
 
 ## Run the local demo
 
-Backend (first start downloads the ~30 MB buffalo_s model):
+Backend (needs the database; first start downloads the ~30 MB buffalo_s model):
 
 ```powershell
+docker compose up -d db       # PostgreSQL + pgvector on :5433
 cd backend
 python -m venv .venv          # once
 .venv\Scripts\pip install -r requirements.txt   # once
@@ -102,34 +101,28 @@ Or start everything (database + backend + frontend) in one go:
 powershell -File start-demo.ps1
 ```
 
-## Switching to Postgres + pgvector
+## The database
 
-Settings live in `backend/.env` (copy `backend/.env.example`; gitignored).
-With `DB_BACKEND=postgres` in that file, just make sure the database is up:
+Settings live in `backend/.env` (copy `backend/.env.example`; gitignored). The
+backend needs the database up:
 
 ```powershell
 docker compose up -d db
 ```
 
-To move existing SQLite data (people, embeddings and weigh sessions) over:
-`.venv\Scripts\python -m scripts.migrate_sqlite_to_pg`
-
 ### Upgrading an older database
 
 The depositor table was originally `employees` (this began as a department
 face-recognition experiment) and is now `people`, with `employee_code` → `code`
-and `employee_id` → `person_id`. Both stores rename in place on startup, so an
-existing `local_store.db` or pgvector database keeps its people, their face
-embeddings and their history — nobody has to re-enrol. The migration is
-idempotent and a no-op on a fresh database.
+and `employee_id` → `person_id`. `schema.sql` renames in place on startup, so an
+existing database keeps its people, their face embeddings and their history —
+nobody has to re-enrol. It is idempotent and a no-op on a fresh database.
 
 ## Configuration (backend/.env or env vars — env vars win)
 
 | Variable | Default | Meaning |
 | --- | --- | --- |
-| `DB_BACKEND` | `sqlite` | `sqlite` or `postgres` |
-| `DATABASE_URL` | `postgresql://face:face@localhost:5433/facedb` | asyncpg DSN (postgres mode) |
-| `SQLITE_PATH` | `backend/local_store.db` | SQLite file (sqlite mode) |
+| `DATABASE_URL` | `postgresql://face:face@localhost:5433/facedb` | asyncpg DSN |
 | `FACE_MODEL` | `buffalo_s` | insightface model pack (`buffalo_l` = more accurate, slower) |
 | `SIMILARITY_THRESHOLD` | `0.40` | cosine similarity cutoff for a match — tune with real photos; `/api/recognize` returns the below-threshold `closest` candidate to help |
 | `ALLOWED_ORIGINS` | `*` | CORS origins, comma-separated |
@@ -168,14 +161,19 @@ People (a person is identified by `code` — the station uses their phone digits
 ## Backend tests
 
 ```powershell
+docker compose up -d db          # the tests need a real database
 cd backend
 .venv\Scripts\pip install -r requirements-dev.txt
 .venv\Scripts\python -m pytest tests
 ```
 
-The station API tests stub `cv2`/`insightface` (see `tests/conftest.py`), so
-they run without the multi-hundred-MB vision stack. Recognition itself is only
-exercised by running the real backend.
+The tests stub `cv2`/`insightface` (see `tests/conftest.py`), so they run
+without the multi-hundred-MB vision stack — but they do need PostgreSQL, since
+that is the only storage backend. They use their own `facedb_test` database on
+the same server and never touch `facedb`. With no server reachable the suite
+skips rather than fails, telling you to start the database.
+
+Recognition itself is only exercised by running the real backend.
 
 ## Known limitations / next steps
 

@@ -41,7 +41,7 @@ app.add_middleware(
 async def health():
     return {
         "status": "ok",
-        "db_backend": config.DB_BACKEND,
+        "db_backend": "postgres",
         "model": config.MODEL_NAME,
         "similarity_threshold": config.SIMILARITY_THRESHOLD,
     }

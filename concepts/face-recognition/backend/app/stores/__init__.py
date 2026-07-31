@@ -1,21 +1,17 @@
 from .. import config
 from .base import Match, Person, Profile, SessionItem, Store, WeighSession
+from .pg_store import PgVectorStore
 
 
 def create_store() -> Store:
-    if config.DB_BACKEND == "postgres":
-        from .pg_store import PgVectorStore
-
-        return PgVectorStore(config.DATABASE_URL)
-    if config.DB_BACKEND == "sqlite":
-        from .sqlite_store import SQLiteStore
-
-        return SQLiteStore(config.SQLITE_PATH)
-    raise ValueError(f"unknown DB_BACKEND: {config.DB_BACKEND!r}")
+    """PostgreSQL + pgvector is the only backend. `Store` stays an interface so
+    the API layer never reaches for pgvector-specific behaviour."""
+    return PgVectorStore(config.DATABASE_URL)
 
 
 __all__ = [
     "Match",
+    "PgVectorStore",
     "Person",
     "Profile",
     "SessionItem",
