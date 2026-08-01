@@ -41,12 +41,15 @@ export class IdentifyScreen implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.identify.stop();
+    // Only here do we hand the camera back — stop() above just pauses detection,
+    // so overlays and error cards don't cause a re-prompt.
+    this.identify.release();
   }
 
   private async startDetection(): Promise<void> {
     await this.identify.start(this.videoRef().nativeElement, (r) => this.onResult(r));
-    if (this.identify.cameraError()) this.station.showError('camera');
+    const fault = this.identify.cameraFault();
+    if (fault) this.station.reportCameraFault(fault);
   }
 
   private onResult(result: IdentifyResult): void {

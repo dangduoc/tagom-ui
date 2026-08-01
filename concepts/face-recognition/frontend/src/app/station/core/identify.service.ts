@@ -1,9 +1,10 @@
-import { Injectable, inject, signal } from '@angular/core';
+import { Injectable, computed, inject, signal, untracked } from '@angular/core';
 import { FaceDetector } from '@mediapipe/tasks-vision';
 
 import { ApiService, RecognizedMatch } from '../../api.service';
 import { createFaceDetector } from '../../face-detection';
-import { Box, closeCamera, cropFace, largestBox, openCamera } from './camera';
+import { Box, cropFace, largestBox } from './camera';
+import { CameraService } from './camera.service';
 
 export type IdentifyResult =
   | { kind: 'face'; match: RecognizedMatch }
@@ -27,13 +28,16 @@ const UNKNOWN_STREAK = 4;
 @Injectable({ providedIn: 'root' })
 export class IdentifyService {
   private readonly api = inject(ApiService);
+  private readonly camera = inject(CameraService);
 
   /** Faces currently in view; null = camera off or detector unavailable. */
   readonly faceCount = signal<number | null>(null);
-  readonly cameraError = signal<string | null>(null);
   readonly running = signal(false);
   /** True while a /api/recognize call is in flight — drives the "checking" chip. */
   readonly checking = signal(false);
+
+  /** Why the camera isn't up, or null. Owned by CameraService. */
+  readonly cameraFault = computed(() => this.camera.fault());
 
   private detector: FaceDetector | null = null;
   private barcodeDetector: { detect(source: CanvasImageSource): Promise<{ rawValue: string }[]> } | null =
@@ -49,31 +53,35 @@ export class IdentifyService {
   private onResult: ((r: IdentifyResult) => void) | null = null;
   private readonly cropCanvas = document.createElement('canvas');
 
-  /** Opens the camera and starts detecting. Resolves once the stream is live. */
+  /**
+   * Opens the camera and starts detecting. Resolves once the stream is live, or
+   * immediately if the camera is unavailable — check `cameraFault()` after.
+   *
+   * `running`/`starting` are read untracked: `start()` is called from an effect,
+   * and a tracked read would make that effect re-run every time detection
+   * toggles, re-entering here for no reason.
+   */
   async start(video: HTMLVideoElement, onResult: (r: IdentifyResult) => void): Promise<void> {
-    if (this.running() || this.starting) return;
+    if (untracked(() => this.running()) || this.starting) return;
     this.starting = true;
     this.onResult = onResult;
     this.video = video;
-    this.cameraError.set(null);
     this.unknownStreak = 0;
     this.lastAttemptAt = 0;
 
     try {
-      this.stream = await openCamera(video);
-    } catch (err) {
-      this.cameraError.set(err instanceof Error ? err.message : String(err));
+      this.stream = await this.camera.acquire();
+      if (!this.stream) return;
+      await this.camera.attach(video, this.stream);
+    } catch {
+      this.stream = null;
       return;
     } finally {
       this.starting = false;
     }
 
     // stop() may have been called while the camera was opening.
-    if (!this.onResult) {
-      closeCamera(this.stream, video);
-      this.stream = null;
-      return;
-    }
+    if (!this.onResult) return;
 
     if (!this.detector) {
       try {
@@ -89,18 +97,27 @@ export class IdentifyService {
     this.loop();
   }
 
-  /** Stops detection and releases the camera. Safe to call repeatedly. */
+  /**
+   * Stops detecting but leaves the camera open. Overlays and error cards use
+   * this: releasing the device here is what made the permission prompt reappear
+   * every time one was dismissed.
+   */
   stop(): void {
     cancelAnimationFrame(this.rafId);
     this.rafId = 0;
-    closeCamera(this.stream, this.video ?? undefined);
-    this.stream = null;
-    this.video = null;
     this.onResult = null;
     this.inFlight = false;
     this.running.set(false);
     this.checking.set(false);
     this.faceCount.set(null);
+  }
+
+  /** Stops detecting and hands the camera back. For leaving the screen. */
+  release(): void {
+    this.stop();
+    this.camera.release(this.video ?? undefined);
+    this.stream = null;
+    this.video = null;
   }
 
   /** QR is a progressive enhancement — Chrome/Edge ship BarcodeDetector, Safari doesn't. */

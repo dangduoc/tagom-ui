@@ -10,6 +10,7 @@ import {
 
 import { ApiService, RecognizedMatch } from '../../api.service';
 import { ScaleService } from '../../scale/scale.service';
+import { CameraFault, CameraService } from './camera.service';
 import { STRINGS } from './i18n';
 import {
   CategoryKey,
@@ -74,6 +75,7 @@ export function phoneDigits(phone: string): string {
 export class StationService {
   private readonly api = inject(ApiService);
   private readonly scale = inject(ScaleService);
+  private readonly camera = inject(CameraService);
   private readonly data = inject(StationDataStore);
   readonly weigh = inject(WeighService);
 
@@ -104,6 +106,12 @@ export class StationService {
   /** Set when the person dismisses the scale-offline card, so it doesn't
    *  immediately reappear while the scale is still down. */
   private readonly scaleAlertMuted = signal(false);
+
+  /** Same idea for the camera card: without it, dismissing on a station with no
+   *  camera just re-raises the card on the identify screen's next effect run. */
+  private readonly cameraAlertMuted = signal(false);
+  /** Drives the card's wording and whether a retry button is worth offering. */
+  readonly cameraFault = signal<CameraFault | null>(null);
 
   // ── derived ──
   readonly L = computed(() => STRINGS[this.lang()]);
@@ -386,6 +394,9 @@ export class StationService {
     this.profileEdit.set(false);
     this.helpCalled.set(false);
     this.scaleAlertMuted.set(false);
+    // A remembered camera fault is deliberately NOT cleared here: the next
+    // person at a station with no camera should not be prompted all over again.
+    this.cameraAlertMuted.set(false);
   }
 
   back(): void {
@@ -502,8 +513,25 @@ export class StationService {
     this.error.set(kind);
   }
 
+  /** Raises the camera card unless the person already dismissed it. */
+  reportCameraFault(fault: CameraFault): void {
+    this.cameraFault.set(fault);
+    if (this.cameraAlertMuted()) return;
+    this.showError('camera');
+  }
+
+  /** Explicit "try again" from the card — the only path that re-asks for
+   *  permission once a fault has been recorded. */
+  retryCamera(): void {
+    this.camera.retry();
+    this.cameraFault.set(null);
+    this.cameraAlertMuted.set(false);
+    this.error.set(null);
+  }
+
   dismissError(): void {
     if (this.error() === 'scale') this.scaleAlertMuted.set(true);
+    if (this.error() === 'camera') this.cameraAlertMuted.set(true);
     this.error.set(null);
   }
 

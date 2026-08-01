@@ -115,6 +115,9 @@ export interface Strings {
   errNetworkSub: string;
   errCameraTitle: string;
   errCameraSub: string;
+  /** Shown when permission was refused rather than the camera being absent. */
+  errCameraDeniedSub: string;
+  errCameraRetry: string;
 }
 
 export const STRINGS: Record<Lang, Strings> = {
@@ -236,6 +239,9 @@ export const STRINGS: Record<Lang, Strings> = {
       'Vẫn cân được bình thường — dữ liệu sẽ tự lưu khi có mạng trở lại.',
     errCameraTitle: 'Camera không khả dụng',
     errCameraSub: 'Bạn vẫn có thể nhập số điện thoại hoặc bỏ qua để cân ẩn danh.',
+    errCameraDeniedSub:
+      'Trình duyệt đang chặn camera. Bạn vẫn có thể nhập số điện thoại, hoặc cho phép camera rồi thử lại.',
+    errCameraRetry: 'Thử lại camera',
   },
   en: {
     brandTag: 'Community recycling collection station',
@@ -354,5 +360,8 @@ export const STRINGS: Record<Lang, Strings> = {
       'Weighing still works — your data will save automatically when the connection returns.',
     errCameraTitle: 'Camera unavailable',
     errCameraSub: 'You can still enter a phone number or skip to weigh anonymously.',
+    errCameraDeniedSub:
+      'The browser is blocking the camera. You can still enter a phone number, or allow the camera and try again.',
+    errCameraRetry: 'Try camera again',
   },
 };

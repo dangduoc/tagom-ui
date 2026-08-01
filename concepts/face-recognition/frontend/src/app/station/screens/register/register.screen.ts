@@ -12,7 +12,8 @@ import {
 import { FaceDetector } from '@mediapipe/tasks-vision';
 
 import { createFaceDetector } from '../../../face-detection';
-import { captureFrame, closeCamera, openCamera } from '../../core/camera';
+import { captureFrame } from '../../core/camera';
+import { CameraService } from '../../core/camera.service';
 import { StationService } from '../../core/station.service';
 import { TgIcon } from '../../shared/tg-icon';
 
@@ -30,11 +31,13 @@ const FACE_CHECK_MS = 250;
 })
 export class RegisterScreen implements AfterViewInit, OnDestroy {
   readonly station = inject(StationService);
+  private readonly camera = inject(CameraService);
 
   private readonly videoRef = viewChild.required<ElementRef<HTMLVideoElement>>('video');
 
   readonly slots = [0, 1, 2, 3, 4];
-  readonly cameraError = signal<string | null>(null);
+  /** Non-null when the camera couldn't be opened; the form still works without it. */
+  readonly cameraError = computed(() => this.camera.fault());
   /** Faces in view; null = camera off or detector unavailable (capture stays ungated). */
   readonly faceCount = signal<number | null>(null);
 
@@ -50,12 +53,11 @@ export class RegisterScreen implements AfterViewInit, OnDestroy {
 
   async ngAfterViewInit(): Promise<void> {
     const video = this.videoRef().nativeElement;
-    try {
-      this.stream = await openCamera(video);
-    } catch (err) {
-      this.cameraError.set(err instanceof Error ? err.message : String(err));
-      return;
-    }
+    // Shared with the identify screen we just came from, so this reuses the
+    // already-open stream instead of asking for permission a second time.
+    this.stream = await this.camera.acquire();
+    if (!this.stream) return;
+    await this.camera.attach(video, this.stream);
     try {
       this.detector ??= await createFaceDetector();
     } catch {
@@ -69,7 +71,7 @@ export class RegisterScreen implements AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     clearInterval(this.faceCheckTimer);
-    closeCamera(this.stream, this.videoRef().nativeElement);
+    this.camera.release(this.videoRef().nativeElement);
     this.stream = null;
     this.detector?.close();
     this.detector = null;

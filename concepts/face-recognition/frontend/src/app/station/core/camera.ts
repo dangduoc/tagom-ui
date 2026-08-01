@@ -12,23 +12,8 @@ export interface Box {
  *  the whole crop — so pad generously. Keep in sync with the backend fallback. */
 export const CROP_PADDING = 0.75;
 
-export async function openCamera(
-  video: HTMLVideoElement,
-  facingMode: 'user' | 'environment' = 'user',
-): Promise<MediaStream> {
-  const stream = await navigator.mediaDevices.getUserMedia({
-    video: { facingMode, width: { ideal: 1280 }, height: { ideal: 720 } },
-    audio: false,
-  });
-  video.srcObject = stream;
-  await video.play();
-  return stream;
-}
-
-export function closeCamera(stream: MediaStream | null, video?: HTMLVideoElement): void {
-  stream?.getTracks().forEach((t) => t.stop());
-  if (video) video.srcObject = null;
-}
+// Opening and releasing the device lives in CameraService — it has to be shared
+// so that moving between the identify and register screens doesn't re-prompt.
 
 export function largestBox(boxes: Box[]): Box | null {
   let best: Box | null = null;

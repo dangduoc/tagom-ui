@@ -103,6 +103,46 @@ describe('StationService', () => {
     expect(station.error()).toBeNull();
   });
 
+  // The bug: on a station with no camera, dismissing the card let the identify
+  // screen's effect re-raise it on the next run, which also re-prompted for
+  // permission. Dismissing has to stick for the rest of the session.
+  it('keeps the camera card dismissed once the person waves it away', () => {
+    station.reportCameraFault('missing');
+    expect(station.error()).toBe('camera');
+
+    station.dismissError();
+    expect(station.error()).toBeNull();
+
+    // The identify screen reports the same fault on every effect run.
+    station.reportCameraFault('missing');
+    station.reportCameraFault('missing');
+    expect(station.error()).toBeNull();
+  });
+
+  it('lets a new person see the camera card again, without re-asking the browser', () => {
+    station.reportCameraFault('missing');
+    station.dismissError();
+    station.reset();
+
+    station.reportCameraFault('missing');
+    expect(station.error()).toBe('camera');
+    // The fault itself survives the reset, so acquire() still won't prompt.
+    expect(station.cameraFault()).toBe('missing');
+  });
+
+  it('retryCamera clears the fault so the next attempt really asks', () => {
+    station.reportCameraFault('denied');
+    station.dismissError();
+
+    station.retryCamera();
+    expect(station.error()).toBeNull();
+    expect(station.cameraFault()).toBeNull();
+
+    // Un-muted again, so a fresh failure is allowed to surface.
+    station.reportCameraFault('denied');
+    expect(station.error()).toBe('camera');
+  });
+
   it('will not finish an empty session', () => {
     station.startSorted();
     station.skip();

@@ -17,9 +17,15 @@ import { TgIcon } from '../tg-icon';
         <h2 class="tg-display">{{ detail().title }}</h2>
         <p>{{ detail().sub }}</p>
         <div class="actions">
-          <button type="button" class="cta" (click)="station.callStaff()">
-            {{ station.L().callStaff }}
-          </button>
+          @if (canRetryCamera()) {
+            <button type="button" class="cta" (click)="station.retryCamera()">
+              {{ station.L().errCameraRetry }}
+            </button>
+          } @else {
+            <button type="button" class="cta" (click)="station.callStaff()">
+              {{ station.L().callStaff }}
+            </button>
+          }
           <button type="button" class="ghost" (click)="station.dismissError()">
             {{ station.L().dismiss }}
           </button>
@@ -81,6 +87,12 @@ import { TgIcon } from '../tg-icon';
 export class ErrorBanner {
   readonly station = inject(StationService);
 
+  /** Retrying a camera the browser blocked can work once the person allows it.
+   *  Retrying one that isn't plugged in cannot, so that case keeps "call staff". */
+  readonly canRetryCamera = computed(
+    () => this.station.error() === 'camera' && this.station.cameraFault() === 'denied',
+  );
+
   readonly detail = computed(() => {
     const L = this.station.L();
     switch (this.station.error()) {
@@ -94,7 +106,8 @@ export class ErrorBanner {
       case 'camera':
         return {
           title: L.errCameraTitle,
-          sub: L.errCameraSub,
+          sub:
+            this.station.cameraFault() === 'denied' ? L.errCameraDeniedSub : L.errCameraSub,
           accent: 'var(--status-info)',
           tint: '#dcecec',
         };
