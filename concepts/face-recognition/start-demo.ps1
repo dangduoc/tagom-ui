@@ -1,5 +1,11 @@
 # Starts the whole demo: pgvector database, backend, frontend.
-# Usage: right-click -> Run with PowerShell, or: powershell -File start-demo.ps1
+#
+# Usage: right-click -> Run with PowerShell, or from a terminal:
+#     powershell -ExecutionPolicy Bypass -File start-demo.ps1
+#
+# The -ExecutionPolicy flag is needed because Windows defaults to Restricted,
+# which refuses to load any .ps1. It applies to that one invocation only. To
+# stop needing it, run once:  Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
 #
 # Keep this file ASCII-only: Windows PowerShell 5.1 reads a BOM-less UTF-8
 # script as ANSI, which mangles any non-ASCII character (an em dash decodes to
@@ -40,16 +46,22 @@ if ($LASTEXITCODE -ne 0) {
     Write-Host "  backend\.venv\Scripts\python.exe -m pip install -r backend\requirements.txt"
     exit 1
 }
+
+# Start-Process spawns a *fresh* PowerShell at the machine default policy, so an
+# -ExecutionPolicy passed to this script does not reach the child. Pass it again,
+# or the frontend window below dies on npm.ps1 being blocked.
 Start-Process powershell -ArgumentList @(
-    "-NoExit", "-Command",
+    "-NoExit", "-ExecutionPolicy", "Bypass", "-Command",
     "Set-Location '$root\backend'; .\.venv\Scripts\python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8000"
 )
 
 # 3. Frontend (HTTPS on all interfaces, for phone access) - own window.
 #    The dev server proxies /api to the backend above (frontend\proxy.conf.json).
+#    npm.cmd rather than npm: bare `npm` resolves to npm.ps1 first, which a
+#    Restricted policy refuses to load. npm.cmd is an executable and always runs.
 Start-Process powershell -ArgumentList @(
-    "-NoExit", "-Command",
-    "Set-Location '$root\frontend'; npm run start:lan"
+    "-NoExit", "-ExecutionPolicy", "Bypass", "-Command",
+    "Set-Location '$root\frontend'; npm.cmd run start:lan"
 )
 
 # The IP the phone should use is the one on whichever interface owns the
