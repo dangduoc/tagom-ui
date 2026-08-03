@@ -24,6 +24,21 @@ SIMILARITY_THRESHOLD = float(os.environ.get("SIMILARITY_THRESHOLD", "0.40"))
 # Comma-separated list of allowed CORS origins, or "*"
 ALLOWED_ORIGINS = os.environ.get("ALLOWED_ORIGINS", "*")
 
+# Which clients the API will answer at all, as comma-separated IPs or CIDRs.
+#
+# A station backend is meant to be reachable only from the machine it runs on:
+# the kiosk browser talks to localhost, and every route is unauthenticated --
+# including listing depositors, reading their citizen ID and address, and
+# deleting them. The deployment plan protects those by making the API
+# unaddressable, which is sound but rests entirely on one bind address being
+# right. This is the backstop: get the bind wrong, or publish the port by
+# accident, and strangers are still refused.
+#
+# "*" disables the check. Do that only where something else is doing the
+# gatekeeping -- docker-compose.yml widens it to the bridge network, because
+# there the SPA's nginx is a legitimate non-local client.
+TRUSTED_CLIENT_CIDRS = os.environ.get("TRUSTED_CLIENT_CIDRS", "127.0.0.0/8,::1")
+
 EMBEDDING_DIM = 512
 
 # Kilograms this station had already gathered before it started recording

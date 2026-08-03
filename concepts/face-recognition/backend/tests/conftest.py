@@ -81,6 +81,11 @@ def postgres_dsn() -> str:
 def client(postgres_dsn, monkeypatch):
     """A TestClient on an empty test database."""
     monkeypatch.setenv("DATABASE_URL", postgres_dsn)
+    # TestClient reports its peer as the literal string "testclient", which is
+    # not an address the trusted-client guard can match, so every request would
+    # come back 403. Switch the guard off for the endpoint tests; it has its own
+    # tests in test_client_guard.py that check the matching directly.
+    monkeypatch.setenv("TRUSTED_CLIENT_CIDRS", "*")
     _stub_vision_modules()
 
     # config and the store are read at import time, so drop any cached copies.

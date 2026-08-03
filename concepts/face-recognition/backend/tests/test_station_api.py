@@ -1,6 +1,6 @@
 """Depositor profiles, weigh sessions and station totals."""
 
-BASE = 12480.5  # config.COMMUNITY_BASE_KG default
+BASE = 0.0  # config.COMMUNITY_BASE_KG default
 
 
 def register(client, code="0901234567", name="Chị Lan Nguyễn", **profile):

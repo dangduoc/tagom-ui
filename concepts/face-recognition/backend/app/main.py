@@ -1,7 +1,10 @@
+import ipaddress
+import logging
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, File, Form, HTTPException, UploadFile
+from fastapi import FastAPI, File, Form, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field, field_validator
 from starlette.concurrency import run_in_threadpool
 
@@ -9,13 +12,55 @@ from . import config
 from .face import BadImageError, FaceService, MultipleFacesError, NoFaceError
 from .stores import Person, Profile, SessionItem, WeighSession, create_store
 
+log = logging.getLogger("uvicorn.error")
+
 face_service: FaceService | None = None
 store = create_store()
+
+
+def _parse_trusted(spec: str):
+    """Networks whose clients may use the API. None means everyone."""
+    if spec.strip() == "*":
+        return None
+    return [
+        ipaddress.ip_network(part.strip(), strict=False)
+        for part in spec.split(",")
+        if part.strip()
+    ]
+
+
+TRUSTED_NETWORKS = _parse_trusted(config.TRUSTED_CLIENT_CIDRS)
+
+
+def _is_trusted(host: str | None) -> bool:
+    if TRUSTED_NETWORKS is None:
+        return True
+    if host is None:
+        return False
+    try:
+        addr = ipaddress.ip_address(host)
+    except ValueError:
+        return False
+    # A v4 client on a dual-stack socket arrives as ::ffff:127.0.0.1, which is
+    # not in 127.0.0.0/8 unless it is unwrapped first.
+    if addr.version == 6 and addr.ipv4_mapped is not None:
+        addr = addr.ipv4_mapped
+    return any(addr in net for net in TRUSTED_NETWORKS)
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     global face_service
+    if TRUSTED_NETWORKS is None:
+        log.warning(
+            "TRUSTED_CLIENT_CIDRS=* - this API will answer any client that can "
+            "reach it, and no route requires authentication."
+        )
+    else:
+        log.info(
+            "Answering clients in %s; all others get 403.",
+            config.TRUSTED_CLIENT_CIDRS,
+        )
     await store.init()
     # Model load downloads ~30MB to ~/.insightface on first run
     face_service = await run_in_threadpool(FaceService)
@@ -24,6 +69,26 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(title="Tagom Recycling Station", lifespan=lifespan)
+
+
+# Registered before CORS so CORS ends up the outer layer (Starlette runs the
+# last-added middleware first) and a rejection still carries the headers a
+# browser needs to surface the 403 rather than an opaque network error.
+#
+# /api/health is guarded too: a stranger has no business fingerprinting the
+# model and threshold either. Container and Tailscale health checks come from
+# inside the trusted range, so nothing legitimate loses its probe.
+@app.middleware("http")
+async def restrict_clients(request: Request, call_next):
+    client = request.client.host if request.client else None
+    if not _is_trusted(client):
+        log.warning("Refused %s %s from %s", request.method, request.url.path, client)
+        return JSONResponse(
+            status_code=403,
+            content={"detail": "This API answers local clients only."},
+        )
+    return await call_next(request)
+
 
 app.add_middleware(
     CORSMiddleware,

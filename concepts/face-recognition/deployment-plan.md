@@ -121,6 +121,34 @@ it as its own task.
   talks to localhost, so it never needs a key at all.
 - Rate-limit the sync endpoint per key.
 
+**Station-side backstop** — *done, `TRUSTED_CLIENT_CIDRS`*
+
+The argument above ("nothing at the station is reachable, so no station auth is
+needed") is sound but rests entirely on one bind address being right, with
+nothing in the code to notice if it isn't. No route is authenticated, and they
+include `GET /api/people`, `GET /api/people/{code}` (phone, citizen ID, address)
+and `DELETE /api/people/{code}` — so a single wrong flag is the whole distance
+between "unreachable" and "anyone on the WiFi can delete depositors".
+
+- The backend refuses any client outside `TRUSTED_CLIENT_CIDRS`
+  (default `127.0.0.0/8,::1`) with a 403, and logs it. This makes the bind
+  address *irrelevant*: bound to `0.0.0.0`, a LAN request is still refused.
+- `docker-compose.yml` widens it to `172.16.0.0/12` so the frontend container
+  can proxy `/api`; that admits containers without admitting the LAN.
+- **This is a backstop, not the boundary.** A reverse proxy that forwards LAN
+  traffic launders the source address — during development the tablet reaches
+  `/api` through `ng serve` and is allowed, which is intended. At a station,
+  publish the SPA's port on `127.0.0.1` so there is no such path.
+
+Still to do here:
+- Bind published ports to `127.0.0.1` in the station's compose file (the dev
+  file deliberately still publishes on all interfaces).
+- Decide whether the kiosk display is attached to the station PC or is a
+  separate wireless tablet. Attached is what this plan assumes and needs no
+  further work; a wireless tablet means the SPA must be served over the LAN,
+  and then it needs its own VLAN/SSID plus an nginx allowlist, because the
+  guard cannot distinguish the tablet from a visitor behind the same proxy.
+
 **Housekeeping**
 - Drop the stale `DB_BACKEND: postgres` line from `docker-compose.yml`; it has been
   a no-op since SQLite was removed.
@@ -257,6 +285,11 @@ In order; each catches a different class of failure.
 7. **Pull the plug.** Literally. The UPS should hold, and on a real power cut the
    PC must come back on its own with all containers up and the kiosk on screen.
 8. **Restore drill** (Phase 4).
+9. **Try to be a visitor.** From a phone on the station's WiFi, hit the station
+   PC's LAN address on every published port. `GET /api/people` and
+   `DELETE /api/people/{code}` must both come back 403, and the refusals must
+   appear in the backend log. Do this from an actual second device — curl from
+   the station PC itself is loopback and proves nothing.
 
 ## Suggested order
 

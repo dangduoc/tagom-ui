@@ -33,7 +33,15 @@ services:
       DB_BACKEND: postgres
       DATABASE_URL: postgresql://face:face@db:5432/facedb
       ALLOWED_ORIGINS: "*"
+      # The frontend container proxies /api from its own bridge address, so
+      # loopback alone would reject it. 172.16.0.0/12 is Docker's default
+      # bridge range. Anything outside it -- including the LAN reaching the
+      # published port below -- still gets a 403.
+      TRUSTED_CLIENT_CIDRS: "127.0.0.0/8,::1,172.16.0.0/12"
     ports:
+      # Published on all interfaces for convenience while developing. On a
+      # station, bind these to 127.0.0.1 so the LAN cannot reach them at all;
+      # the CIDR guard above is the backstop, not the boundary.
       - "8000:8000"
     volumes:
       # Cache the ~30MB insightface model download across container rebuilds
