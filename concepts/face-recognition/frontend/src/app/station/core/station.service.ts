@@ -157,8 +157,10 @@ export class StationService {
   private nextItemId = 1;
 
   constructor() {
-    // The scale is wired over WebSocket to the ESP32 bridge; connect once at boot.
-    this.scale.connect(this.scale.getUrl());
+    // The scale is wired over WebSocket to the ESP32 bridge; connect once at
+    // boot. No address is passed: booting is not the operator choosing one, and
+    // persisting it here is what used to freeze the default (see ScaleService).
+    this.scale.connect();
 
     // Station total for the summary, plus any sessions stranded by an outage.
     void this.data.loadStats();

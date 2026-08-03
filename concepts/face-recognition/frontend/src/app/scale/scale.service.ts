@@ -25,6 +25,24 @@ const pageIsHttps = () => location.protocol === 'https:';
 function defaultUrl(): string {
   return pageIsHttps() ? `wss://${location.host}${PROXY_PATH}` : DEFAULT_URL;
 }
+
+/** The stored address, or null if there isn't a real override.
+ *
+ *  Migration: earlier builds persisted the computed default on every boot,
+ *  which froze it -- the stored copy then outranked `defaultUrl()` forever, so
+ *  changing DEFAULT_URL in code could never reach a station that had launched
+ *  even once. Storage that merely echoes the default was never a choice, so
+ *  drop it. This only catches values matching *today's* default; one frozen
+ *  under an older DEFAULT_URL still has to be cleared from this page. */
+function storedOverride(): string | null {
+  const stored = localStorage.getItem(URL_STORAGE_KEY);
+  if (stored === null) return null;
+  if (stored === defaultUrl()) {
+    localStorage.removeItem(URL_STORAGE_KEY);
+    return null;
+  }
+  return stored;
+}
 const RECONNECT_DELAY_MS = 2000;
 /** No reading for this long while connected → show the reading as gone stale. */
 const READING_TIMEOUT_MS = 5000;
@@ -38,17 +56,32 @@ export class ScaleService {
   private ws: WebSocket | null = null;
   private reconnectTimer: ReturnType<typeof setTimeout> | null = null;
   private readingTimer: ReturnType<typeof setTimeout> | null = null;
-  private url = localStorage.getItem(URL_STORAGE_KEY) ?? defaultUrl();
+  private url = storedOverride() ?? defaultUrl();
 
   getUrl(): string {
     return this.url;
   }
 
-  connect(url: string): void {
-    this.url = url.trim();
-    localStorage.setItem(URL_STORAGE_KEY, this.url);
+  /** Connects using the configured address. Deliberately does not persist: an
+   *  address nobody chose must not outrank a future default. */
+  connect(): void {
     this.disconnect();
     this.open();
+  }
+
+  /** Records an address the operator picked, and reconnects. Blank -- or a value
+   *  equal to the default -- clears the override so the address goes back to
+   *  following the origin. */
+  setUrl(url: string): void {
+    const next = url.trim();
+    if (next && next !== defaultUrl()) {
+      localStorage.setItem(URL_STORAGE_KEY, next);
+      this.url = next;
+    } else {
+      localStorage.removeItem(URL_STORAGE_KEY);
+      this.url = defaultUrl();
+    }
+    this.connect();
   }
 
   disconnect(): void {

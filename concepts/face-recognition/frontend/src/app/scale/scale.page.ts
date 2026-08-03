@@ -25,7 +25,10 @@ export class ScalePage implements OnDestroy {
 
   toggle(): void {
     if (this.scale.status() === 'disconnected') {
-      this.scale.connect(this.url());
+      this.scale.setUrl(this.url());
+      // Re-read: blanking the field (or typing the default) clears the override,
+      // and the box should show the address actually in use.
+      this.url.set(this.scale.getUrl());
     } else {
       this.scale.disconnect();
     }
