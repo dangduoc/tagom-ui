@@ -29,7 +29,12 @@ EMBEDDING_DIM = 512
 # Kilograms this station had already gathered before it started recording
 # sessions here. Added to the recorded total on the summary screen so the
 # community number reflects the station's real history.
-COMMUNITY_BASE_KG = float(os.environ.get("COMMUNITY_BASE_KG", "12480.5"))
+#
+# Defaults to 0 so the summary shows only what was actually weighed. Set this
+# per station, and only to a figure the station can stand behind -- the total
+# and the progress bar are the entire reward on that screen, so a number that
+# is mostly invented is worse than a small honest one.
+COMMUNITY_BASE_KG = float(os.environ.get("COMMUNITY_BASE_KG", "0"))
 
 # What the community bar on the summary screen fills against.
 COMMUNITY_GOAL_KG = float(os.environ.get("COMMUNITY_GOAL_KG", "15000"))

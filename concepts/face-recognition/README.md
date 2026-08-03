@@ -126,7 +126,7 @@ nobody has to re-enrol. It is idempotent and a no-op on a fresh database.
 | `FACE_MODEL` | `buffalo_s` | insightface model pack (`buffalo_l` = more accurate, slower) |
 | `SIMILARITY_THRESHOLD` | `0.40` | cosine similarity cutoff for a match — tune with real photos; `/api/recognize` returns the below-threshold `closest` candidate to help |
 | `ALLOWED_ORIGINS` | `*` | CORS origins, comma-separated |
-| `COMMUNITY_BASE_KG` | `12480.5` | kg the station had gathered before it started recording sessions here; added to the summary's community total |
+| `COMMUNITY_BASE_KG` | `0` | kg the station had gathered before it started recording sessions here; added to the summary's community total. Left at 0 the total is exactly what was weighed |
 | `COMMUNITY_GOAL_KG` | `15000` | what the summary's community bar fills against |
 | `MAX_ITEM_WEIGHT_KG` | `500` | rejects implausible scale readings on `POST /api/sessions` |
 
