@@ -9,7 +9,22 @@ export interface ScaleReading {
 export type ScaleStatus = 'disconnected' | 'connecting' | 'connected';
 
 const URL_STORAGE_KEY = 'scale-ws-url';
-const DEFAULT_URL = 'ws://192.168.83.103:81';
+/** The ESP32 takes a DHCP lease, so this drifts -- it was .103 until that lease
+ *  moved to another machine. Treat it as a starting guess; the /debug page
+ *  overrides it and that value wins. A DHCP reservation on the router is the
+ *  real fix. */
+const DEFAULT_URL = 'ws://192.168.83.105:81';
+/** Same-origin path the dev server forwards to the ESP32 (see proxy.conf.js). */
+const PROXY_PATH = '/scale-ws';
+
+const pageIsHttps = () => location.protocol === 'https:';
+
+/** An HTTPS page hard-blocks `ws://`, so `npm run start:lan` has to reach the
+ *  scale through the dev server's own origin. On `http://localhost` -- which is
+ *  what production uses -- go straight to the ESP32. */
+function defaultUrl(): string {
+  return pageIsHttps() ? `wss://${location.host}${PROXY_PATH}` : DEFAULT_URL;
+}
 const RECONNECT_DELAY_MS = 2000;
 /** No reading for this long while connected → show the reading as gone stale. */
 const READING_TIMEOUT_MS = 5000;
@@ -23,7 +38,7 @@ export class ScaleService {
   private ws: WebSocket | null = null;
   private reconnectTimer: ReturnType<typeof setTimeout> | null = null;
   private readingTimer: ReturnType<typeof setTimeout> | null = null;
-  private url = localStorage.getItem(URL_STORAGE_KEY) ?? DEFAULT_URL;
+  private url = localStorage.getItem(URL_STORAGE_KEY) ?? defaultUrl();
 
   getUrl(): string {
     return this.url;
@@ -50,6 +65,18 @@ export class ScaleService {
   private open(): void {
     this.status.set('connecting');
     this.error.set(null);
+
+    // Retrying this is pointless -- the browser blocks it before a packet is
+    // sent -- and the 2s reconnect just floods the console. Fail once, loudly.
+    if (pageIsHttps() && this.url.startsWith('ws://')) {
+      this.status.set('disconnected');
+      this.error.set(
+        `An HTTPS page cannot open ${this.url}. Use ${defaultUrl()} to go through ` +
+          `the dev-server proxy, or open the app on http://localhost.`,
+      );
+      return;
+    }
+
     try {
       this.ws = new WebSocket(this.url);
     } catch (err) {

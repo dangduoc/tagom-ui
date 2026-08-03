@@ -56,7 +56,10 @@ Start-Process powershell -ArgumentList @(
 )
 
 # 3. Frontend (HTTPS on all interfaces, for phone access) - own window.
-#    The dev server proxies /api to the backend above (frontend\proxy.conf.json).
+#    The dev server proxies /api to the backend above, and /scale-ws to the
+#    ESP32 scale (frontend\proxy.conf.js). The scale proxy exists because this
+#    server is HTTPS and an HTTPS page hard-blocks a direct ws:// to the ESP32.
+#    If the scale moved, set $env:SCALE_WS before running this script.
 #    npm.cmd rather than npm: bare `npm` resolves to npm.ps1 first, which a
 #    Restricted policy refuses to load. npm.cmd is an executable and always runs.
 Start-Process powershell -ArgumentList @(
