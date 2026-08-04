@@ -38,7 +38,7 @@ compliance argument.
    Station (×5, on-premise)                     Central (Nhan Hoa VPS)
  ┌─────────────────────────────────┐          ┌──────────────────────────┐
  │ Dell OptiPlex 7050 Micro        │          │  FastAPI (ROLE=central)  │
- │  Chromium --kiosk               │          │   POST /api/sync/sessions│
+ │  Chrome --kiosk (Ubuntu)        │          │   POST /api/sync/sessions│
  │    └─ http://localhost          │          │   GET  /api/stats        │
  │  nginx (SPA)                    │  HTTPS   │   GET  /api/people/{code}│
  │  FastAPI (ROLE=station)         │ ───────► │                          │
@@ -143,11 +143,15 @@ between "unreachable" and "anyone on the WiFi can delete depositors".
 Still to do here:
 - Bind published ports to `127.0.0.1` in the station's compose file (the dev
   file deliberately still publishes on all interfaces).
-- Decide whether the kiosk display is attached to the station PC or is a
-  separate wireless tablet. Attached is what this plan assumes and needs no
-  further work; a wireless tablet means the SPA must be served over the LAN,
-  and then it needs its own VLAN/SSID plus an nginx allowlist, because the
-  guard cannot distinguish the tablet from a visitor behind the same proxy.
+
+**Settled: the display is attached to the station PC**, so nothing is served
+over the LAN and there is no second device to authorise. This is what the plan
+already assumed, and it closes the question outright rather than mitigating it
+— a visitor typing the kiosk's URL reaches their own phone, because the URL is
+`http://localhost`. No VLAN, no nginx allowlist, no provisioning token, no
+per-device key. Had it been a wireless tablet, all four would have been needed,
+because the guard above cannot tell a tablet from a visitor behind the same
+proxy.
 
 **Housekeeping**
 - Drop the stale `DB_BACKEND: postgres` line from `docker-compose.yml`; it has been
@@ -157,16 +161,26 @@ Still to do here:
 
 ## Phase 1 — Station hardware
 
+**The kiosk screen is attached to the station PC** — a monitor on the OptiPlex,
+not a separate wireless tablet. That is what lets the SPA be served on
+`http://localhost`, which is what makes the camera work without HTTPS, the
+`ws://` scale work without a firmware change, and the API unaddressable from
+the LAN. The "tablet" in the design handoff is the UI's form factor, not the
+device. It also means the PC needs a camera of its own.
+
 Per station:
 
 | Item | ₫ |
 |---|---|
-| Dell OptiPlex 7050 Micro (i5-6500T, 8 GB, 256 GB NVMe), 12-month warranty | 4,290,000 |
+| Dell OptiPlex 7050 Micro (i5-7500T, 8 GB, 256 GB NVMe), Hacom, 6-month warranty | 4,999,000 |
+| Touchscreen or plain monitor + stand/enclosure | *not yet priced* |
+| USB webcam — Hikvision DS-U02 (1080p30, 88.7° dFoV, 0.1 lux), Hacom, 24-month warranty | 449,000 |
 | Small line-interactive UPS | ~800,000 |
-| **Total, one-off** | **~5,100,000** |
+| **Total, one-off** | **~6,200,000 + display** |
 
-- **8 GB is enough.** Working set is roughly 1 GB Chromium + 700 MB backend +
-  300 MB Postgres + 400 MB OS ≈ 2.5 GB.
+- **8 GB is enough.** Working set is roughly 1 GB Chrome + 700 MB backend +
+  300 MB Postgres + 400 MB OS ≈ 2.5 GB, plus ~1.5 GB for the GNOME desktop
+  (Phase 2 explains why Desktop rather than Server) ≈ **4 GB of 8**.
 - **Enable "Power On after AC Loss" in BIOS.** Otherwise a power cut leaves the
   station dark until someone drives out to press the button. Test it.
 - **Disable Intel AMT** unless you deliberately provision it. The 7050's Q270
@@ -174,29 +188,225 @@ Per station:
   has a poor CVE history if left unmanaged.
 - **Plan for dust.** A recycling station is dusty and these have intake fans.
   Enclose with a filter, or commit to blowing it out quarterly.
-- Buy **one** first and use OnlyLap's 15-day return window to validate the real
-  kiosk load before ordering the other four. Chromium + the MediaPipe loop on a
-  35 W Skylake part is the one thing in this plan that is not yet measured.
+- **Buy the camera for field of view, not resolution.** 720p is already more than
+  the pipeline uses — the detector runs at 640, ArcFace embeds 112×112 crops, and
+  `camera.service.ts` asks for exactly 1280×720. What decides whether the kiosk
+  works for someone who was given no instructions is how much of the scene the
+  camera sees. The obvious cheap pick, a Logitech C270 at 420,000₫, is only 55°
+  diagonal and frames ~50cm at arm's length; the DS-U02 is 88.7° and frames
+  ~100cm for 29,000₫ more, with a far better low-light spec and four times the
+  warranty. Same vendor as the PC, so one RMA trip covers both.
+- **A wider lens makes the face smaller in frame — check the margin, don't
+  assume it.** At 60cm in an 80° horizontal frame a head spans roughly 16% of
+  width, about 200px at 720p. That clears both the detector and the 112×112
+  embedding comfortably. If the camera ends up mounted further back, raise the
+  request in `camera.service.ts` to 1920×1080 rather than buying a longer lens.
+- **Both options are fixed focus.** Neither is sharp if someone leans in to 40cm.
+  If that turns out to matter in practice, autofocus is the fix and it costs
+  roughly 3× (C920-class, ~1.2–1.5M₫). Don't pay for it before seeing the
+  problem.
+- **Enrollment quality is permanent.** The 5 registration photos become the
+  stored embedding; a marginal camera there caps that person's recognition
+  accuracy forever, long after the camera is replaced.
+- **Backlight will beat any of these cameras.** Someone standing against a bright
+  doorway defeats detection outright. Solve it with lamp placement when siting
+  the kiosk, not by buying a better sensor.
+- Buy **one** of everything first and validate the real kiosk load before
+  ordering the other four. Chromium + the MediaPipe loop on a 35 W Kaby Lake part
+  is the one thing in this plan that is not yet measured. Confirm Hacom's
+  exchange window before relying on being able to return it.
 
 ---
 
 ## Phase 2 — Station software
 
-- **Ubuntu Server 24.04 LTS + Docker.** Your existing `docker-compose.yml` is
-  already almost the station deployment — db, backend, frontend, all three.
-- Production compose overlay: no published ports except nginx on `127.0.0.1:80`,
-  `restart: unless-stopped` everywhere, real DB credentials from an env file,
-  images pulled by tag from **ghcr.io** rather than built on the box.
-- **Kiosk:** Chromium in `--kiosk --app=http://localhost`, autostarted. Grant the
-  camera with a managed policy (`VideoCaptureAllowedUrls`) rather than relying on
-  a click — `http://localhost` is a secure context so Chromium persists grants
-  normally, and the `CameraService` fix means a failure now degrades to the phone
-  keypad instead of a permission-prompt loop.
-- **Auto-update:** a systemd timer running `docker compose pull && docker compose up -d`
-  on a schedule, pinned to a tag you move deliberately. Keep the previous tag so
-  rollback is one command.
-- **Remote access: Tailscale** on every station (free at this scale). No port
-  forwarding at five different sites, no inbound firewall rules, SSH over the tailnet.
+**Ubuntu Desktop 24.04 LTS**, not Server. Server has no graphical stack, and the
+register screen needs an **on-screen keyboard** — name, phone, age, address and
+citizen ID all get typed on a touchscreen with no physical keyboard. GNOME ships
+one; a bare kiosk compositor would mean bolting on `onboard` or `squeekboard` and
+wiring it up. The cost is about 1 GB more RAM (working set ~2.5 GB → ~4 GB of 8),
+which is affordable, and more surface area to lock down, which steps 5–7 handle.
+
+*Written from the vendors' documented procedures; walk it through on the first
+station and correct anything that drifted before doing this five times.*
+
+### 0. BIOS, before installing anything
+
+- **Power On after AC Loss: enabled.** Without it a power cut leaves the station
+  dark until someone drives out. This is Verification step 7.
+- **Intel AMT: disabled** unless you deliberately provision it. The Q270 chipset
+  has it and it has a poor CVE history left unmanaged.
+- Boot order: NVMe first, so a forgotten USB stick doesn't strand the kiosk.
+
+### 1. Install Ubuntu Desktop 24.04.x LTS
+
+Choose **Minimal installation**. No third-party drivers are needed — Kaby Lake
+graphics and the UVC webcam both work out of the box. Create one user (`tagom`
+below) and enable automatic login at the Users screen, or afterwards:
+
+```bash
+sudo tee /etc/gdm3/custom.conf >/dev/null <<'EOF'
+[daemon]
+AutomaticLoginEnable=true
+AutomaticLogin=tagom
+EOF
+```
+
+### 2. Docker CE
+
+Use Docker's own repository. **Not** `docker.io` and **not** the snap — both lag
+and the snap confines paths in ways that bite later.
+
+```bash
+sudo apt-get update
+sudo apt-get install -y ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] \
+  https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" \
+  | sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
+sudo apt-get update
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io \
+  docker-buildx-plugin docker-compose-plugin
+sudo usermod -aG docker "$USER"     # log out and back in for this to take
+```
+
+### 3. Google Chrome, not Chromium
+
+Ubuntu's `chromium` package is a **snap**. Camera access then needs
+`snap connect chromium:camera`, and managed policies land somewhere awkward.
+The `.deb` reads policy from a predictable path:
+
+```bash
+wget -qO /tmp/chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo apt-get install -y /tmp/chrome.deb
+```
+
+### 4. Grant the camera by policy, not by clicking
+
+`http://localhost` is a secure context, so a click *would* persist — but a policy
+survives profile resets and means nobody has to know to click.
+
+```bash
+sudo mkdir -p /etc/opt/chrome/policies/managed
+sudo tee /etc/opt/chrome/policies/managed/tagom-kiosk.json >/dev/null <<'EOF'
+{
+  "VideoCaptureAllowedUrls": ["http://localhost"],
+  "DefaultNotificationsSetting": 2,
+  "DefaultPopupsSetting": 2,
+  "PasswordManagerEnabled": false,
+  "AutofillAddressEnabled": false,
+  "AutofillCreditCardEnabled": false,
+  "BrowserSignin": 0,
+  "SyncDisabled": true,
+  "MetricsReportingEnabled": false,
+  "TranslateEnabled": false,
+  "BookmarkBarEnabled": false
+}
+EOF
+```
+
+Autofill and the password manager are off deliberately: the register form collects
+citizen ID and address, and neither should be retained by the browser between
+visitors. Verify at `chrome://policy` before signing off on the station.
+
+### 5. Stop the screen going to sleep
+
+Defaults blank at ~5 minutes and suspend on idle. A station idle overnight must
+still be awake in the morning. Run **as the `tagom` user in its own session**,
+not under sudo:
+
+```bash
+gsettings set org.gnome.desktop.session idle-delay 0
+gsettings set org.gnome.desktop.screensaver lock-enabled false
+gsettings set org.gnome.desktop.screensaver idle-activation-enabled false
+gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type 'nothing'
+gsettings set org.gnome.settings-daemon.plugins.power power-button-action 'nothing'
+gsettings set org.gnome.desktop.a11y.applications screen-keyboard-enabled true
+```
+
+The last line is the on-screen keyboard the register form depends on.
+
+### 6. Don't let updates interrupt a session
+
+Security updates yes, surprise reboots and nag dialogs over the kiosk no:
+
+```bash
+sudo sed -i 's|^//\s*Unattended-Upgrade::Automatic-Reboot .*|Unattended-Upgrade::Automatic-Reboot "false";|' \
+  /etc/apt/apt.conf.d/50unattended-upgrades
+sudo systemctl disable --now update-notifier-download.timer 2>/dev/null || true
+```
+
+### 7. Autostart the kiosk — after the stack is actually up
+
+Chrome starting before Docker finishes leaves a connection-refused page on
+screen with nobody there to reload it. Wait for the origin first:
+
+```bash
+mkdir -p ~/.local/bin ~/.config/autostart
+
+tee ~/.local/bin/tagom-kiosk >/dev/null <<'EOF'
+#!/bin/bash
+# The compose stack takes a while after boot; don't show an error page meanwhile.
+until curl -sf http://localhost >/dev/null 2>&1; do sleep 2; done
+exec /usr/bin/google-chrome-stable \
+  --kiosk --app=http://localhost \
+  --noerrdialogs \
+  --disable-session-crashed-bubble \
+  --disable-features=Translate \
+  --check-for-update-interval=31536000
+EOF
+chmod +x ~/.local/bin/tagom-kiosk
+
+tee ~/.config/autostart/tagom-kiosk.desktop >/dev/null <<EOF
+[Desktop Entry]
+Type=Application
+Name=Tagom Kiosk
+Exec=$HOME/.local/bin/tagom-kiosk
+X-GNOME-Autostart-enabled=true
+EOF
+```
+
+`--disable-session-crashed-bubble` matters more than it looks: after a power cut
+Chrome otherwise opens with a "restore pages?" bar over the idle screen.
+
+### 8. The compose overlay
+
+Alongside the dev `docker-compose.yml`:
+
+- **No published port reachable from the LAN.** nginx on `127.0.0.1:80` only;
+  backend and db publish nothing at all. This is what makes the station
+  unaddressable, and `TRUSTED_CLIENT_CIDRS` is the backstop if it is ever wrong.
+- `restart: unless-stopped` on all three services.
+- Real database credentials from an env file — never the dev `face:face`.
+- Images pulled by tag from **ghcr.io**, not built on the box: an 8 GB Micro
+  should not be compiling the Angular bundle.
+- `COMMUNITY_BASE_KG` set per station, or left at 0.
+
+### 9. Remote access: Tailscale
+
+```bash
+curl -fsSL https://tailscale.com/install.sh | sh
+sudo tailscale up --ssh
+```
+
+Free at this scale. No port forwarding at five sites, no inbound rules, and SSH
+over the tailnet rather than an exposed port.
+
+### 10. Auto-update
+
+A systemd timer running `docker compose pull && docker compose up -d` against a
+tag you move deliberately. Keep the previous tag so rollback is one command.
+
+### Before leaving the station
+
+- Reboot and touch nothing: the kiosk must come back on its own.
+- Pull the power. It must come back from that too.
+- Confirm `chrome://policy` shows `VideoCaptureAllowedUrls` applied.
+- Confirm the camera works without any prompt appearing.
+- From a phone on the same WiFi, confirm the station's LAN address answers
+  nothing (Verification step 9).
 
 ---
 
@@ -251,9 +461,9 @@ This is where an on-premise fleet is genuinely worse than cloud, so do not skip 
 
 | | |
 |---|---|
-| Station PC + UPS, one-off | ~5,100,000₫ each (~$195) |
-| Five stations, one-off | ~25,500,000₫ |
-| Cold spare | ~4,300,000₫ |
+| Station PC + webcam + UPS, one-off | ~6,200,000₫ each (~$235), **plus a display** |
+| Five stations, one-off | ~31,000,000₫ + five displays |
+| Cold spare | ~5,000,000₫ |
 | Central VPS | **86,000₫/mo** |
 | Cloudflare (DNS, TLS, R2 backups) | 0₫ |
 | **Recurring total** | **~86,000₫/mo (~$3.30)** |
