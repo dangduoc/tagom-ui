@@ -3,7 +3,7 @@ import { FaceDetector } from '@mediapipe/tasks-vision';
 
 import { ApiService, RecognizedMatch } from '../../api.service';
 import { createFaceDetector } from '../../face-detection';
-import { Box, cropFace, largestBox } from './camera';
+import { Box, cropFace, largestBox, onlyVisible } from './camera';
 import { CameraService } from './camera.service';
 
 export type IdentifyResult =
@@ -140,7 +140,10 @@ export class IdentifyService {
 
     if (this.stream && video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
       const now = performance.now();
-      const boxes = this.detectFaces(video, now);
+      // Confine detection to the on-screen crop: the feed is object-fit: cover,
+      // so the camera sees wider than the person does. Without this a face in
+      // the hidden side margin is recognised when the person thinks they've left.
+      const boxes = onlyVisible(video, this.detectFaces(video, now));
       this.faceCount.set(this.detector ? boxes.length : null);
 
       if (!this.inFlight && now - this.lastAttemptAt >= RECOGNIZE_INTERVAL_MS) {
