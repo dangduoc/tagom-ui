@@ -9,7 +9,8 @@ export type Screen =
   | 'profile'
   | 'category'
   | 'weigh'
-  | 'summary';
+  | 'summary'
+  | 'face';
 
 export type Overlay = null | 'help' | 'keypad' | 'noface' | 'endconfirm';
 
@@ -62,6 +63,9 @@ export interface Person {
   citizenId?: string;
   /** Backend code the face embeddings are enrolled against, when known. */
   code?: string;
+  /** Whether the person has any enrolled face photos — drives "set up" vs
+   *  "update" on the profile screen. Undefined when not loaded from the server. */
+  hasFace?: boolean;
 }
 
 /** Person = a real account · 'anon' = deliberately skipped · null = not identified yet. */

@@ -187,6 +187,13 @@ class PgVectorStore(Store):
             embedding.astype(np.float32),
         )
 
+    async def clear_embeddings(self, person_id: int) -> int:
+        result = await self.pool.execute(
+            "DELETE FROM face_embeddings WHERE person_id = $1", person_id
+        )
+        # asyncpg returns e.g. "DELETE 3"; the trailing field is the row count.
+        return int(result.split()[-1])
+
     async def best_match(self, embedding: np.ndarray) -> Match | None:
         row = await self.pool.fetchrow(
             """

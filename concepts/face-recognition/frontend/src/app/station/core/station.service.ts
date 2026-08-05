@@ -57,6 +57,7 @@ const IN_FLOW: Screen[] = [
   'unknown',
   'register',
   'profile',
+  'face',
   'category',
   'weigh',
 ];
@@ -102,6 +103,10 @@ export class StationService {
   readonly profileEdit = signal(false);
   readonly pform = signal<Person>({ fullName: '', phone: '' });
   private prevScreen: Screen = 'confirmed';
+
+  /** Face capture launched from the profile screen. */
+  readonly savingFaces = signal(false);
+  readonly facesError = signal(false);
 
   /** Set when the person dismisses the scale-offline card, so it doesn't
    *  immediately reappear while the scale is still down. */
@@ -419,6 +424,11 @@ export class StationService {
       case 'register':
         this.screen.set('unknown');
         break;
+      case 'face':
+        // Launched from the profile screen; drop any half-taken photos.
+        this.facePhotos.set([]);
+        this.screen.set('profile');
+        break;
       case 'profile':
         this.screen.set(this.prevScreen);
         break;
@@ -569,6 +579,38 @@ export class StationService {
     if (!acc) return;
     this.pform.set({ ...acc });
     this.profileEdit.set(true);
+  }
+
+  /** From the profile screen: take (or re-take) this person's face photos so
+   *  face scanning works next time. Starts from an empty set. */
+  startFaceCapture(): void {
+    if (!this.account()) return;
+    this.facePhotos.set([]);
+    this.facesError.set(false);
+    this.screen.set('face');
+  }
+
+  /** Enrol the freshly captured photos against the current account, replacing any
+   *  existing faces so a re-take fully supersedes the old set. The person and
+   *  their history are untouched; on success, return to the profile. */
+  async submitFaces(): Promise<void> {
+    const acc = this.account();
+    const photos = this.facePhotos();
+    if (!acc?.code || !photos.length || this.savingFaces()) return;
+    this.savingFaces.set(true);
+    this.facesError.set(false);
+    try {
+      await this.api.enroll(acc.code, acc.fullName, '', photos, {}, true);
+      const person = await this.data.loadPerson(acc.code);
+      if (person) this.identity.set(person);
+      this.facePhotos.set([]);
+      this.screen.set('profile');
+    } catch {
+      // Keep the photos so the person can just tap Save again.
+      this.facesError.set(true);
+    } finally {
+      this.savingFaces.set(false);
+    }
   }
 
   cancelEdit(): void {

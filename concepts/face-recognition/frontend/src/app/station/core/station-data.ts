@@ -44,6 +44,7 @@ export function toPerson(dto: PersonDto): Person {
     ward: dto.ward ?? undefined,
     address: dto.address ?? undefined,
     citizenId: dto.citizen_id ?? undefined,
+    hasFace: dto.has_face_data,
   };
 }
 

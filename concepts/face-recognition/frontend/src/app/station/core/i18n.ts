@@ -63,6 +63,11 @@ export interface Strings {
   faceGuide: string;
   capturePhoto: string;
   faceDone: string;
+  setupFace: string;
+  updateFace: string;
+  faceSetupTitle: string;
+  faceSaving: string;
+  faceSaveFailed: string;
   retake: string;
   cancel: string;
   registerCta: string;
@@ -191,6 +196,11 @@ export const STRINGS: Record<Lang, Strings> = {
     faceGuide: 'Đưa khuôn mặt vào trong khung',
     capturePhoto: 'Chụp ảnh',
     faceDone: 'Đã đủ 5 ảnh khuôn mặt',
+    setupFace: 'Thêm khuôn mặt',
+    updateFace: 'Cập nhật khuôn mặt',
+    faceSetupTitle: 'Chụp khuôn mặt để lần sau quét nhanh hơn',
+    faceSaving: 'Đang lưu…',
+    faceSaveFailed: 'Không lưu được ảnh, thử lại',
     retake: 'Chụp lại',
     cancel: 'Hủy',
     registerCta: 'Đăng ký',
@@ -317,6 +327,11 @@ export const STRINGS: Record<Lang, Strings> = {
     faceGuide: 'Position your face in the frame',
     capturePhoto: 'Capture photo',
     faceDone: 'All 5 face photos captured',
+    setupFace: 'Set up face',
+    updateFace: 'Update face photos',
+    faceSetupTitle: 'Take face photos for faster check-in next time',
+    faceSaving: 'Saving…',
+    faceSaveFailed: "Couldn't save photos, try again",
     retake: 'Retake',
     cancel: 'Cancel',
     registerCta: 'Register',

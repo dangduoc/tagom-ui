@@ -104,5 +104,11 @@ class Store(ABC):
     async def add_embedding(self, person_id: int, embedding: np.ndarray) -> None: ...
 
     @abstractmethod
+    async def clear_embeddings(self, person_id: int) -> int:
+        """Remove all of a person's face embeddings, leaving the person and their
+        weigh history intact. Returns how many were removed. For re-taking the
+        face photos without losing the account."""
+
+    @abstractmethod
     async def best_match(self, embedding: np.ndarray) -> Match | None:
         """Nearest neighbor by cosine similarity, or None if no embeddings exist."""

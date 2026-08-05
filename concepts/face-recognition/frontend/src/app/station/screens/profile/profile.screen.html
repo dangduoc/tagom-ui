@@ -88,9 +88,15 @@
           <p class="prow-value">{{ row.value }}</p>
         </div>
       }
-      <button type="button" class="edit" (click)="station.editProfile()">
-        <tg-icon name="edit" [size]="22" />{{ station.L().edit }}
-      </button>
+      <div class="actions">
+        <button type="button" class="edit" (click)="station.editProfile()">
+          <tg-icon name="edit" [size]="22" />{{ station.L().edit }}
+        </button>
+        <button type="button" class="face" (click)="station.startFaceCapture()">
+          <tg-icon name="face-scan" [size]="22" />
+          {{ station.account()?.hasFace ? station.L().updateFace : station.L().setupFace }}
+        </button>
+      </div>
     </div>
   }
 </section>

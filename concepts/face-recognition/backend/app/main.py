@@ -165,6 +165,11 @@ async def enroll(
     ward: str | None = Form(None),
     address: str | None = Form(None),
     citizen_id: str | None = Form(None),
+    # When true, the person's existing face photos are replaced by these ones
+    # rather than added to — for re-taking a bad or outdated set. The old
+    # embeddings are cleared only after at least one new photo validates below,
+    # so a failed retake can never leave someone with no face data.
+    replace: bool = Form(False),
     files: list[UploadFile] = File(...),
 ):
     embeddings = []
@@ -210,6 +215,10 @@ async def enroll(
             citizen_id=citizen_id,
         ),
     )
+    # Only now that we hold at least one usable new embedding is it safe to drop
+    # the old ones — a retake that produced nothing usable 422'd above.
+    if replace:
+        await store.clear_embeddings(person_id)
     for emb in embeddings:
         await store.add_embedding(person_id, emb)
 
@@ -217,6 +226,7 @@ async def enroll(
         "person_id": person_id,
         "code": code,
         "enrolled_photos": len(embeddings),
+        "replaced": replace,
         "files": results,
     }
 

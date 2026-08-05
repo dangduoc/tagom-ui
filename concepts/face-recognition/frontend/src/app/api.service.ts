@@ -99,11 +99,13 @@ export class ApiService {
     department: string,
     photos: Blob[],
     profile: ProfilePatch = {},
+    replace = false,
   ): Promise<EnrollResponse> {
     const form = new FormData();
     form.append('code', code);
     form.append('full_name', fullName);
     if (department) form.append('department', department);
+    if (replace) form.append('replace', 'true');
     for (const [key, value] of Object.entries(profile)) {
       if (key !== 'full_name' && value !== undefined) form.append(key, value);
     }

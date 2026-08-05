@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { StationService } from './core/station.service';
 import { CategoryScreen } from './screens/category/category.screen';
 import { ConfirmedScreen } from './screens/confirmed/confirmed.screen';
+import { FaceScreen } from './screens/face/face.screen';
 import { IdentifyScreen } from './screens/identify/identify.screen';
 import { IdleScreen } from './screens/idle/idle.screen';
 import { ProfileScreen } from './screens/profile/profile.screen';
@@ -31,6 +32,7 @@ import { TgIcon } from './shared/tg-icon';
     ConfirmedScreen,
     EndSessionDialog,
     ErrorBanner,
+    FaceScreen,
     HelpOverlay,
     IdentifyScreen,
     IdleScreen,

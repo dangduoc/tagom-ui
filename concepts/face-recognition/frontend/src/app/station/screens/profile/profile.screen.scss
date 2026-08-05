@@ -78,18 +78,34 @@
   font-size: var(--text-lg);
 }
 
-.edit {
+.actions {
   display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.edit,
+.face {
+  display: flex;
+  flex: 1;
   gap: 10px;
   align-items: center;
   justify-content: center;
-  margin-top: 16px;
-  border: 1.5px solid var(--border-strong);
   border-radius: var(--radius-md);
   padding: 16px;
-  color: var(--tagom-green);
   font-weight: var(--fw-bold);
   font-size: var(--text-lg);
+}
+
+.edit {
+  border: 1.5px solid var(--border-strong);
+  color: var(--tagom-green);
+}
+
+/* Filled, because surfacing "add your face" is the whole point of this work. */
+.face {
+  background: var(--tagom-green);
+  color: var(--tagom-lime);
 }
 
 /* Field/label/row styling comes from the global .tg-form block; the profile
