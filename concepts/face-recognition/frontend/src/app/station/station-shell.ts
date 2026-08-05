@@ -11,6 +11,7 @@ import { SummaryScreen } from './screens/summary/summary.screen';
 import { UnknownScreen } from './screens/unknown/unknown.screen';
 import { WeighScreen } from './screens/weigh/weigh.screen';
 import { LangToggle } from './shared/lang-toggle';
+import { EndSessionDialog } from './shared/overlays/endsession-dialog';
 import { ErrorBanner } from './shared/overlays/error-banner';
 import { HelpOverlay } from './shared/overlays/help-overlay';
 import { KeypadOverlay } from './shared/overlays/keypad-overlay';
@@ -28,6 +29,7 @@ import { TgIcon } from './shared/tg-icon';
   imports: [
     CategoryScreen,
     ConfirmedScreen,
+    EndSessionDialog,
     ErrorBanner,
     HelpOverlay,
     IdentifyScreen,

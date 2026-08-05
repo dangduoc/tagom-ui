@@ -11,7 +11,7 @@ export type Screen =
   | 'weigh'
   | 'summary';
 
-export type Overlay = null | 'help' | 'keypad' | 'noface';
+export type Overlay = null | 'help' | 'keypad' | 'noface' | 'endconfirm';
 
 export type ErrorKind = null | 'scale' | 'network' | 'camera';
 

@@ -428,6 +428,23 @@ export class StationService {
   }
 
   // ── overlays ──
+  /** "End session" from the header — always confirms first (a stray tap must not
+   *  discard a weigh or a half-filled registration). Opening the overlay pauses
+   *  the identify auto-detect via the same effect every overlay relies on. */
+  openEndConfirm(): void {
+    this.overlay.set('endconfirm');
+  }
+
+  /** Confirmed "yes, end it": back to idle for the next person. reset() clears
+   *  the overlay too. */
+  confirmEnd(): void {
+    this.reset();
+  }
+
+  closeEndConfirm(): void {
+    this.overlay.set(null);
+  }
+
   openHelp(): void {
     this.helpCalled.set(false);
     this.overlay.set('help');

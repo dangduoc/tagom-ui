@@ -63,6 +63,20 @@
   font-size: var(--text-body-size);
 }
 
+/* Quiet outline — the "leave this session" escape hatch, deliberately less
+   prominent than Help so it's found when wanted, not fat-fingered. */
+.end {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  padding: 9px 18px;
+  color: var(--text-muted);
+  font-weight: var(--fw-semibold);
+  font-size: var(--text-body-size);
+}
+
 .stage {
   position: absolute;
   inset: 0;
@@ -101,12 +115,14 @@
 
   /* Header buttons collapse to icons to keep the bar one line (handoff §5). */
   .back .label,
-  .help .label {
+  .help .label,
+  .end .label {
     display: none;
   }
 
   .back,
-  .help {
+  .help,
+  .end {
     padding: 11px;
   }
 }

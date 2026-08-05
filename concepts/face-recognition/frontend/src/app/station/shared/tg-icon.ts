@@ -6,6 +6,7 @@ export type IconName =
   | 'arrow-right'
   | 'arrow-left'
   | 'chevron-right'
+  | 'x'
   | 'camera'
   | 'user'
   | 'phone'
@@ -63,6 +64,9 @@ export type IconName =
         }
         @case ('chevron-right') {
           <path d="M9 18l6-6-6-6" />
+        }
+        @case ('x') {
+          <path d="M18 6 6 18M6 6l12 12" />
         }
         @case ('camera') {
           <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />

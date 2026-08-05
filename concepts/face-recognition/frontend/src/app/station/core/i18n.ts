@@ -12,6 +12,11 @@ export interface Strings {
   startQuickSub: string;
   help: string;
   back: string;
+  endSession: string;
+  endTitle: string;
+  endBody: string;
+  endConfirm: string;
+  keepGoing: string;
   identifyTitle: string;
   identifySub: string;
   cantScan: string;
@@ -132,6 +137,11 @@ export const STRINGS: Record<Lang, Strings> = {
     startQuickSub: 'Cả túi rác chưa phân loại, cân một lần',
     help: 'Cần trợ giúp?',
     back: 'Quay lại',
+    endSession: 'Kết thúc',
+    endTitle: 'Kết thúc phiên này?',
+    endBody: 'Bạn sẽ quay lại màn hình đầu. Mọi thông tin chưa lưu sẽ bị bỏ.',
+    endConfirm: 'Kết thúc',
+    keepGoing: 'Tiếp tục',
     identifyTitle: 'Đưa mã QR lên, hoặc nhìn vào camera',
     identifySub:
       'Mở ứng dụng Tagom và giơ mã QR — hoặc chỉ cần nhìn vào camera. Chúng tôi tự nhận ra bạn.',
@@ -254,6 +264,11 @@ export const STRINGS: Record<Lang, Strings> = {
     startQuickSub: 'One mixed bag, weighed in one go',
     help: 'Need help?',
     back: 'Back',
+    endSession: 'End',
+    endTitle: 'End this session?',
+    endBody: "You'll return to the start screen. Anything not saved will be discarded.",
+    endConfirm: 'End session',
+    keepGoing: 'Keep going',
     identifyTitle: 'Hold up your QR, or look at the camera',
     identifySub:
       'Open the Tagom app and show your QR — or just look at the camera. We’ll recognise you.',
