@@ -3,7 +3,7 @@ import { FaceDetector } from '@mediapipe/tasks-vision';
 
 import { ApiService, RecognizedMatch } from '../../api.service';
 import { createFaceDetector } from '../../face-detection';
-import { Box, cropFace, largestBox, onlyVisible } from './camera';
+import { Box, cropFace, onlyVisible, pickTarget } from './camera';
 import { CameraService } from './camera.service';
 
 export type IdentifyResult =
@@ -149,7 +149,9 @@ export class IdentifyService {
       if (!this.inFlight && now - this.lastAttemptAt >= RECOGNIZE_INTERVAL_MS) {
         this.lastAttemptAt = now;
         void this.scanQr(video);
-        const face = largestBox(boxes);
+        // The person at the kiosk: biggest face that's also close enough and
+        // centred. A distant or edge face (e.g. someone walking past) is ignored.
+        const face = pickTarget(video, boxes);
         if (face) this.recognize(video, face);
       }
     }

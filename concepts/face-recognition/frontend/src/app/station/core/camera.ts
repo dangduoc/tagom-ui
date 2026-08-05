@@ -63,6 +63,52 @@ export function onlyVisible(video: HTMLVideoElement, boxes: Box[]): Box[] {
   });
 }
 
+// ── Choosing which face to identify ──────────────────────────────────────────
+// A passer-by at the edge, or someone far across the room, should not be
+// scanned: only the person standing at the kiosk is. Two tunable gates express
+// that — both are fractions of the on-screen (visible) region, so they hold
+// across screen sizes.
+
+/** Face box must be at least this tall, as a fraction of the visible height —
+ *  the "come close enough" gate. Roughly a face filling a fifth of the frame. */
+export const MIN_FACE_HEIGHT_FRAC = 0.2;
+
+/** The face centre must fall inside this central fraction of the visible region
+ *  — the "stand in front, not at the edge" gate. ~0.6 tracks the on-screen
+ *  brackets, so putting your face in them is what gets you scanned. */
+export const CENTER_ZONE_FRAC = 0.6;
+
+/**
+ * The one face to try to identify: the largest that is both close enough
+ * (>= MIN_FACE_HEIGHT_FRAC tall) and centred (its centre within the central
+ * CENTER_ZONE_FRAC of the frame). With several faces in view this is the person
+ * at the kiosk — biggest wins, but only among those who also stand centre. Null
+ * when nobody qualifies, so a distant or edge face is simply ignored.
+ */
+export function pickTarget(video: HTMLVideoElement, boxes: Box[]): Box | null {
+  const r = visibleRegion(video);
+  const rw = r.right - r.left;
+  const rh = r.bottom - r.top;
+  if (rw <= 0 || rh <= 0) return null;
+
+  const marginX = (rw * (1 - CENTER_ZONE_FRAC)) / 2;
+  const marginY = (rh * (1 - CENTER_ZONE_FRAC)) / 2;
+  const minH = rh * MIN_FACE_HEIGHT_FRAC;
+
+  const eligible = boxes.filter((b) => {
+    const cx = b.x + b.width / 2;
+    const cy = b.y + b.height / 2;
+    return (
+      b.height >= minH &&
+      cx >= r.left + marginX &&
+      cx <= r.right - marginX &&
+      cy >= r.top + marginY &&
+      cy <= r.bottom - marginY
+    );
+  });
+  return largestBox(eligible);
+}
+
 function toJpeg(canvas: HTMLCanvasElement, quality: number): Promise<Blob> {
   return new Promise((resolve, reject) => {
     canvas.toBlob(
