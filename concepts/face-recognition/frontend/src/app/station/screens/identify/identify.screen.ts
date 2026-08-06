@@ -3,6 +3,7 @@ import {
   Component,
   ElementRef,
   OnDestroy,
+  computed,
   effect,
   inject,
   viewChild,
@@ -24,6 +25,23 @@ export class IdentifyScreen implements OnDestroy {
   readonly identify = inject(IdentifyService);
 
   private readonly videoRef = viewChild.required<ElementRef<HTMLVideoElement>>('video');
+
+  /** What the chip inside the camera view says. A dead camera takes priority —
+   *  "Đang tìm…" while nothing is being scanned is a lie. */
+  readonly statusText = computed(() => {
+    const L = this.station.L();
+    if (this.identify.cameraFault()) return L.errCameraTitle;
+    if (this.identify.checking()) return L.searching;
+    if (this.identify.unrecognized()) return L.notRecognized;
+    return L.scanning;
+  });
+
+  /** Settled states (camera down, or nobody recognised) — warm chip, no blink. */
+  readonly statusSettled = computed(
+    () =>
+      !!this.identify.cameraFault() ||
+      (this.identify.unrecognized() && !this.identify.checking()),
+  );
 
   constructor() {
     // Detection must be paused whenever an overlay or error card is up. Otherwise
@@ -59,9 +77,6 @@ export class IdentifyScreen implements OnDestroy {
         break;
       case 'qr':
         void this.station.identifiedByQr(result.payload);
-        break;
-      case 'unknown':
-        this.station.identifiedAsUnknown();
         break;
     }
   }

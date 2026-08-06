@@ -123,6 +123,18 @@
   animation: tg-blink 1s infinite;
 }
 
+/* Settled "we didn't find you" state — warm accent, and the dot stops blinking
+   because scanning is no longer the active thing the person is waiting on. */
+.status.unknown {
+  background: rgb(0 0 0 / 0.55);
+  color: var(--status-warning);
+}
+
+.status.unknown .pulse {
+  background: var(--status-warning);
+  animation: none;
+}
+
 .copy {
   width: 440px;
   max-width: 100%;

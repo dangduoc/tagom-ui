@@ -8,9 +8,7 @@ import { CameraService } from './camera.service';
 
 export type IdentifyResult =
   | { kind: 'face'; match: RecognizedMatch }
-  | { kind: 'qr'; payload: string }
-  /** Enough consecutive non-matches that we're confident this person is new. */
-  | { kind: 'unknown' };
+  | { kind: 'qr'; payload: string };
 
 /** Don't hammer the backend — one recognition attempt at most this often. */
 const RECOGNIZE_INTERVAL_MS = 1200;
@@ -35,6 +33,16 @@ export class IdentifyService {
   readonly running = signal(false);
   /** True while a /api/recognize call is in flight — drives the "checking" chip. */
   readonly checking = signal(false);
+
+  /**
+   * Set once we've had enough consecutive non-matches to be confident the person
+   * at the kiosk isn't enrolled. Deliberately does NOT navigate anywhere: the
+   * person stays on the identify screen — the status chip just says so — and
+   * registers or types their phone from there. Cleared when a fresh face appears
+   * or detection restarts, and an enrolled person who only needed to reposition
+   * is still picked up because scanning continues.
+   */
+  readonly unrecognized = signal(false);
 
   /** Why the camera isn't up, or null. Owned by CameraService. */
   readonly cameraFault = computed(() => this.camera.fault());
@@ -67,6 +75,7 @@ export class IdentifyService {
     this.onResult = onResult;
     this.video = video;
     this.unknownStreak = 0;
+    this.unrecognized.set(false);
     this.lastAttemptAt = 0;
 
     try {
@@ -91,7 +100,10 @@ export class IdentifyService {
         this.detector = null;
       }
     }
-    await this.ensureBarcodeDetector();
+    // QR scanning is not supported yet — leave the barcode detector unset so the
+    // loop's scanQr call (also commented out) is a no-op. Re-enable both together
+    // when QR support lands. TODO: QR support.
+    // await this.ensureBarcodeDetector();
 
     this.running.set(true);
     this.loop();
@@ -110,6 +122,7 @@ export class IdentifyService {
     this.running.set(false);
     this.checking.set(false);
     this.faceCount.set(null);
+    this.unrecognized.set(false);
   }
 
   /** Stops detecting and hands the camera back. For leaving the screen. */
@@ -148,11 +161,20 @@ export class IdentifyService {
 
       if (!this.inFlight && now - this.lastAttemptAt >= RECOGNIZE_INTERVAL_MS) {
         this.lastAttemptAt = now;
-        void this.scanQr(video);
+        // QR scanning is not supported yet. TODO: QR support — re-enable this and
+        // ensureBarcodeDetector() in start() together.
+        // void this.scanQr(video);
         // The person at the kiosk: biggest face that's also close enough and
         // centred. A distant or edge face (e.g. someone walking past) is ignored.
         const face = pickTarget(video, boxes);
-        if (face) this.recognize(video, face);
+        if (face) {
+          this.recognize(video, face);
+        } else {
+          // Nobody in the visible frame — clear any "not recognised" verdict so
+          // the next person starts from a clean scanning state.
+          this.unknownStreak = 0;
+          this.unrecognized.set(false);
+        }
       }
     }
     this.rafId = requestAnimationFrame(this.loop);
@@ -200,8 +222,10 @@ export class IdentifyService {
           this.emit({ kind: 'face', match: res.match });
         } else if (res.reason !== 'no_face') {
           // A real below-threshold result (or an empty database) — count it.
+          // Enough in a row and we flag it on the chip, but keep scanning rather
+          // than leaving the screen (see `unrecognized`).
           this.unknownStreak += 1;
-          if (this.unknownStreak >= UNKNOWN_STREAK) this.emit({ kind: 'unknown' });
+          if (this.unknownStreak >= UNKNOWN_STREAK) this.unrecognized.set(true);
         }
       })
       .catch(() => {

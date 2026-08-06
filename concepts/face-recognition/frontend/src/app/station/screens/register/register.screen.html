@@ -135,19 +135,20 @@
 </div>
 
 <footer class="bar">
-  <p class="required"><span class="req">*</span> {{ station.L().requiredNote }}</p>
-  @if (station.registerError()) {
-    <p class="failed">{{ station.L().registerFailed }}</p>
-  }
-  <div class="bar-actions">
-    <button type="button" class="cancel" (click)="station.back()">{{ station.L().cancel }}</button>
-    <button
-      type="button"
-      class="submit"
-      [disabled]="!station.canSubmitRegister() || station.registering()"
-      (click)="station.submitRegister()"
-    >
-      {{ station.registering() ? station.L().registering : station.L().registerCta }}
-    </button>
+  <div class="bar-inner">
+    @if (station.registerError()) {
+      <p class="failed">{{ station.L().registerFailed }}</p>
+    }
+    <div class="bar-actions">
+      <button type="button" class="cancel" (click)="station.back()">{{ station.L().cancel }}</button>
+      <button
+        type="button"
+        class="submit"
+        [disabled]="!station.canSubmitRegister() || station.registering()"
+        (click)="station.submitRegister()"
+      >
+        {{ station.registering() ? station.L().registering : station.L().registerCta }}
+      </button>
+    </div>
   </div>
 </footer>

@@ -7,9 +7,9 @@
     <span class="tl"></span><span class="tr"></span><span class="bl"></span><span class="br"></span>
   </div>
 
-  <p class="status">
+  <p class="status" [class.unknown]="statusSettled()">
     <span class="pulse"></span>
-    {{ identify.checking() ? station.L().searching : station.L().scanning }}
+    {{ statusText() }}
   </p>
 </div>
 
@@ -23,15 +23,16 @@
       {{ station.L().cantScan }}
     </button>
 
+    <button type="button" class="option" (click)="station.goRegister()">
+      <tg-icon name="user-plus" [size]="26" [strokeWidth]="1.9" />
+      {{ station.L().registerFirst }}
+    </button>
+
     <button type="button" class="skip" (click)="station.skip()">
       {{ station.L().skip }}
       <tg-icon name="arrow-right" [size]="24" [strokeWidth]="2.2" />
     </button>
 
     <p class="note">{{ station.L().skipNote }}</p>
-
-    <button type="button" class="noface" (click)="station.openNoFace()">
-      {{ station.L().noFaceLink }}
-    </button>
   </div>
 </div>

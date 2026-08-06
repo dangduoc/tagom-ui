@@ -20,6 +20,7 @@ export interface Strings {
   identifyTitle: string;
   identifySub: string;
   cantScan: string;
+  registerFirst: string;
   skip: string;
   noFaceLink: string;
   noFaceTitle: string;
@@ -28,6 +29,7 @@ export interface Strings {
   nfPhone: string;
   skipNote: string;
   scanning: string;
+  notRecognized: string;
   confirmedHi: string;
   confirmedQ: string;
   yes: string;
@@ -147,10 +149,11 @@ export const STRINGS: Record<Lang, Strings> = {
     endBody: 'Bạn sẽ quay lại màn hình đầu. Mọi thông tin chưa lưu sẽ bị bỏ.',
     endConfirm: 'Kết thúc',
     keepGoing: 'Tiếp tục',
-    identifyTitle: 'Đưa mã QR lên, hoặc nhìn vào camera',
+    identifyTitle: 'Nhìn vào camera để nhận diện',
     identifySub:
-      'Mở ứng dụng Tagom và giơ mã QR — hoặc chỉ cần nhìn vào camera. Chúng tôi tự nhận ra bạn.',
-    cantScan: 'Không quét được? Nhập số điện thoại',
+      'Giữ khuôn mặt trong khung, trạm sẽ tự nhận ra bạn. Lần đầu đến? Đăng ký hoặc nhập số điện thoại bên dưới.',
+    cantScan: 'Nhập số điện thoại',
+    registerFirst: 'Đăng ký lần đầu',
     skip: 'Bỏ qua, cân ẩn danh',
     noFaceLink: 'Camera không nhận ra bạn?',
     noFaceTitle:
@@ -160,6 +163,7 @@ export const STRINGS: Record<Lang, Strings> = {
     nfPhone: 'Đã có, nhập số điện thoại cho dễ',
     skipNote: 'Bạn vẫn cân được bình thường — chỉ là không lưu vào tài khoản.',
     scanning: 'Đang tìm…',
+    notRecognized: 'Chưa nhận ra khuôn mặt',
     confirmedHi: 'Chào bạn,',
     confirmedQ: 'Đúng là bạn chứ?',
     yes: 'Đúng rồi',
@@ -192,7 +196,7 @@ export const STRINGS: Record<Lang, Strings> = {
     phFullName: 'Nguyễn Văn A',
     optional: '(tùy chọn)',
     requiredNote: 'Trường bắt buộc',
-    faceWhy: 'Để trạm nhận ra bạn bằng khuôn mặt trong lần sau — bạn sẽ không cần điện thoại.',
+    faceWhy: 'Để trạm nhận ra bạn bằng khuôn mặt trong lần sau — bạn sẽ không cần nhập số điện thoại.',
     faceGuide: 'Đưa khuôn mặt vào trong khung',
     capturePhoto: 'Chụp ảnh',
     faceDone: 'Đã đủ 5 ảnh khuôn mặt',
@@ -279,10 +283,11 @@ export const STRINGS: Record<Lang, Strings> = {
     endBody: "You'll return to the start screen. Anything not saved will be discarded.",
     endConfirm: 'End session',
     keepGoing: 'Keep going',
-    identifyTitle: 'Hold up your QR, or look at the camera',
+    identifyTitle: 'Look at the camera',
     identifySub:
-      'Open the Tagom app and show your QR — or just look at the camera. We’ll recognise you.',
-    cantScan: 'Can’t scan? Enter phone number',
+      'Keep your face in frame and the station will recognise you. First time here? Register or enter your phone below.',
+    cantScan: 'Enter phone number',
+    registerFirst: 'Register for the first time',
     skip: 'Skip, weigh anonymously',
     noFaceLink: 'Camera not recognising you?',
     noFaceTitle: 'We couldn’t recognise your face. Have you registered a TAGOM account before?',
@@ -291,6 +296,7 @@ export const STRINGS: Record<Lang, Strings> = {
     nfPhone: 'Yes — enter my phone number instead',
     skipNote: 'You can still weigh as normal — it just won’t save to an account.',
     scanning: 'Looking…',
+    notRecognized: 'Face not recognised',
     confirmedHi: 'Hello,',
     confirmedQ: 'Is this you?',
     yes: 'Yes, that’s me',
@@ -323,7 +329,7 @@ export const STRINGS: Record<Lang, Strings> = {
     phFullName: 'e.g. Jane Doe',
     optional: '(optional)',
     requiredNote: 'Required field',
-    faceWhy: 'Lets the station recognise you by face next time — no phone needed.',
+    faceWhy: 'Lets the station recognise you by face next time — no need to enter your phone number.',
     faceGuide: 'Position your face in the frame',
     capturePhoto: 'Capture photo',
     faceDone: 'All 5 face photos captured',

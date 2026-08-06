@@ -240,7 +240,7 @@ export class StationService {
 
   notMe(): void {
     this.identity.set(null);
-    this.screen.set('unknown');
+    this.screen.set('identify');
   }
 
   /** A face or QR match came back from IdentifyService. */
@@ -422,7 +422,9 @@ export class StationService {
         this.screen.set('identify');
         break;
       case 'register':
-        this.screen.set('unknown');
+        // Register is reached from the identify screen (the "Đăng ký lần đầu"
+        // button), so back returns there rather than to the unknown screen.
+        this.screen.set('identify');
         break;
       case 'face':
         // Launched from the profile screen; drop any half-taken photos.

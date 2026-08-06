@@ -9,6 +9,7 @@ export type IconName =
   | 'x'
   | 'camera'
   | 'user'
+  | 'user-plus'
   | 'phone'
   | 'id-card'
   | 'check'
@@ -75,6 +76,11 @@ export type IconName =
         @case ('user') {
           <path d="M20 21a8 8 0 0 0-16 0" />
           <circle cx="12" cy="7" r="4" />
+        }
+        @case ('user-plus') {
+          <path d="M16 21v-1a6 6 0 0 0-12 0v1" />
+          <circle cx="10" cy="7" r="4" />
+          <path d="M20 8v6M23 11h-6" />
         }
         @case ('phone') {
           <path

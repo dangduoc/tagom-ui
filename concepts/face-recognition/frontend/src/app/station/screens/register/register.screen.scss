@@ -8,8 +8,9 @@
 .cards {
   display: flex;
   flex: 1;
+  flex-direction: column;
   gap: 24px;
-  align-items: flex-start;
+  align-items: center;
   padding: 28px 36px;
   overflow: auto;
 }
@@ -18,15 +19,18 @@
   border-radius: 22px;
   background: var(--surface-card);
   box-shadow: 0 12px 32px rgb(0 77 67 / 0.08);
+  width: 100%;
+  max-width: 720px;
 }
 
+/* Stacked as two rows — neither card grows to fill leftover height. */
 .card.main {
-  flex: 1.35;
+  flex: none;
   padding: 32px 34px;
 }
 
 .card.face {
-  flex: 1;
+  flex: none;
   padding: 32px 30px;
 }
 
@@ -99,10 +103,11 @@
 
 .viewport {
   position: relative;
-  margin-bottom: 16px;
+  margin: 0 auto 16px;
   border-radius: var(--radius-lg);
   background: #04302a;
   width: 100%;
+  max-width: 520px;
   aspect-ratio: 4 / 3;
   overflow: hidden;
 }
@@ -223,35 +228,46 @@
 }
 
 .bar {
-  display: flex;
   flex-shrink: 0;
-  gap: 16px;
-  align-items: center;
-  justify-content: space-between;
   border-top: 1px solid var(--border-subtle);
   background: var(--surface-page);
-  padding: 0 40px;
-  min-height: 96px;
+  padding: 16px 40px;
 }
 
-.required {
-  margin: 0;
-  opacity: 0.65;
-  font-size: var(--text-body-size);
+/* Aligned with the cards above: a 720px centred column so the action buttons
+   line up under the card and split its width equally. */
+.bar-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
 }
 
 .failed {
-  flex: 1;
   margin: 0;
   color: var(--status-danger);
   font-weight: var(--fw-semibold);
   font-size: var(--text-body-size);
+  text-align: center;
 }
 
 .bar-actions {
   display: flex;
   gap: 14px;
-  align-items: center;
+}
+
+/* Register (submit) gets the lion's share — a 30 / 70 split. flex:N with a
+   single value sets flex-basis:0, so the ratio is exact. */
+.bar-actions .cancel {
+  flex: 3;
+  text-align: center;
+}
+
+.bar-actions .submit {
+  flex: 7;
+  text-align: center;
 }
 
 .cancel {
@@ -295,16 +311,10 @@
   }
 
   .bar {
-    flex-wrap: wrap;
     padding: 14px 18px;
   }
 
-  .bar-actions {
-    flex: 1;
-  }
-
   .submit {
-    flex: 1;
     padding: 16px 24px;
   }
 }
