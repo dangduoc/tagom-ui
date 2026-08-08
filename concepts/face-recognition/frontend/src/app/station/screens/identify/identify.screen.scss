@@ -30,13 +30,6 @@
   transform: scaleX(-1);
 }
 
-.vignette {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(120% 100% at 50% 0%, rgb(10 81 71 / 0.35) 0%, rgb(4 48 42 / 0.75) 70%);
-  pointer-events: none;
-}
-
 .scanline {
   position: absolute;
   top: 0;
