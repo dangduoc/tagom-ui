@@ -8,7 +8,7 @@ import {
   untracked,
 } from '@angular/core';
 
-import { ApiService, RecognizedMatch } from '../../api.service';
+import { ApiService, EnrollError, RecognizedMatch } from '../../api.service';
 import { ScaleService } from '../../scale/scale.service';
 import { CameraFault, CameraService } from './camera.service';
 import { STRINGS } from './i18n';
@@ -98,7 +98,9 @@ export class StationService {
   readonly form = signal<RegisterForm>({ ...EMPTY_FORM });
   readonly facePhotos = signal<Blob[]>([]);
   readonly registering = signal(false);
-  readonly registerError = signal(false);
+  // null = no error; 'photos' = the face photos had no usable face (retake);
+  // 'other' = anything else (network/server).
+  readonly registerError = signal<null | 'photos' | 'other'>(null);
 
   readonly profileEdit = signal(false);
   readonly pform = signal<Person>({ fullName: '', phone: '' });
@@ -106,7 +108,7 @@ export class StationService {
 
   /** Face capture launched from the profile screen. */
   readonly savingFaces = signal(false);
-  readonly facesError = signal(false);
+  readonly facesError = signal<null | 'photos' | 'other'>(null);
 
   /** Set when the person dismisses the scale-offline card, so it doesn't
    *  immediately reappear while the scale is still down. */
@@ -287,7 +289,7 @@ export class StationService {
 
   // ── register ──
   goRegister(): void {
-    this.registerError.set(false);
+    this.registerError.set(null);
     this.screen.set('register');
   }
 
@@ -308,7 +310,7 @@ export class StationService {
     const f = this.form();
     const code = phoneDigits(f.phone);
     this.registering.set(true);
-    this.registerError.set(false);
+    this.registerError.set(null);
 
     const profile = {
       phone: maskPhone(f.phone),
@@ -335,8 +337,17 @@ export class StationService {
       this.form.set({ ...EMPTY_FORM });
       this.facePhotos.set([]);
       this.enter();
-    } catch {
-      this.registerError.set(true);
+    } catch (e) {
+      // 422 = the server found no usable face in the photos. Clear them so the
+      // slots reset, and tell the person to retake rather than showing a generic
+      // failure. The typed name is kept in case the class identity is lost
+      // across a bundle boundary.
+      if (e instanceof EnrollError ? e.status === 422 : (e as { status?: number })?.status === 422) {
+        this.facePhotos.set([]);
+        this.registerError.set('photos');
+      } else {
+        this.registerError.set('other');
+      }
     } finally {
       this.registering.set(false);
     }
@@ -588,7 +599,7 @@ export class StationService {
   startFaceCapture(): void {
     if (!this.account()) return;
     this.facePhotos.set([]);
-    this.facesError.set(false);
+    this.facesError.set(null);
     this.screen.set('face');
   }
 
@@ -600,16 +611,20 @@ export class StationService {
     const photos = this.facePhotos();
     if (!acc?.code || !photos.length || this.savingFaces()) return;
     this.savingFaces.set(true);
-    this.facesError.set(false);
+    this.facesError.set(null);
     try {
       await this.api.enroll(acc.code, acc.fullName, '', photos, {}, true);
       const person = await this.data.loadPerson(acc.code);
       if (person) this.identity.set(person);
       this.facePhotos.set([]);
       this.screen.set('profile');
-    } catch {
-      // Keep the photos so the person can just tap Save again.
-      this.facesError.set(true);
+    } catch (e) {
+      const isPhotos =
+        e instanceof EnrollError ? e.status === 422 : (e as { status?: number })?.status === 422;
+      // No usable face: clear the photos so the slots reset for a retake. Any
+      // other failure keeps them so the person can just tap Save again.
+      if (isPhotos) this.facePhotos.set([]);
+      this.facesError.set(isPhotos ? 'photos' : 'other');
     } finally {
       this.savingFaces.set(false);
     }

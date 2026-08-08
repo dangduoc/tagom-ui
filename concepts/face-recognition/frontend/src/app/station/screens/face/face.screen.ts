@@ -74,7 +74,9 @@ const FACE_CHECK_MS = 250;
       }
 
       @if (station.facesError()) {
-        <p class="failed">{{ station.L().faceSaveFailed }}</p>
+        <p class="failed">
+          {{ station.facesError() === 'photos' ? station.L().photosNoFace : station.L().faceSaveFailed }}
+        </p>
       }
 
       <button

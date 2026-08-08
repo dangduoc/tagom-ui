@@ -137,7 +137,9 @@
 <footer class="bar">
   <div class="bar-inner">
     @if (station.registerError()) {
-      <p class="failed">{{ station.L().registerFailed }}</p>
+      <p class="failed">
+        {{ station.registerError() === 'photos' ? station.L().photosNoFace : station.L().registerFailed }}
+      </p>
     }
     <div class="bar-actions">
       <button type="button" class="cancel" (click)="station.back()">{{ station.L().cancel }}</button>

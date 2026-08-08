@@ -75,6 +75,7 @@ export interface Strings {
   registerCta: string;
   registering: string;
   registerFailed: string;
+  photosNoFace: string;
   pickTitle: string;
   pickSub: string;
   cat_nhua: string;
@@ -210,6 +211,7 @@ export const STRINGS: Record<Lang, Strings> = {
     registerCta: 'Đăng ký',
     registering: 'Đang lưu…',
     registerFailed: 'Chưa lưu được. Vui lòng thử lại hoặc gọi nhân viên.',
+    photosNoFace: 'Ảnh chưa thấy rõ khuôn mặt. Vui lòng chụp lại 5 ảnh, nhìn thẳng vào camera.',
     pickTitle: 'Bạn muốn cân loại nào?',
     pickSub: 'Chạm vào một loại để bắt đầu cân',
     cat_nhua: 'Nhựa',
@@ -343,6 +345,7 @@ export const STRINGS: Record<Lang, Strings> = {
     registerCta: 'Register',
     registering: 'Saving…',
     registerFailed: 'Couldn’t save. Please try again or call a staff member.',
+    photosNoFace: 'Those photos didn’t show a clear face. Please retake the 5 photos, looking straight at the camera.',
     pickTitle: 'What would you like to weigh?',
     pickSub: 'Tap a type to start weighing',
     cat_nhua: 'Plastic',

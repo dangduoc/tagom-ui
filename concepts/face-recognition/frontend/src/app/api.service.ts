@@ -28,6 +28,20 @@ export interface EnrollResponse {
   files: EnrollFileResult[];
 }
 
+/** Thrown when /api/enroll rejects. `status === 422` is the "no usable face
+ *  photo" case — the caller can tell the person to retake rather than showing a
+ *  generic failure. */
+export class EnrollError extends Error {
+  constructor(
+    message: string,
+    readonly status: number,
+    readonly files: EnrollFileResult[] = [],
+  ) {
+    super(message);
+    this.name = 'EnrollError';
+  }
+}
+
 /** Depositor record as the station API returns it. */
 export interface PersonDto {
   code: string;
@@ -115,7 +129,11 @@ export class ApiService {
       const body = await res.json().catch(() => null);
       const message =
         body?.detail?.message ?? body?.detail ?? `enroll failed: HTTP ${res.status}`;
-      throw new Error(typeof message === 'string' ? message : JSON.stringify(message));
+      throw new EnrollError(
+        typeof message === 'string' ? message : JSON.stringify(message),
+        res.status,
+        body?.detail?.files ?? [],
+      );
     }
     return res.json();
   }
