@@ -62,7 +62,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 11px;
-  background: var(--lime-100);
+  background: var(--surface-sunken);
   width: 40px;
   height: 40px;
   color: var(--tagom-green);
@@ -139,7 +139,7 @@
   left: 0;
   margin: 0;
   padding: 0 12px;
-  color: var(--tagom-lime);
+  color: var(--on-accent);
   text-align: center;
   font-weight: var(--fw-semibold);
   font-size: 15px;
@@ -174,8 +174,8 @@
 
 .slot.filled {
   border: none;
-  background: var(--tagom-green);
-  color: var(--tagom-lime);
+  background: var(--accent);
+  color: var(--on-accent);
 }
 
 .capture {
@@ -184,10 +184,10 @@
   align-items: center;
   justify-content: center;
   border-radius: var(--radius-md);
-  background: var(--tagom-green);
+  background: var(--accent);
   padding: 18px;
   width: 100%;
-  color: var(--tagom-lime);
+  color: var(--on-accent);
   font-weight: var(--fw-bold);
   font-size: 21px;
 }
@@ -211,7 +211,7 @@
   justify-content: center;
   margin: 0;
   border-radius: var(--radius-md);
-  background: var(--lime-100);
+  background: var(--surface-sunken);
   padding: 18px;
   color: var(--tagom-green);
   font-weight: var(--fw-bold);
@@ -281,9 +281,9 @@
 
 .submit {
   border-radius: var(--radius-pill);
-  background: var(--tagom-green);
+  background: var(--accent);
   padding: 18px 44px;
-  color: var(--tagom-lime);
+  color: var(--on-accent);
   letter-spacing: 0.03em;
   font-weight: var(--fw-bold);
   font-size: 22px;

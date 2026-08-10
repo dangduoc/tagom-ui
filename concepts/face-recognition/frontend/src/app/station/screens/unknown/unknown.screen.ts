@@ -74,9 +74,9 @@ import { TgIcon } from '../../shared/tg-icon';
       font-weight: var(--fw-bold);
     }
     .primary {
-      background: var(--tagom-green);
+      background: var(--accent);
       padding: 22px 32px;
-      color: var(--tagom-lime);
+      color: var(--on-accent);
       font-size: var(--text-h3);
     }
     .ghost {

@@ -67,9 +67,9 @@ import { TgIcon } from '../tg-icon';
     }
     .cta {
       border-radius: var(--radius-pill);
-      background: var(--tagom-green);
+      background: var(--accent);
       padding: 18px 34px;
-      color: var(--tagom-lime);
+      color: var(--on-accent);
       font-weight: var(--fw-bold);
       font-size: var(--text-lg);
       text-transform: uppercase;

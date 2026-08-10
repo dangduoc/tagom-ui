@@ -11,12 +11,12 @@ import {
 
 import { IdentifyResult, IdentifyService } from '../../core/identify.service';
 import { StationService } from '../../core/station.service';
-import { TgIcon } from '../../shared/tg-icon';
+import { OptionCard } from '../../shared/option-card';
 
 @Component({
   selector: 'tg-identify-screen',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [TgIcon],
+  imports: [OptionCard],
   templateUrl: './identify.screen.html',
   styleUrl: './identify.screen.scss',
 })

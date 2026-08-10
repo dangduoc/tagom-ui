@@ -24,9 +24,9 @@
 
 /* The payoff: the entire field flips green. */
 .panel.locked {
-  background: var(--tagom-green);
+  background: var(--accent);
   animation: tg-pop var(--dur-slow) var(--ease-out);
-  color: var(--tagom-lime);
+  color: var(--on-accent);
 }
 
 .figure {
@@ -77,10 +77,10 @@
   justify-content: center;
   margin-bottom: 18px;
   border-radius: var(--radius-circle);
-  background: var(--tagom-lime);
+  background: var(--on-accent);
   width: 88px;
   height: 88px;
-  color: var(--tagom-green);
+  color: var(--accent);
 }
 
 .recorded {
@@ -157,7 +157,7 @@
 
 .hold-fill {
   border-radius: var(--radius-pill);
-  background: var(--tagom-green);
+  background: var(--accent);
   height: 100%;
   transition: width 0.12s linear;
 }

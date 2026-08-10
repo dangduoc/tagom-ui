@@ -1,37 +1,40 @@
-<div class="cam">
-  <video #video class="feed" playsinline muted autoplay></video>
-  <div class="scanline"></div>
-
-  <div class="brackets">
-    <span class="tl"></span><span class="tr"></span><span class="bl"></span><span class="br"></span>
+<div class="cam-col">
+  <div class="cam">
+    <video #video class="feed" playsinline muted autoplay></video>
+    <div class="scanline"></div>
+    <div class="brackets">
+      <span class="tl"></span>
+      <span class="tr"></span>
+      <span class="bl"></span>
+      <span class="br"></span>
+    </div>
+    <p class="status" [class.unknown]="statusSettled()">
+      <span class="pulse"></span>{{ statusText() }}
+    </p>
   </div>
-
-  <p class="status" [class.unknown]="statusSettled()">
-    <span class="pulse"></span>
-    {{ statusText() }}
-  </p>
+  <p class="hold">{{ station.L().holdPose }}</p>
 </div>
 
 <div class="copy">
-  <h1 class="tg-display">{{ station.L().identifyTitle }}</h1>
-  <p class="sub">{{ station.L().identifySub }}</p>
+  <p class="eyebrow">{{ station.L().faceIdEyebrow }}</p>
+  <h1 class="tg-display">{{ station.L().faceIdTitle }}</h1>
 
-  <div class="fallbacks">
-    <button type="button" class="option" (click)="station.openKeypad()">
-      <tg-icon name="id-card" [size]="26" [strokeWidth]="1.9" />
-      {{ station.L().cantScan }}
-    </button>
+  <div class="options">
+    <button
+      tg-option-card
+      [icon]="'phone'"
+      [overline]="station.L().cantFaceQ"
+      [label]="station.L().cantScan"
+      (click)="station.goPhone()"
+    ></button>
 
-    <button type="button" class="option" (click)="station.goRegister()">
-      <tg-icon name="user-plus" [size]="26" [strokeWidth]="1.9" />
-      {{ station.L().registerFirst }}
-    </button>
-
-    <button type="button" class="skip" (click)="station.skip()">
-      {{ station.L().skip }}
-      <tg-icon name="arrow-right" [size]="24" [strokeWidth]="2.2" />
-    </button>
-
-    <p class="note">{{ station.L().skipNote }}</p>
+    <button
+      tg-option-card
+      [icon]="'plus'"
+      [overline]="station.L().stillCantQ"
+      [label]="station.L().optRegister"
+      [variant]="'outline'"
+      (click)="station.goRegister()"
+    ></button>
   </div>
 </div>

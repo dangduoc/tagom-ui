@@ -25,10 +25,10 @@ header {
   align-items: center;
   justify-content: center;
   border-radius: var(--radius-circle);
-  background: var(--tagom-green);
+  background: var(--accent);
   width: 64px;
   height: 64px;
-  color: var(--tagom-lime);
+  color: var(--on-accent);
 }
 
 h1 {
@@ -106,10 +106,10 @@ h1 {
 .panel {
   display: flex;
   flex-direction: column;
-  background: var(--tagom-green);
+  background: var(--accent);
   padding: 52px 44px;
   width: 460px;
-  color: var(--tagom-lime);
+  color: var(--on-accent);
   overflow-y: auto;
 }
 
@@ -149,20 +149,20 @@ h1 {
 hr {
   margin: 32px 0;
   border: none;
-  background: rgb(222 232 78 / 0.25);
+  background: rgb(255 255 255 / 0.3);
   height: 1px;
 }
 
 .bar {
   border-radius: var(--radius-pill);
-  background: rgb(222 232 78 / 0.18);
+  background: rgb(255 255 255 / 0.24);
   height: 14px;
   overflow: hidden;
 }
 
 .fill {
   border-radius: var(--radius-pill);
-  background: var(--tagom-lime);
+  background: var(--on-accent);
   height: 100%;
   transition: width var(--dur-slow) var(--ease-out);
 }
@@ -184,14 +184,14 @@ hr {
   gap: 16px;
   align-items: center;
   border-radius: var(--radius-lg);
-  background: rgb(222 232 78 / 0.12);
+  background: rgb(255 255 255 / 0.15);
   padding: 18px;
 }
 
 .app-qr {
   flex-shrink: 0;
   border-radius: 10px;
-  background: var(--tagom-lime);
+  background: var(--on-accent);
   width: 64px;
   height: 64px;
 }
@@ -205,9 +205,9 @@ hr {
 .done {
   margin-top: 20px;
   border-radius: var(--radius-pill);
-  background: var(--tagom-lime);
+  background: var(--on-accent);
   padding: 20px;
-  color: var(--tagom-green);
+  color: var(--accent);
   text-align: center;
   letter-spacing: 0.03em;
   font-weight: var(--fw-bold);

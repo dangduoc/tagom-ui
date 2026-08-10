@@ -77,7 +77,29 @@ export class StationDataStore {
     }
   }
 
-  /** Loads profile + history for a code. Returns null if nobody holds it. */
+  /**
+   * Loads profile + history for a code. Null means nobody holds that code; an
+   * unreachable or erroring server throws.
+   *
+   * The distinction matters for phone-number sign-in, which otherwise tells
+   * someone with a perfectly good account that it doesn't exist.
+   */
+  async findPerson(code: string): Promise<Person | null> {
+    const bundle = await this.api.getPerson(code);
+    if (!bundle) return null;
+    this.personalTotal.set(bundle.personal_total);
+    this.memberSince.set(formatMonth(bundle.person.member_since));
+    this.sessions.set(
+      bundle.sessions.map((s) => ({
+        date: formatDate(s.date),
+        items: s.items.map((i) => ({ key: i.category as CategoryKey, weight: i.weight })),
+      })),
+    );
+    return toPerson(bundle.person);
+  }
+
+  /** findPerson for the callers that are only refreshing what's already on
+   *  screen and have nothing useful to do about a failure. */
   async loadPerson(code: string): Promise<Person | null> {
     try {
       const bundle = await this.api.getPerson(code);

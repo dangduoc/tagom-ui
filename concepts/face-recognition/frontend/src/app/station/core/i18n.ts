@@ -6,19 +6,42 @@ export interface Strings {
   idleTitle: string;
   idleSub: string;
   idleCam: string;
+  /** Labels around the event details under the idle poster. */
+  whenLabel: string;
+  whereLabel: string;
   startSorted: string;
   startSortedSub: string;
   startQuick: string;
   startQuickSub: string;
   help: string;
   back: string;
+  exit: string;
   endSession: string;
+  /** Login chooser — the three ways in. */
+  loginTitle: string;
+  loginSub: string;
+  optFaceId: string;
+  optFaceIdSub: string;
+  optPhone: string;
+  optPhoneSub: string;
+  optRegister: string;
+  optRegisterSub: string;
+  /** Face ID screen. */
+  faceIdEyebrow: string;
+  faceIdTitle: string;
+  holdPose: string;
+  cantFaceQ: string;
+  stillCantQ: string;
+  /** Phone screen. */
+  phoneEyebrow: string;
+  phoneTitle: string;
+  cantPhoneQ: string;
+  useFaceId: string;
+  okKey: string;
   endTitle: string;
   endBody: string;
   endConfirm: string;
   keepGoing: string;
-  identifyTitle: string;
-  identifySub: string;
   cantScan: string;
   registerFirst: string;
   skip: string;
@@ -121,6 +144,8 @@ export interface Strings {
   lookup: string;
   searching: string;
   notFound: string;
+  /** The lookup couldn't reach the server — not the same as "no such account". */
+  lookupOffline: string;
   callStaff: string;
   errScaleTitle: string;
   errScaleSub: string;
@@ -139,22 +164,40 @@ export const STRINGS: Record<Lang, Strings> = {
     idleTitle: 'Mang rác tái chế đến, cùng cân nhé',
     idleSub: 'Cân từng loại và ghi vào tài khoản của bạn. Miễn phí — vì đường phố sạch hơn.',
     idleCam: 'Camera chỉ dùng để nhận diện khi bạn bắt đầu.',
+    whenLabel: 'Thời gian',
+    whereLabel: 'Địa điểm',
     startSorted: 'Cân theo loại',
     startSortedSub: 'Phân loại rác và cân từng loại một',
     startQuick: 'Cân nhanh',
     startQuickSub: 'Cả túi rác chưa phân loại, cân một lần',
     help: 'Cần trợ giúp?',
     back: 'Quay lại',
+    exit: 'Thoát',
     endSession: 'Kết thúc',
+    loginTitle: 'Chọn hình thức đăng nhập',
+    loginSub: 'Gomer vui lòng chọn hình thức đăng nhập để cân rác nhé!',
+    optFaceId: 'Face ID',
+    optFaceIdSub: 'Sử dụng nhận diện khuôn mặt để đăng nhập',
+    optPhone: 'Số điện thoại',
+    optPhoneSub: 'Sử dụng số điện thoại để đăng nhập',
+    optRegister: 'Tạo tài khoản mới',
+    optRegisterSub: 'Bạn chưa có tài khoản? Tạo ngay!',
+    faceIdEyebrow: 'Đăng nhập Face ID',
+    faceIdTitle: 'Vui lòng nhìn vào camera',
+    holdPose: '(Giữ nguyên tư thế trong 2 giây)',
+    cantFaceQ: 'Không thể nhận diện khuôn mặt?',
+    stillCantQ: 'Vẫn không thể đăng nhập?',
+    phoneEyebrow: 'Đăng nhập bằng số điện thoại',
+    phoneTitle: 'Hãy nhập số điện thoại của bạn',
+    cantPhoneQ: 'Không thể nhập số điện thoại?',
+    useFaceId: 'Nhận diện bằng Face ID',
+    okKey: 'OK',
     endTitle: 'Kết thúc phiên này?',
     endBody: 'Bạn sẽ quay lại màn hình đầu. Mọi thông tin chưa lưu sẽ bị bỏ.',
     endConfirm: 'Kết thúc',
     keepGoing: 'Tiếp tục',
-    identifyTitle: 'Nhìn vào camera để nhận diện',
-    identifySub:
-      'Giữ khuôn mặt trong khung, trạm sẽ tự nhận ra bạn. Lần đầu đến? Đăng ký hoặc nhập số điện thoại bên dưới.',
     cantScan: 'Nhập số điện thoại',
-    registerFirst: 'Đăng ký lần đầu',
+    registerFirst: 'Tạo tài khoản mới',
     skip: 'Bỏ qua, cân ẩn danh',
     noFaceLink: 'Camera không nhận ra bạn?',
     noFaceTitle:
@@ -219,7 +262,7 @@ export const STRINGS: Record<Lang, Strings> = {
     cat_kimloai: 'Kim loại',
     cat_thuytinh: 'Thủy tinh',
     cat_vai: 'Vải',
-    cat_chua: 'Chưa phân loại',
+    cat_chua: 'Rác tổng hợp',
     weighing: 'Đang cân',
     settling: 'Đang ổn định…',
     holdStill: 'Giữ yên vật trên cân',
@@ -257,6 +300,7 @@ export const STRINGS: Record<Lang, Strings> = {
     lookup: 'Tìm',
     searching: 'Đang tìm…',
     notFound: 'Không tìm thấy tài khoản với số này.',
+    lookupOffline: 'Chưa kết nối được với hệ thống. Vui lòng thử lại hoặc gọi nhân viên.',
     callStaff: 'Gọi nhân viên',
     errScaleTitle: 'Mất kết nối với cân',
     errScaleSub: 'Cân chưa phản hồi. Vui lòng gọi nhân viên hỗ trợ.',
@@ -274,22 +318,40 @@ export const STRINGS: Record<Lang, Strings> = {
     idleTitle: 'Bring your recycling — let’s weigh it',
     idleSub: 'Weigh each type and log it to your account. Free — for cleaner streets.',
     idleCam: 'The camera is only used to recognise you at the start.',
+    whenLabel: 'When',
+    whereLabel: 'Where',
     startSorted: 'Weigh by type',
     startSortedSub: 'Sort your recycling and weigh each type',
     startQuick: 'Quick weigh',
     startQuickSub: 'One mixed bag, weighed in one go',
     help: 'Need help?',
     back: 'Back',
+    exit: 'Exit',
     endSession: 'End',
+    loginTitle: 'How would you like to sign in?',
+    loginSub: 'Pick a way to sign in, then we can weigh your recycling.',
+    optFaceId: 'Face ID',
+    optFaceIdSub: 'Sign in by letting the station recognise your face',
+    optPhone: 'Phone number',
+    optPhoneSub: 'Sign in with your phone number',
+    optRegister: 'Create an account',
+    optRegisterSub: 'No account yet? Make one now!',
+    faceIdEyebrow: 'Face ID sign-in',
+    faceIdTitle: 'Please look at the camera',
+    holdPose: '(Hold still for 2 seconds)',
+    cantFaceQ: "Camera can't recognise you?",
+    stillCantQ: 'Still cannot sign in?',
+    phoneEyebrow: 'Phone number sign-in',
+    phoneTitle: 'Enter your phone number',
+    cantPhoneQ: "Can't enter your phone number?",
+    useFaceId: 'Recognise me by Face ID',
+    okKey: 'OK',
     endTitle: 'End this session?',
     endBody: "You'll return to the start screen. Anything not saved will be discarded.",
     endConfirm: 'End session',
     keepGoing: 'Keep going',
-    identifyTitle: 'Look at the camera',
-    identifySub:
-      'Keep your face in frame and the station will recognise you. First time here? Register or enter your phone below.',
     cantScan: 'Enter phone number',
-    registerFirst: 'Register for the first time',
+    registerFirst: 'Create an account',
     skip: 'Skip, weigh anonymously',
     noFaceLink: 'Camera not recognising you?',
     noFaceTitle: 'We couldn’t recognise your face. Have you registered a TAGOM account before?',
@@ -353,7 +415,7 @@ export const STRINGS: Record<Lang, Strings> = {
     cat_kimloai: 'Metal',
     cat_thuytinh: 'Glass',
     cat_vai: 'Fabric',
-    cat_chua: 'Unsorted',
+    cat_chua: 'Mixed waste',
     weighing: 'Weighing',
     settling: 'Settling…',
     holdStill: 'Keep it still on the scale',
@@ -391,6 +453,7 @@ export const STRINGS: Record<Lang, Strings> = {
     lookup: 'Find',
     searching: 'Looking…',
     notFound: 'No account found for that number.',
+    lookupOffline: "Couldn't reach the system. Please try again or call a staff member.",
     callStaff: 'Call staff',
     errScaleTitle: 'Lost connection to the scale',
     errScaleSub: 'The scale isn’t responding. Please call a staff member.',

@@ -1,0 +1,55 @@
+<div class="pad-col">
+  <output class="display tg-nums">{{ station.keypad() || '---' }}</output>
+
+  @if (station.keypadMiss(); as miss) {
+    <p class="notfound">
+      {{ miss === 'offline' ? station.L().lookupOffline : station.L().notFound }}
+    </p>
+  }
+
+  <div class="pad">
+    @for (d of digits; track d) {
+      <button type="button" class="key" (click)="station.pressKey(d)">{{ d }}</button>
+    }
+    <button
+      type="button"
+      class="key alt"
+      (click)="station.deleteKey()"
+      [attr.aria-label]="station.L().back"
+    >
+      ⌫
+    </button>
+    <button type="button" class="key" (click)="station.pressKey('0')">0</button>
+    <button type="button" class="key ok" (click)="station.lookupPhone()">
+      {{ station.L().okKey }}
+    </button>
+  </div>
+</div>
+
+<div class="copy">
+  <p class="eyebrow">{{ station.L().phoneEyebrow }}</p>
+  <h1 class="tg-display">{{ station.L().phoneTitle }}</h1>
+
+  <div class="options">
+    <button
+      tg-option-card
+      [icon]="'face-scan'"
+      [overline]="station.L().cantPhoneQ"
+      [label]="station.L().useFaceId"
+      (click)="station.goFaceId()"
+    ></button>
+
+    <button
+      tg-option-card
+      [icon]="'plus'"
+      [overline]="station.L().stillCantQ"
+      [label]="station.L().optRegister"
+      [variant]="'outline'"
+      (click)="station.goRegister()"
+    ></button>
+  </div>
+</div>
+
+@if (station.keypadBusy()) {
+  <tg-loading-overlay [label]="station.L().searching" />
+}

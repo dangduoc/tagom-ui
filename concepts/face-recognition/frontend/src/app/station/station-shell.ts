@@ -6,6 +6,8 @@ import { ConfirmedScreen } from './screens/confirmed/confirmed.screen';
 import { FaceScreen } from './screens/face/face.screen';
 import { IdentifyScreen } from './screens/identify/identify.screen';
 import { IdleScreen } from './screens/idle/idle.screen';
+import { LoginScreen } from './screens/login/login.screen';
+import { PhoneScreen } from './screens/phone/phone.screen';
 import { ProfileScreen } from './screens/profile/profile.screen';
 import { RegisterScreen } from './screens/register/register.screen';
 import { SummaryScreen } from './screens/summary/summary.screen';
@@ -15,7 +17,6 @@ import { LangToggle } from './shared/lang-toggle';
 import { EndSessionDialog } from './shared/overlays/endsession-dialog';
 import { ErrorBanner } from './shared/overlays/error-banner';
 import { HelpOverlay } from './shared/overlays/help-overlay';
-import { KeypadOverlay } from './shared/overlays/keypad-overlay';
 import { NoFaceDialog } from './shared/overlays/noface-dialog';
 import { SessionRail } from './shared/session-rail/session-rail';
 import { TgIcon } from './shared/tg-icon';
@@ -36,9 +37,10 @@ import { TgIcon } from './shared/tg-icon';
     HelpOverlay,
     IdentifyScreen,
     IdleScreen,
-    KeypadOverlay,
     LangToggle,
+    LoginScreen,
     NoFaceDialog,
+    PhoneScreen,
     ProfileScreen,
     RegisterScreen,
     SessionRail,

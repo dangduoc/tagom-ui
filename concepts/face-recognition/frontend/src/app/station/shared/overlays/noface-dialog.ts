@@ -77,8 +77,8 @@ import { TgIcon } from '../tg-icon';
     }
     .route.primary {
       border-color: transparent;
-      background: var(--tagom-green);
-      color: var(--tagom-lime);
+      background: var(--accent);
+      color: var(--on-accent);
     }
     .quiet {
       margin-top: 16px;

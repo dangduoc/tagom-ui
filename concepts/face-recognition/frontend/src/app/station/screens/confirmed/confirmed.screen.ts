@@ -52,7 +52,7 @@ import { TgIcon } from '../../shared/tg-icon';
       justify-content: center;
       margin: 0 auto 24px;
       border-radius: var(--radius-circle);
-      background: var(--lime-100);
+      background: var(--surface-sunken);
       width: 96px;
       height: 96px;
       color: var(--tagom-green);
@@ -97,8 +97,8 @@ import { TgIcon } from '../../shared/tg-icon';
       font-weight: var(--fw-bold);
     }
     .yes {
-      background: var(--tagom-green);
-      color: var(--tagom-lime);
+      background: var(--accent);
+      color: var(--on-accent);
       letter-spacing: 0.03em;
       font-size: var(--text-h3);
       text-transform: uppercase;

@@ -27,7 +27,7 @@
   align-items: center;
   justify-content: center;
   border-radius: var(--radius-circle);
-  background: var(--lime-100);
+  background: var(--surface-sunken);
   width: 72px;
   height: 72px;
   color: var(--tagom-green);
@@ -104,8 +104,8 @@
 
 /* Filled, because surfacing "add your face" is the whole point of this work. */
 .face {
-  background: var(--tagom-green);
-  color: var(--tagom-lime);
+  background: var(--accent);
+  color: var(--on-accent);
 }
 
 /* Field/label/row styling comes from the global .tg-form block; the profile
@@ -144,9 +144,9 @@
 .save {
   flex: 1.4;
   border-radius: var(--radius-md);
-  background: var(--tagom-green);
+  background: var(--accent);
   padding: 16px;
-  color: var(--tagom-lime);
+  color: var(--on-accent);
   text-align: center;
   letter-spacing: 0.03em;
   font-weight: var(--fw-bold);
@@ -175,8 +175,8 @@
 
 .stat.total {
   flex: 1.4;
-  background: var(--tagom-green);
-  color: var(--tagom-lime);
+  background: var(--accent);
+  color: var(--on-accent);
 }
 
 .cap {

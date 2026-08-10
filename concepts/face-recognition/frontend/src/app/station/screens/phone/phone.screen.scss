@@ -1,0 +1,129 @@
+:host {
+  display: flex;
+  position: absolute;
+  inset: 0;
+  gap: 72px;
+  align-items: safe center;
+  justify-content: safe center;
+  padding: 20px 56px;
+  overflow-y: auto;
+}
+
+.pad-col {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  gap: 14px;
+  width: 460px;
+  max-width: 100%;
+}
+
+.display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+  padding: 0 20px;
+  height: 150px;
+  overflow: hidden;
+  letter-spacing: 0.1em;
+  font-weight: var(--fw-bold);
+  font-size: 46px;
+}
+
+.notfound {
+  margin: -4px 0 0;
+  color: var(--status-danger);
+  text-align: center;
+  font-weight: var(--fw-semibold);
+  font-size: var(--text-lg);
+}
+
+.pad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.key {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+  height: 78px;
+  color: var(--tagom-green);
+  font-weight: var(--fw-bold);
+  font-size: 34px;
+  user-select: none;
+}
+
+.key:active {
+  transform: scale(var(--press-scale));
+}
+
+/* Backspace stays white but outlined, so the destructive key is distinguishable
+   from a digit by shape rather than only by its glyph. */
+.key.alt {
+  border: 1.5px solid var(--border-subtle);
+  font-size: 28px;
+}
+
+.key.ok {
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 28px;
+}
+
+.copy {
+  width: 520px;
+  max-width: 100%;
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  opacity: 0.75;
+  font-size: var(--text-h3);
+}
+
+h1 {
+  margin: 0 0 44px;
+  text-wrap: pretty;
+  line-height: 1.06;
+  font-size: clamp(32px, 4vw, 52px);
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+@media (max-width: 900px) {
+  :host {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 24px;
+    padding: 18px;
+  }
+
+  .pad-col {
+    margin: 0 auto;
+  }
+
+  .display {
+    height: 104px;
+    font-size: 36px;
+  }
+
+  .key {
+    height: 62px;
+    font-size: 28px;
+  }
+
+  h1 {
+    margin-bottom: 22px;
+  }
+}

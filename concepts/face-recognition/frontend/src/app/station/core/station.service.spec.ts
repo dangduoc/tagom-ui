@@ -37,6 +37,105 @@ describe('StationService', () => {
     localStorage.clear();
   });
 
+  // ── the entry flow: chooser → Face ID | phone | register ──
+
+  it('starts a session on the chooser, not the camera', () => {
+    // What a tap on the idle poster does — there is no mode choice any more, so
+    // every session is sorted and the category grid is always shown.
+    station.startSorted();
+
+    expect(station.screen()).toBe('login');
+    expect(station.mode()).toBe('sorted');
+    // The camera screen must be chosen, never arrived at by default.
+    expect(station.isEntry()).toBe(true);
+    expect(station.inFlow()).toBe(false);
+  });
+
+  it('opens the phone screen with a clear keypad', () => {
+    station.startSorted();
+    station.pressKey('9');
+    station.goPhone();
+
+    expect(station.screen()).toBe('phone');
+    expect(station.keypad()).toBe('');
+    expect(station.keypadMiss()).toBeNull();
+  });
+
+  it('confirms a person found by phone number', async () => {
+    api.getPerson.mockResolvedValue({
+      person: {
+        code: '0901234567',
+        full_name: 'Chị Lan',
+        phone: '090 ••• 67',
+        member_since: '2026-01-04 10:00:00',
+        has_face_data: false,
+      },
+      sessions: [],
+      personal_total: 0,
+      session_count: 0,
+    });
+
+    station.startSorted();
+    station.goPhone();
+    for (const d of '0901234567') station.pressKey(d);
+    await station.lookupPhone();
+
+    expect(station.screen()).toBe('confirmed');
+    expect(station.account()?.fullName).toBe('Chị Lan');
+  });
+
+  it('keeps an unknown number on the phone screen instead of dropping the person', async () => {
+    station.startSorted();
+    station.goPhone();
+    for (const d of '0900000000') station.pressKey(d);
+    await station.lookupPhone();
+
+    expect(station.screen()).toBe('phone');
+    expect(station.keypadMiss()).toBe('notfound');
+  });
+
+  // The bug behind "I typed my number and it said I have no account": the store
+  // swallowed every failure into null, so an unreachable backend was reported as
+  // an unknown number — sending someone with a good account off to register a
+  // duplicate.
+  it('says the system is unreachable, not that the account is missing', async () => {
+    api.getPerson.mockRejectedValue(new Error('network down'));
+
+    station.startSorted();
+    station.goPhone();
+    for (const d of '0338004227') station.pressKey(d);
+    await station.lookupPhone();
+
+    expect(station.screen()).toBe('phone');
+    expect(station.keypadMiss()).toBe('offline');
+    expect(station.keypadBusy()).toBe(false);
+  });
+
+  it('sends "not me" back to the chooser, not to the camera that got it wrong', () => {
+    station.startSorted();
+    station.identifiedAs({
+      code: '0901234567',
+      full_name: 'Chị Lan',
+      department: '',
+      similarity: 0.7,
+    });
+    expect(station.screen()).toBe('confirmed');
+
+    station.notMe();
+    expect(station.screen()).toBe('login');
+    expect(station.identity()).toBeNull();
+  });
+
+  it('returns to the chooser from register, keeping the mode picked on idle', () => {
+    station.startQuick();
+    station.goRegister();
+    expect(station.screen()).toBe('register');
+
+    station.back();
+    expect(station.screen()).toBe('login');
+    expect(station.mode()).toBe('quick');
+  });
+
   it('routes quick mode straight to an unsorted weigh, never the tile grid', () => {
     station.startQuick();
     station.skip();

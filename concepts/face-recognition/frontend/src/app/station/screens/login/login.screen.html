@@ -1,0 +1,38 @@
+<div class="copy">
+  <p class="brandtag">{{ station.L().brandTag }}</p>
+  <h1 class="tg-display">{{ station.L().loginTitle }}</h1>
+  <p class="sub">{{ station.L().loginSub }}</p>
+  <p class="kao" aria-hidden="true">⸜(｡˃ ᵕ ˂ )⸝♡</p>
+
+  <div class="options">
+    <button
+      tg-option-card
+      [icon]="'face-scan'"
+      [label]="station.L().optFaceId"
+      [sub]="station.L().optFaceIdSub"
+      (click)="station.goFaceId()"
+    ></button>
+
+    <button
+      tg-option-card
+      [icon]="'phone'"
+      [label]="station.L().optPhone"
+      [sub]="station.L().optPhoneSub"
+      (click)="station.goPhone()"
+    ></button>
+
+    <button
+      tg-option-card
+      [icon]="'plus'"
+      [label]="station.L().optRegister"
+      [sub]="station.L().optRegisterSub"
+      [variant]="'outline'"
+      (click)="station.goRegister()"
+    ></button>
+  </div>
+</div>
+
+<div class="art">
+  <!-- Same mascot the design puts here, and the same one idle already shows. -->
+  <img src="/tagom/object.png" alt="" />
+</div>

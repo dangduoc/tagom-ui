@@ -16,19 +16,19 @@ import { StationService } from '../core/station.service';
       display: flex;
       gap: 2px;
       border-radius: var(--radius-pill);
-      background: var(--tagom-green);
+      background: var(--accent);
       padding: 4px;
       user-select: none;
     }
     .pills span {
       border-radius: var(--radius-pill);
       padding: 6px 16px;
-      color: rgb(222 232 78 / 0.75);
+      color: rgb(255 255 255 / 0.8);
       font-size: 15px;
       font-weight: var(--fw-bold);
     }
     .pills .on {
-      background: var(--tagom-lime);
+      background: var(--surface-card);
       color: var(--tagom-green);
     }
   `,

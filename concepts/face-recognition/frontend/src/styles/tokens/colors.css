@@ -1,10 +1,13 @@
 /* Tagom — Color tokens
-   Two brand-native themes: "light" (lime field, green ink) and "dark" (green field, lime ink).
+   Light theme: cream field, deep-green ink, leaf-green fills. Dark is the
+   inverse (green field, lime ink).
    Derived neutrals use oklch harmonised toward the deep-green primary. */
 :root {
   /* ── Brand core ── */
-  --tagom-lime: #dee84e;      /* chartreuse / signal lime */
-  --tagom-green: #004d43;     /* deep forest green */
+  --tagom-lime: #dee84e;      /* chartreuse / signal lime — brand mark, camera overlay */
+  --tagom-green: #004d43;     /* deep forest green — headings, borders, ink */
+  --tagom-leaf: #699d36;      /* fresh leaf green — filled buttons and chips */
+  --tagom-cream: #f6f7e8;     /* the page field */
   --tagom-black: #000000;
   --tagom-white: #ffffff;
 
@@ -42,20 +45,24 @@
   --status-danger:  #b23a2e;
 
   /* ── Semantic aliases — LIGHT theme (default) ── */
-  --surface-page:   var(--tagom-lime);
+  --surface-page:   var(--tagom-cream);
   --surface-card:   var(--tagom-white);
-  --surface-sunken: var(--lime-100);
+  /* Soft panels sit a touch of leaf into white, so they read as recessed
+     against both the cream page and the white cards. */
+  --surface-sunken: color-mix(in srgb, var(--tagom-leaf) 11%, var(--tagom-white));
   --surface-inverse: var(--tagom-green);
 
   --text-heading:   var(--tagom-green);
   --text-body:      var(--tagom-black);
   --text-muted:     var(--green-500);
-  --text-on-accent: var(--tagom-lime);
+  --text-on-accent: var(--tagom-white);
   --text-inverse:   var(--tagom-white);
 
-  --accent:         var(--tagom-green);
-  --on-accent:      var(--tagom-lime);
-  --accent-hover:   var(--green-900);
+  /* Filled buttons and chips. Ink on them is white, not lime — lime on leaf
+     green has nowhere near enough contrast to read at kiosk distance. */
+  --accent:         var(--tagom-leaf);
+  --on-accent:      var(--tagom-white);
+  --accent-hover:   #578a2a;
 
   --border-subtle:  color-mix(in srgb, var(--tagom-green) 18%, transparent);
   --border-strong:  var(--tagom-green);

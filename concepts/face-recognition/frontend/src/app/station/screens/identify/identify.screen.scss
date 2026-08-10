@@ -2,11 +2,28 @@
   display: flex;
   position: absolute;
   inset: 0;
-  gap: 56px;
-  align-items: center;
-  justify-content: center;
-  padding: 44px 56px;
+  gap: 72px;
+  align-items: safe center;
+  justify-content: safe center;
+  padding: 20px 56px;
   overflow-y: auto;
+}
+
+.cam-col {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  gap: 16px;
+  align-items: center;
+}
+
+/* The design's static "hold still" caption, kept alongside the live status chip
+   rather than instead of it — the chip is the only thing that says whether the
+   station is actually looking. */
+.hold {
+  margin: 0;
+  opacity: 0.7;
+  font-size: var(--text-lg);
 }
 
 .cam {
@@ -129,91 +146,47 @@
 }
 
 .copy {
-  width: 440px;
+  width: 520px;
   max-width: 100%;
 }
 
+.eyebrow {
+  margin: 0 0 10px;
+  opacity: 0.75;
+  font-size: var(--text-h3);
+}
+
 h1 {
-  margin: 0 0 18px;
+  margin: 0 0 44px;
   text-wrap: pretty;
   line-height: 1.06;
-  font-size: clamp(30px, 3.8vw, 44px);
+  font-size: clamp(32px, 4vw, 52px);
+  text-transform: uppercase;
 }
 
-.sub {
-  margin: 0 0 32px;
-  text-wrap: pretty;
-  line-height: 1.4;
-  font-size: 22px;
-}
-
-.fallbacks {
+.options {
   display: flex;
   flex-direction: column;
   gap: 14px;
-  max-width: 380px;
 }
 
-.option {
-  display: flex;
-  gap: 14px;
-  align-items: center;
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
-  background: var(--surface-card);
-  padding: 18px 22px;
-  font-weight: var(--fw-semibold);
-  font-size: var(--text-lg);
-}
-
-.skip {
-  display: flex;
-  gap: 14px;
-  align-items: center;
-  justify-content: space-between;
-  border: 1.5px dashed var(--border-strong);
-  border-radius: var(--radius-lg);
-  padding: 18px 22px;
-  color: var(--tagom-green);
-  font-weight: var(--fw-bold);
-  font-size: var(--text-lg);
-}
-
-.note {
-  margin: 2px 0 0;
-  opacity: 0.6;
-  line-height: 1.4;
-  font-size: 15px;
-}
-
-.noface {
-  margin-top: 6px;
-  color: var(--tagom-green);
-  text-align: left;
-  font-weight: var(--fw-bold);
-  font-size: var(--text-body-size);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-@media (max-width: 600px) {
+@media (max-width: 900px) {
   :host {
     flex-direction: column;
     align-items: stretch;
     justify-content: flex-start;
-    gap: 16px;
+    gap: 20px;
     padding: 18px;
   }
 
   .cam {
-    margin: 0 auto;
     width: 100%;
     max-width: 340px;
     height: auto;
     aspect-ratio: 1;
   }
 
-  .fallbacks {
-    max-width: none;
+  h1 {
+    margin-bottom: 22px;
   }
 }

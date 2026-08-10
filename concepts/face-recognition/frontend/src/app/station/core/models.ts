@@ -2,7 +2,13 @@ export type Lang = 'vn' | 'en';
 
 export type Screen =
   | 'idle'
+  /** "Chọn hình thức đăng nhập" — the three ways in. */
+  | 'login'
+  /** The Face ID screen. Only reached by choosing it, so the camera never
+   *  starts on someone who didn't ask for it. */
   | 'identify'
+  /** Phone-number keypad. Was an overlay on top of the camera; now its own screen. */
+  | 'phone'
   | 'confirmed'
   | 'unknown'
   | 'register'
@@ -12,7 +18,7 @@ export type Screen =
   | 'summary'
   | 'face';
 
-export type Overlay = null | 'help' | 'keypad' | 'noface' | 'endconfirm';
+export type Overlay = null | 'help' | 'noface' | 'endconfirm';
 
 export type ErrorKind = null | 'scale' | 'network' | 'camera';
 
@@ -32,13 +38,22 @@ export interface Category {
 /** Category colours are a deliberate exception to the two-colour brand: materials
  *  must be instantly distinguishable. Keep these identical across the tile, the
  *  rail dot, the weigh chip and the summary. */
+/**
+ * Order here is the order of the tiles on the category screen.
+ *
+ * "Rác tổng hợp" leads: most people arrive with one mixed bag, so the commonest
+ * answer should be the first thing they see rather than the leftover option at
+ * the end. The key stays `chuaphanloai` — it is what every stored weigh row and
+ * the backend's CATEGORY_KEYS already hold, and renaming a label is not a reason
+ * to migrate data.
+ */
 export const CATEGORIES: Record<CategoryKey, Category> = {
+  chuaphanloai: { color: '#6b6f52', vn: 'Rác tổng hợp', en: 'Mixed waste' },
   nhua: { color: '#2f6f92', vn: 'Nhựa', en: 'Plastic' },
   giay: { color: '#c07d1e', vn: 'Giấy', en: 'Paper' },
   kimloai: { color: '#5f7078', vn: 'Kim loại', en: 'Metal' },
   thuytinh: { color: '#2c7a7b', vn: 'Thủy tinh', en: 'Glass' },
   vai: { color: '#a85c4b', vn: 'Vải', en: 'Fabric' },
-  chuaphanloai: { color: '#6b6f52', vn: 'Chưa phân loại', en: 'Unsorted' },
 };
 
 export const CATEGORY_KEYS = Object.keys(CATEGORIES) as CategoryKey[];

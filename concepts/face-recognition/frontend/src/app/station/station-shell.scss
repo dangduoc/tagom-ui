@@ -1,5 +1,7 @@
 :host {
   --tg-header-h: 76px;
+  --tg-entry-top-h: 92px;
+  --tg-entry-bottom-h: 84px;
   --tg-rail-w: 380px;
 
   display: block;
@@ -37,7 +39,14 @@
 }
 
 .wordmark {
-  font-size: 26px;
+  display: block;
+  width: 110px;
+  height: 40px;
+}
+
+.entry-top .wordmark {
+  width: 146px;
+  height: 53px;
 }
 
 .back {
@@ -56,9 +65,9 @@
   gap: 9px;
   align-items: center;
   border-radius: var(--radius-pill);
-  background: var(--tagom-green);
+  background: var(--accent);
   padding: 11px 20px;
-  color: var(--tagom-lime);
+  color: var(--on-accent);
   font-weight: var(--fw-bold);
   font-size: var(--text-body-size);
 }
@@ -77,6 +86,56 @@
   font-size: var(--text-body-size);
 }
 
+/* Entry chrome — wordmark + language on top, help and Thoát on the bottom.
+   Shared by login / Face ID / phone so the three screens don't each grow their
+   own copy of it. */
+.entry-top,
+.entry-bottom {
+  display: flex;
+  position: absolute;
+  right: 0;
+  left: 0;
+  z-index: 5;
+  align-items: center;
+  padding: 0 72px;
+}
+
+.entry-top {
+  top: 0;
+  justify-content: space-between;
+  height: var(--tg-entry-top-h);
+}
+
+.entry-bottom {
+  bottom: 0;
+  justify-content: space-between;
+  height: var(--tg-entry-bottom-h);
+}
+
+/* Nothing on the left when help is the only child — keep Thoát on the right. */
+.entry-bottom .entry-help {
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+  opacity: 0.75;
+  color: var(--tagom-green);
+  font-weight: var(--fw-semibold);
+  font-size: 18px;
+}
+
+.exit {
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--surface-card);
+  padding: 12px 26px;
+  color: var(--tagom-green);
+  font-weight: var(--fw-bold);
+  font-size: var(--text-lg);
+}
+
 .stage {
   position: absolute;
   inset: 0;
@@ -84,6 +143,11 @@
 
 .stage.with-header {
   top: var(--tg-header-h);
+}
+
+.stage.is-entry {
+  top: var(--tg-entry-top-h);
+  bottom: var(--tg-entry-bottom-h);
 }
 
 .stage.with-rail {
@@ -98,14 +162,25 @@
     flex-direction: column;
   }
 
-  .chrome {
+  .chrome,
+  .entry-top,
+  .entry-bottom {
     position: static;
     flex-shrink: 0;
     padding: 0 18px;
   }
 
+  .entry-top {
+    height: 68px;
+  }
+
+  .entry-bottom {
+    height: 72px;
+  }
+
   .stage,
   .stage.with-header,
+  .stage.is-entry,
   .stage.with-rail {
     position: relative;
     flex: 1;

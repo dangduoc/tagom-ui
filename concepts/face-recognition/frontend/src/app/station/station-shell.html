@@ -1,7 +1,7 @@
 @if (station.inFlow()) {
   <header class="chrome">
     <div class="left">
-      <span class="wordmark tg-display">tagom</span>
+      <img class="wordmark" src="/tagom/wordmark.svg" width="110" height="40" alt="tagom" />
       @if (station.canBack()) {
         <button type="button" class="back" (click)="station.back()">
           <tg-icon name="arrow-left" [size]="18" [strokeWidth]="2.2" />
@@ -23,13 +23,34 @@
   </header>
 }
 
-<div class="stage" [class.with-header]="station.inFlow()" [class.with-rail]="station.showRail()">
+<!-- The three entry screens carry the wordmark themselves rather than the in-flow
+     header: nothing has started yet, so there is no session to end and nothing
+     to go back to except the chooser. -->
+@if (station.isEntry()) {
+  <div class="entry-top">
+    <img class="wordmark" src="/tagom/wordmark.svg" width="110" height="40" alt="tagom" />
+    <tg-lang-toggle />
+  </div>
+}
+
+<div
+  class="stage"
+  [class.with-header]="station.inFlow()"
+  [class.is-entry]="station.isEntry()"
+  [class.with-rail]="station.showRail()"
+>
   @switch (station.screen()) {
     @case ('idle') {
       <tg-idle-screen />
     }
+    @case ('login') {
+      <tg-login-screen />
+    }
     @case ('identify') {
       <tg-identify-screen />
+    }
+    @case ('phone') {
+      <tg-phone-screen />
     }
     @case ('confirmed') {
       <tg-confirmed-screen />
@@ -58,6 +79,23 @@
   }
 </div>
 
+@if (station.isEntry()) {
+  <div class="entry-bottom">
+    <!-- Not in the design, but a kiosk always needs a way to fetch a human. -->
+    <button type="button" class="entry-help" (click)="station.openHelp()">
+      <img src="/tagom/star-green.svg" width="22" height="22" alt="" />
+      {{ station.L().help }}
+    </button>
+
+    @if (station.screen() !== 'login') {
+      <button type="button" class="exit" (click)="station.goLogin()">
+        <tg-icon name="arrow-left" [size]="22" [strokeWidth]="2.2" />
+        {{ station.L().exit }}
+      </button>
+    }
+  </div>
+}
+
 <!-- One rail instance for both category and weigh, so the two can never diverge. -->
 @if (station.showRail()) {
   <tg-session-rail />
@@ -66,9 +104,6 @@
 @switch (station.overlay()) {
   @case ('help') {
     <tg-help-overlay />
-  }
-  @case ('keypad') {
-    <tg-keypad-overlay />
   }
   @case ('noface') {
     <tg-noface-dialog />

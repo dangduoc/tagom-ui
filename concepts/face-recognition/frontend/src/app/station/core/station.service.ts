@@ -52,7 +52,6 @@ const EMPTY_FORM: RegisterForm = {
 
 /** Screens that show the in-flow header. */
 const IN_FLOW: Screen[] = [
-  'identify',
   'confirmed',
   'unknown',
   'register',
@@ -61,6 +60,10 @@ const IN_FLOW: Screen[] = [
   'category',
   'weigh',
 ];
+
+/** The three ways in. They carry their own chrome (wordmark, language, Thoát)
+ *  rather than the in-flow header, so they're deliberately not in IN_FLOW. */
+const ENTRY: Screen[] = ['login', 'identify', 'phone'];
 
 const REQUIRED_PHONE_DIGITS = 8;
 
@@ -93,7 +96,11 @@ export class StationService {
 
   readonly keypad = signal('');
   readonly keypadBusy = signal(false);
-  readonly keypadNotFound = signal(false);
+  /** null = nothing to say · 'notfound' = no account holds that number ·
+   *  'offline' = we couldn't ask. Never conflate the last two: telling someone
+   *  their account doesn't exist because the server is down sends them off to
+   *  register a duplicate. */
+  readonly keypadMiss = signal<null | 'notfound' | 'offline'>(null);
 
   readonly form = signal<RegisterForm>({ ...EMPTY_FORM });
   readonly facePhotos = signal<Blob[]>([]);
@@ -123,7 +130,8 @@ export class StationService {
   // ── derived ──
   readonly L = computed(() => STRINGS[this.lang()]);
   readonly inFlow = computed(() => IN_FLOW.includes(this.screen()));
-  readonly canBack = computed(() => this.inFlow() && this.screen() !== 'identify');
+  readonly isEntry = computed(() => ENTRY.includes(this.screen()));
+  readonly canBack = computed(() => this.inFlow());
   readonly showRail = computed(() => this.screen() === 'category' || this.screen() === 'weigh');
   readonly isAnon = computed(() => this.identity() === 'anon');
   readonly account = computed<Person | null>(() => {
@@ -219,7 +227,28 @@ export class StationService {
     this.items.set([]);
     this.currentCat.set(null);
     this.overlay.set(null);
+    this.screen.set('login');
+  }
+
+  // ── the three ways in ──
+  /** "Thoát", and where every entry screen backs out to. Not a session reset:
+   *  the mode they picked on idle survives, so they land back on the chooser. */
+  goLogin(): void {
+    this.identity.set(null);
+    this.keypad.set('');
+    this.keypadMiss.set(null);
+    this.registerError.set(null);
+    this.screen.set('login');
+  }
+
+  goFaceId(): void {
     this.screen.set('identify');
+  }
+
+  goPhone(): void {
+    this.keypad.set('');
+    this.keypadMiss.set(null);
+    this.screen.set('phone');
   }
 
   /** The single router that respects `mode` — quick mode never sees the tile grid. */
@@ -240,9 +269,10 @@ export class StationService {
     this.enter();
   }
 
+  /** "Không phải tôi" — back to the chooser, not straight at the camera that
+   *  just got it wrong. They may well want the phone number instead. */
   notMe(): void {
-    this.identity.set(null);
-    this.screen.set('identify');
+    this.goLogin();
   }
 
   /** A face or QR match came back from IdentifyService. */
@@ -406,7 +436,7 @@ export class StationService {
     this.data.clearPerson();
     this.currentCat.set(null);
     this.keypad.set('');
-    this.keypadNotFound.set(false);
+    this.keypadMiss.set(null);
     this.form.set({ ...EMPTY_FORM });
     this.facePhotos.set([]);
     this.profileEdit.set(false);
@@ -429,13 +459,12 @@ export class StationService {
         break;
       case 'confirmed':
       case 'unknown':
-        this.identity.set(null);
-        this.screen.set('identify');
+        this.goLogin();
         break;
       case 'register':
-        // Register is reached from the identify screen (the "Đăng ký lần đầu"
-        // button), so back returns there rather than to the unknown screen.
-        this.screen.set('identify');
+        // Register is reached from the chooser (and from either entry screen's
+        // "Tạo tài khoản mới" card), so back returns to the chooser.
+        this.goLogin();
         break;
       case 'face':
         // Launched from the profile screen; drop any half-taken photos.
@@ -485,43 +514,37 @@ export class StationService {
     this.overlay.set(null);
   }
 
-  openKeypad(): void {
-    this.keypad.set('');
-    this.keypadNotFound.set(false);
-    this.overlay.set('keypad');
-  }
-
-  closeKeypad(): void {
-    this.overlay.set(null);
-  }
-
+  // ── phone screen ──
   pressKey(digit: string): void {
-    this.keypadNotFound.set(false);
+    this.keypadMiss.set(null);
     this.keypad.update((v) => (v + digit).slice(0, 11));
   }
 
   deleteKey(): void {
-    this.keypadNotFound.set(false);
+    this.keypadMiss.set(null);
     this.keypad.update((v) => v.slice(0, -1));
   }
 
-  /** Look the phone number up; falls through to an anonymous session if unknown. */
+  /**
+   * Look the phone number up. `findPerson` is used rather than `loadPerson`
+   * precisely because it lets a failure through: a server we can't reach must
+   * say so, not claim the number belongs to nobody.
+   */
   async lookupPhone(): Promise<void> {
     const code = phoneDigits(this.keypad());
     if (code.length < REQUIRED_PHONE_DIGITS || this.keypadBusy()) return;
     this.keypadBusy.set(true);
-    this.keypadNotFound.set(false);
+    this.keypadMiss.set(null);
     try {
-      const person = await this.data.loadPerson(code);
+      const person = await this.data.findPerson(code);
       if (person) {
         this.identity.set(person);
         this.screen.set('confirmed');
-        this.overlay.set(null);
       } else {
-        this.keypadNotFound.set(true);
+        this.keypadMiss.set('notfound');
       }
     } catch {
-      this.keypadNotFound.set(true);
+      this.keypadMiss.set('offline');
     } finally {
       this.keypadBusy.set(false);
     }
@@ -547,7 +570,8 @@ export class StationService {
   }
 
   noFacePhone(): void {
-    this.openKeypad();
+    this.overlay.set(null);
+    this.goPhone();
   }
 
   showError(kind: Exclude<ErrorKind, null>): void {

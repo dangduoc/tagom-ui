@@ -108,7 +108,7 @@ const FACE_CHECK_MS = 250;
       justify-content: center;
       margin-bottom: 12px;
       border-radius: var(--radius-circle);
-      background: var(--tagom-lime);
+      background: var(--surface-sunken);
       width: 64px;
       height: 64px;
       color: var(--tagom-green);
@@ -177,8 +177,8 @@ const FACE_CHECK_MS = 250;
     }
     .slot.filled {
       border-color: transparent;
-      background: var(--tagom-green);
-      color: var(--tagom-lime);
+      background: var(--accent);
+      color: var(--on-accent);
     }
     .capture,
     .save {
@@ -199,8 +199,8 @@ const FACE_CHECK_MS = 250;
       opacity: 0.45;
     }
     .save {
-      background: var(--tagom-green);
-      color: var(--tagom-lime);
+      background: var(--accent);
+      color: var(--on-accent);
     }
     .save:disabled {
       opacity: 0.45;

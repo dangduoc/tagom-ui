@@ -44,7 +44,7 @@ import { TgIcon } from '../tg-icon';
       justify-content: center;
       margin: 0 auto 18px;
       border-radius: var(--radius-circle);
-      background: var(--lime-100);
+      background: var(--surface-sunken);
       width: 88px;
       height: 88px;
       color: var(--tagom-green);
@@ -61,10 +61,10 @@ import { TgIcon } from '../tg-icon';
     }
     .cta {
       border-radius: var(--radius-pill);
-      background: var(--tagom-green);
+      background: var(--accent);
       padding: 22px;
       width: 100%;
-      color: var(--tagom-lime);
+      color: var(--on-accent);
       letter-spacing: 0.03em;
       font-weight: var(--fw-bold);
       font-size: var(--text-h3);

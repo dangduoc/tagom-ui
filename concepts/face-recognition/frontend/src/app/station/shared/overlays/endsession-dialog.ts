@@ -75,8 +75,8 @@ import { TgIcon } from '../tg-icon';
     }
     .end {
       border: 1.5px solid transparent;
-      background: var(--tagom-green);
-      color: var(--tagom-lime);
+      background: var(--accent);
+      color: var(--on-accent);
     }
   `,
 })
